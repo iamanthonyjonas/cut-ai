@@ -125,8 +125,8 @@ préférences apprises (section suivante) appliquées d'office.
 - **Personnalisation visuelle** : à l'installation, propose UNE fois d'ouvrir `demarrer.html` (2 minutes :
   prénom, style, sous-titres, appel à l'action, avec aperçu). Il renvoie un bloc `CUTAI-REGLAGES` que le
   client colle ici : applique-le avec le skill `setup` (`references/onboarding-visuel.md`). Refusé ou
-  ignoré : monte avec les réglages de base. Le questionnaire `/setup` complet reste disponible
-  (« personnalise mon style ») ; ne le lance pas de toi-même. Le débrief fait partie de la première vidéo.
+  ignoré : monte avec les réglages de base. « Personnalise mon style » = rouvre `demarrer.html` (jamais un questionnaire dans le chat ni une liste de styles en texte).
+  Propose aussi l'app HyperFrames (gratuite, https://hyperframes.dev/studio) une fois, à l'installation. Le débrief fait partie de la première vidéo.
 - **Débrief repoussé** : si `{{MAISON}}work/premiere-video.md` annonce « débrief à faire », le reproposer
   une fois en début de conversation, suivre la note, puis la supprimer, qu'il accepte ou non.
 - Ne pas marquer `setup.styleChosen = true` sans choix explicite (garder le noir et blanc en est

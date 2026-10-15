@@ -33,6 +33,21 @@ textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
 .opt[aria-pressed=true] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--surface); }
 .opt b { display: block; font-family: var(--font-display); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
 .opt small { display: block; color: var(--ink-3); font-size: 13px; line-height: 1.35; margin-top: 3px; }
+.pv-mini { height: 96px; border-radius: 8px; margin-bottom: 9px; position: relative; overflow: hidden; border: 1px solid var(--line); }
+.pv-mini .m { position: absolute; left: 8px; right: 8px; top: 8px; height: 30%; border-radius: 6px; }
+.pv-mini .f { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(180deg,#8d7b66,#5b4d3d); }
+.pv-mini .c { position: absolute; left: 6px; right: 6px; top: 52%; text-align: center; font-weight: 800; font-size: 10px; line-height: 1.1; }
+.pv-mini .c span { padding: 1px 4px; }
+.pv-mini .c.block span { background: var(--q-a); color: var(--q-b); }
+.pv-mini .c.outline span, .pv-mini .c.soft span { color: var(--q-t); text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+.pv-mini .c.plate span { background: rgba(0,0,0,.62); color: #fff; border-radius: 5px; }
+.pv-mini .c.shadow span { color: var(--q-t); text-shadow: 2px 2px 0 var(--q-a); }
+.pv-mini .c.underline span { color: var(--q-t); border-bottom: 2px solid var(--q-a); }
+.pv-mini .c.soft span { text-shadow: 0 1px 6px rgba(0,0,0,.7); }
+.counter { font-family: var(--font-code); font-size: 13px; margin: 8px 0 0; color: var(--ink-2); } .counter.bad { color: #b3261e; } .counter.good { color: var(--ink); font-weight: 700; }
+.cost { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: var(--space-3); } .cost th, .cost td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; } .cost th { font-size: 13px; color: var(--ink-3); font-weight: 600; }
+.note { font-size: 14px; color: var(--ink-3); margin-top: var(--space-3); }
+.hf { display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap; } .hf a.cut-btn { text-decoration: none; }
 .sw { height: 54px; border-radius: 8px; margin-bottom: 9px; display: flex; align-items: flex-end; padding: 6px; gap: 5px; border: 1px solid var(--line); } .sw i { width: 18px; height: 18px; border-radius: 50%; display: block; }
 .diag { height: 70px; border-radius: 8px; margin-bottom: 9px; background: var(--line); display: grid; overflow: hidden; }
 .diag.split { grid-template-rows: 1fr 1fr; } .diag.split div:first-child { background: var(--ink-3); } .diag.split div:last-child { background: var(--ink); }
@@ -69,15 +84,21 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
 <header class="top wrap">
   <picture><source media="(prefers-color-scheme: dark)" srcset="assets/cut/cut-logo-blanc.svg"><img class="logo" src="assets/cut/cut-logo.svg" alt="Cut AI"></picture>
   <h1 id="hello">Salut. Faisons ton <span class="cut-em">style</span>.</h1>
-  <p class="sub">Quatre étapes, deux minutes. Tu cliques, tu vois le résultat à côté, et à la fin tu copies tes réglages pour les coller dans ta conversation. Rien ne part sur Internet.</p>
+  <p class="sub">Quelques étapes, cinq minutes. Tu cliques, tu vois le résultat à côté, et à la fin tu copies tes réglages pour les coller dans ta conversation. Rien ne part sur Internet.</p>
   <nav class="steps" id="nav">
-    <a class="cut-pill" href="#s1">1 · Toi</a><a class="cut-pill" href="#s2">2 · Ton style</a>
-    <a class="cut-pill" href="#s3">3 · Ton appel à l'action</a><a class="cut-pill" href="#s4">4 · Ta première vidéo</a><a class="cut-pill" href="#fin">Mes réglages</a>
+    <a class="cut-pill" href="#s0">0 · HyperFrames</a><a class="cut-pill" href="#s1">1 · Toi</a><a class="cut-pill" href="#s2">2 · Ton style</a>
+    <a class="cut-pill" href="#s3">3 · Ton appel à l'action</a><a class="cut-pill" href="#s4">4 · Ta première vidéo</a><a class="cut-pill" href="#s5">5 · Ta voix</a><a class="cut-pill" href="#s6">6 · Consommation</a><a class="cut-pill" href="#fin">Mes réglages</a>
   </nav>
 </header>
 
 <main class="layout wrap">
 <div>
+  <section class="step" id="s0">
+    <h2><span class="n">0</span>Installe HyperFrames</h2>
+    <p class="hint">C'est l'application gratuite qui te montre ton montage sur une timeline et exporte en un clic (Mac et Linux). Installe-la maintenant : tu en auras besoin pour voir ton Reel.</p>
+    <div class="hf"><a class="cut-btn cut-btn--buy" href="https://hyperframes.dev/studio" target="_blank" rel="noopener">Télécharger HyperFrames</a><span class="note" style="margin:0">Déjà installée ? Passe à l'étape 1.</span></div>
+  </section>
+
   <section class="step" id="s1">
     <h2><span class="n">1</span>Qui es-tu ?</h2>
     <p class="hint">Pour personnaliser tes textes, tes sous-titres et tes scripts.</p>
@@ -143,13 +164,36 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
     </div>
   </section>
 
+  <section class="step" id="s5">
+    <h2><span class="n">5</span>Ta voix : 10 à 15 scripts</h2>
+    <p class="hint">Pour que ton IA écrive comme toi, colle <b>10 à 15 scripts de Reels déjà faits</b> (le texte que tu dis face caméra). Ils doivent être <b>vraiment différents</b> : des sujets variés, des accroches différentes, pas dix fois la même idée. Sépare-les par une ligne contenant <code>---</code>. Pas encore 10 scripts ? Tu peux sauter cette étape : on affinera ta voix après tes premières vidéos.</p>
+    <textarea id="scripts" style="min-height:220px" placeholder="Script 1&#10;---&#10;Script 2&#10;---&#10;…"></textarea>
+    <p class="counter" id="scriptsCount">0 script</p>
+    <button class="cut-btn" id="copyScripts" type="button" style="margin-top:12px">Copier mes scripts</button>
+    <p class="note">À coller dans ta conversation, séparément de tes réglages. Tes scripts restent sur ton ordinateur.</p>
+  </section>
+
+  <section class="step" id="s6">
+    <h2><span class="n">6</span>Ce que ça consomme</h2>
+    <p class="hint">Ton IA travaille avec ton abonnement (Claude ou ChatGPT) : on parle donc de <b>tokens consommés</b>, pas d'une facture en plus. Voici des ordres de grandeur pour t'y repérer.</p>
+    <table class="cost">
+      <tr><th>Action</th><th>Consommation estimée</th></tr>
+      <tr><td>Installation et réglages</td><td>faible (quelques minutes de travail)</td></tr>
+      <tr><td>Script + légende</td><td>faible (une conversation courte)</td></tr>
+      <tr><td>Premier Reel monté d'une traite (30 à 45 s)</td><td>élevée : compte une bonne part d'une session</td></tr>
+      <tr><td>Retouches après le débrief</td><td>moyenne</td></tr>
+      <tr><td>Reels suivants</td><td>moyenne : moins que le premier, tes goûts sont connus</td></tr>
+    </table>
+    <p class="note">Estimations, non mesurées sur ton compte : elles dépendent de la durée de ta vidéo et des retouches. Pour les voir en vrai, demande à ton IA « combien ce Reel a consommé ». Astuce : fais une étape lourde par conversation, et garde tes retouches groupées en un seul message.</p>
+  </section>
+
   <section class="step final cut-slab" id="fin">
     <h2>Tes réglages<span class="ok" id="okmsg">Copié</span></h2>
     <p class="hint">Copie ce bloc et colle-le dans ta conversation avec ton IA (Claude Code ou Codex).</p>
     <pre id="out"></pre>
     <button class="cut-btn cut-btn--buy" id="copy">Copier mes réglages</button>
     <ol class="todo">
-      <li><b>Colle</b> le bloc dans ta conversation et envoie.</li>
+      <li><b>Colle</b> le bloc dans ta conversation et envoie (puis, séparément, tes scripts si tu en as 10).</li>
       <li>Ton IA règle ton style, puis <b>écrit ton script et ta légende</b> (ou attend ta vidéo).</li>
       <li>Tu tournes avec le script en main, puis tu glisses ta vidéo : « on monte celle-ci ».</li>
     </ol>
@@ -175,7 +219,7 @@ const PRESETS = __PRESETS__;
 const SKINS = __SKINS__;
 const $ = (s) => document.querySelector(s);
 const state = { preset: "neutral", skin: "soft", layout: "split", ctas: ["keyword-dm"], mode: "script", music: "aucune" };
-const FIELDS = ["firstName", "handle", "name", "language", "niche", "keyword", "dmTool", "topic"];
+const FIELDS = ["scripts", "firstName", "handle", "name", "language", "niche", "keyword", "dmTool", "topic"];
 const SKIN_LABEL = { soft: "Doux", block: "Bloc", outline: "Contour", plate: "Plaque", shadow: "Ombre", underline: "Souligné" };
 
 function save() { try { localStorage.setItem("cutai-demarrer", JSON.stringify({ state, f: Object.fromEntries(FIELDS.map((k) => [k, $("#" + k).value])) })); } catch (e) {} }
@@ -190,7 +234,7 @@ function load() {
 
 function buildCards() {
   $("#presets").innerHTML = PRESETS.map((p) =>
-    `<button class="opt" data-v="${p.id}"><div class="sw" style="background:${p.bg}"><i style="background:${p.accent}"></i><i style="background:${p.text}"></i></div><b>${p.label.replace(/ \(.*\)/, "")}</b><small>${p.short}</small></button>`).join("");
+    `<button class="opt" data-v="${p.id}"><div class="pv-mini" style="background:${p.bg};--q-a:${p.accent};--q-b:${p.bg};--q-t:${p.text}"><div class="m" style="background:${p.surface}"></div><div class="f"></div><div class="c ${p.skin}"><span>Ta phrase forte</span></div></div><b>${p.label.replace(/ \(.*\)/, "")}</b><small>${p.short}</small></button>`).join("");
   $("#skins").innerHTML = Object.keys(SKIN_LABEL).map((k) =>
     `<button class="opt" data-v="${k}"><b>${SKIN_LABEL[k]}</b><small>${SKINS[k] || ""}</small></button>`).join("");
 }
@@ -233,12 +277,26 @@ function refresh() {
   const fn = $("#firstName").value.trim();
   $("#hello").innerHTML = (fn ? "Salut " + fn.replace(/[<>&]/g, "") + "." : "Salut.") + " Faisons ton <span class=\"cut-em\">style</span>.";
   // pastilles « fait »
-  const ok = { s1: $("#firstName").value.trim() && $("#handle").value.trim(), s2: true, s3: state.ctas.length > 0, s4: state.mode === "video" || $("#topic").value.trim() };
+  const ok = { s1: $("#firstName").value.trim() && $("#handle").value.trim(), s2: true, s3: state.ctas.length > 0, s4: state.mode === "video" || $("#topic").value.trim(), s0: true, s5: scriptList().length >= 10, s6: true };
   document.querySelectorAll("#nav .cut-pill").forEach((a) => a.classList.toggle("done", !!ok[a.getAttribute("href").slice(1)]));
+  scriptsStatus();
   $("#out").textContent = build();
   save();
 }
 
+function scriptList() { return $("#scripts").value.split(/^\s*---+\s*$/m).map((x) => x.trim()).filter((x) => x.length > 40); }
+function scriptsStatus() {
+  const l = scriptList(), n = l.length, seen = new Set(); let dup = 0;
+  l.forEach((x) => { const k = x.toLowerCase().replace(/\W+/g, " ").slice(0, 60); if (seen.has(k)) dup++; seen.add(k); });
+  const el = $("#scriptsCount");
+  let t = n + (n > 1 ? " scripts" : " script"), c = "";
+  if (dup) { t += " · " + dup + " début(s) identique(s) : varie les accroches"; c = "bad"; }
+  else if (n === 0) t += " · vise 10 à 15, tous différents";
+  else if (n < 10) { t += " · encore " + (10 - n) + " pour arriver à 10"; c = "bad"; }
+  else if (n > 15) { t += " · 15 suffisent : garde les 15 plus différents"; c = "bad"; }
+  else { t += " · parfait"; c = "good"; }
+  el.textContent = t; el.className = "counter " + c;
+}
 function build() {
   let h = $("#handle").value.trim(); if (h && !h.startsWith("@")) h = "@" + h;
   const kw = $("#keyword").value.trim().toUpperCase() || null;
@@ -261,6 +319,11 @@ $("#copy").addEventListener("click", async () => {
   const t = $("#out").textContent;
   try { await navigator.clipboard.writeText(t); } catch (e) { const r = document.createRange(); r.selectNodeContents($("#out")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); }
   $("#okmsg").classList.add("on"); setTimeout(() => $("#okmsg").classList.remove("on"), 2500);
+});
+$("#copyScripts").addEventListener("click", async () => {
+  const t = "CUTAI-SCRIPTS v1\n" + scriptList().map((x, i) => "### Script " + (i + 1) + "\n" + x).join("\n\n");
+  try { await navigator.clipboard.writeText(t); } catch (e) { const a = $("#scripts"); a.select(); document.execCommand("copy"); }
+  $("#copyScripts").textContent = "Copié"; setTimeout(() => { $("#copyScripts").textContent = "Copier mes scripts"; }, 2500);
 });
 refresh();
 </script>

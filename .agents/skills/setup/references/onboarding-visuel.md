@@ -44,9 +44,15 @@ des champs. S'il y a un mot-clé : « et ton mot-clé habituel : {MOT} ».
 - **`video`** : « Glisse ta vidéo brute ici et dis "on monte celle-ci". » La première vidéo se monte
   d'une traite (fichier agent, section 🟢), avec **son style et son cadrage** quand ils sont réglés.
 
+## 4 bis. Un bloc `CUTAI-SCRIPTS`
+
+S'il est collé (10 à 15 scripts, `### Script n`), c'est le corpus de la voix : suis le bloc B du skill
+(`references/voice-extraction.md`). Moins de 10 scripts, ou des scripts qui se ressemblent (même
+accroche, même sujet) : dis-le en une phrase et demande d'autres scripts différents ; ne devine pas.
+
 ## 5. Règles
 
 - Aucune question sur ce que le bloc contient déjà (style, cadrage, appel à l'action).
-- La voix (bloc B) n'est pas demandée ici : elle s'apprend au débrief ou sur `/setup voix`.
+- La voix (bloc B) n'est pas demandée dans le chat : elle vient du bloc `CUTAI-SCRIPTS` ou s'apprend au débrief.
 - Un bloc collé une seconde fois = il change d'avis : réapplique, confirme en une ligne.
 - Ne montre jamais les chemins ni le JSON au client, sauf demande.

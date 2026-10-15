@@ -209,7 +209,8 @@ Après réussite seulement :
 >
 > Tu peux sauter l'étape 2 : je monte alors ta première vidéo avec les réglages de base.
 
-Puis, dans cet ordre :
+Puis, dans cet ordre, **sans attendre de réponse entre les étapes** et **sans jamais lancer le skill `setup` ni un questionnaire dans le chat** :
+0. **Propose HyperFrames** : dis une fois « Installe l'app HyperFrames, elle est gratuite : https://hyperframes.dev/studio » (c'est aussi l'étape 0 de la page).
 1. **Ouvre `demarrer.html`** pour le client (Mac : `open demarrer.html`, Linux : `xdg-open`, Windows :
    `start demarrer.html`). S'il est dans Claude Code ou Codex (et pas dans l'app HyperFrames), propose
    aussi d'**ouvrir un onglet de preview** : la page dans le navigateur intégré s'il y en a un, sinon dans

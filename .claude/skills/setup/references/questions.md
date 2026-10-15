@@ -1,4 +1,4 @@
-# Questionnaire de l'Empreinte — formulations exactes, bloc par bloc
+# Questionnaire en conversation (secours) — formulations exactes, bloc par bloc
 
 Ce fichier est le **script du questionnaire**. Pour chaque question : la formulation exacte
 (tutoiement, simple, zéro jargon), le **champ config cible**, le **défaut** (« Entrée = »), et les
@@ -25,7 +25,7 @@ défaut, et on n'écrit **rien** avant la validation de fin de bloc.
 ## Bloc B — Voix
 
 **Étape 1 — récolte du corpus (message unique) :**
-> « Colle-moi entre 5 et 15 de tes propres scripts ou transcripts de Reels — juste le texte que tu
+> « Colle-moi 10 à 15 de tes propres scripts ou transcripts de Reels, vraiment différents les uns des autres (sujets et accroches variés) — juste le texte que tu
 > dis face caméra. C'est ce qui apprend à ton monteur à écrire comme toi. Plus tu en mets, plus
 > c'est fidèle. (Si tu n'en as pas sous la main, dis-le, on fera autrement.) »
 

@@ -1,19 +1,23 @@
 ---
 name: setup
 description: >-
-  L'Empreinte — l'onboarding de personnalisation du Cut AI. Lance-le UNE fois après
-  l'installation pour transférer TON goût (ta voix, tes couleurs, ton funnel, ton cadrage) à ton
-  monteur. Use when the user says "setup", "configure mon système", "onboarding", "empreinte",
-  "personnalise mon monteur" ou "personnalise mon style". Ne pas lancer ce questionnaire
-  automatiquement après installation ou lorsqu’une personne demande simplement son premier montage.
-  Aussi : un message qui contient un bloc `CUTAI-REGLAGES` (copié depuis la page demarrer.html) = onboarding
-  visuel, à appliquer sans questionnaire (references/onboarding-visuel.md) ;
-  `/setup <bloc>` (identite, voix, funnel, visuel, derush, technique) pour refaire un bloc,
-  et le débrief de la première vidéo (references/debrief-premiere-video.md), ouvert par le fichier
-  agent une fois la première vidéo livrée.
+  Réglages de personnalisation de Cut AI. La personnalisation (style, sous-titres, cadrage, appel à
+  l'action, prénom) se fait UNIQUEMENT par la page visuelle `demarrer.html` : ouvre-la, n'ouvre jamais
+  de questionnaire dans le chat. Use when the user says "personnalise", "personnalise mon style",
+  "réglages", "setup" ou "onboarding" : ouvre `demarrer.html` (Mac : `open demarrer.html`) et attends
+  le bloc `CUTAI-REGLAGES`. Un message qui contient ce bloc = onboarding visuel, à appliquer sans
+  questionnaire (references/onboarding-visuel.md). Les blocs en conversation ne servent que sur
+  demande explicite `/setup <bloc>` (identite, voix, funnel, visuel, derush, technique) et pour
+  la voix (bloc B) après la première vidéo. Débrief de la première vidéo : references/debrief-premiere-video.md,
+  ouvert par le fichier agent une fois la première vidéo livrée.
 ---
 
-# L'Empreinte — onboarding de personnalisation
+# Réglages Cut AI — personnalisation
+
+> **Règle n°1 : la page `demarrer.html` est la seule porte d'entrée.** Ne pose JAMAIS les questions de style,
+> de sous-titres, de cadrage ou d'appel à l'action dans le chat (pas de listes de styles en texte, pas de
+> « Bienvenue » ni d'emoji d'accueil) : le client les choisit sur la page avec des aperçus. Ce qui suit ne
+> sert que si `/setup <bloc>` est demandé explicitement.
 
 > **Ce n'est pas configurer un logiciel. C'est transférer ton goût à une IA, une seule fois.**
 > À la fin, ton monteur écrit dans TA voix, monte à TES couleurs, cadre TON visage et parle à TON
@@ -113,12 +117,12 @@ validations) est dans **`references/questions.md`** — le lire avant d'animer u
 1. Lire `brand.config.json` (ou le créer depuis `brand.config.example.json`).
 2. Regarder `setup.completedBlocks` et **`setup.styleChosen`**.
 3. **Si un bloc précis est demandé** (`/setup voix`) → aller droit à ce bloc.
-4. **Si `setup.styleChosen` est `false` → proposer le bloc D EN PREMIER**, quel que soit l'ordre
-   habituel. Annoncer franchement : « on commence par tes couleurs et tes sous-titres, 2 minutes —
-   tu peux aussi monter tout de suite avec le style Papier ». S'il préfère voir d'abord une vidéo
-   sortir, **c'est OK** : le style de départ « Papier » tient la route, on repropose après.
+4. **Si `setup.styleChosen` est `false` et qu'aucun bloc précis n'est demandé → ouvre `demarrer.html`** (et
+   un onglet de preview si ton outil en a un), dis en une phrase « choisis ton style sur la page, copie le
+   résultat et colle-le ici », puis attends. Pas de questionnaire dans le chat. S'il préfère voir d'abord
+   une vidéo sortir, **c'est OK** : le style de départ « Papier » tient la route, on repropose après.
 5. **Sinon** → annoncer l'état et proposer le prochain bloc non fait. Un petit mot d'accueil au tout
-   premier lancement : présenter l'Empreinte en 2 phrases (ton monteur apprend ta voix, tes couleurs, ton cadrage : tu la déposes une fois, chaque vidéo la porte), dire
+   premier lancement : dire en 2 phrases ce que le bloc règle, dire
    que ça prend ~15 min et qu'on peut s'arrêter entre deux blocs (tout est sauvegardé).
 
 ---
@@ -138,7 +142,7 @@ Questions (détail + validations dans `references/questions.md`) :
 
 ---
 
-## Bloc B — Voix (le cœur de l'Empreinte)
+## Bloc B — Voix (le cœur de la personnalisation)
 
 **Écrit :** le **Profil de voix** injecté entre les marqueurs `voice-profile` de
 `.claude/skills/reel-script/SKILL.md`, + le corpus copié dans
@@ -153,7 +157,7 @@ Questions (détail + validations dans `references/questions.md`) :
 Méthode d'analyse détaillée (quoi chercher, comment classer, pièges) →
 **`references/voice-extraction.md`** — le lire avant d'analyser.
 
-1. **Récolter le corpus.** Demander de coller **5 à 15 scripts ou transcripts** de ses propres Reels
+1. **Récolter le corpus.** Demander **10 à 15 scripts ou transcripts** de ses propres Reels, **volontairement différents** (sujets, accroches, formats variés : refuse un lot de scripts qui se ressemblent et demande d'en changer). Ils arrivent en général dans un bloc `CUTAI-SCRIPTS` copié depuis la page demarrer.html
    (le texte parlé ; s'il donne des liens, lui demander de coller le texte — on n'accède pas au
    réseau). Plus il y en a, meilleur est le clone.
    - **Pas de corpus ?** Basculer en **mode interview de secours** (5 questions sur son ton, ses
@@ -365,7 +369,7 @@ snapshot visuel.
 3. Afficher un **récapitulatif de TOUT ce qui a été personnalisé** : identité, voix (N patterns),
    funnel/CTA, couleurs + polices, dérush/audio, cadrage calibré. Format court et lisible.
 4. Conclure chaleureusement :
-   > « Ton Empreinte est prête. Pour ton premier Reel : donne-moi ton idée de script, ou
+   > « Tes réglages sont prêts. Pour ton premier Reel : donne-moi ton idée de script, ou
    > lance-toi direct avec ta première vidéo brute. »
 
 Rappel du pipeline pour la suite (sans déborder) : Script → Tournage → Dérush → Montage → Review →

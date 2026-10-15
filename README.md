@@ -91,7 +91,7 @@ tout se règle, même en vrac ou en vocal. Il corrige la vidéo, te résume ce q
 **tes vidéos suivantes sont montées directement comme tu aimes.**
 
 Tu peux aussi personnaliser avant, ou à tout moment : dis **« personnalise mon style »**
-(ou `/setup`). Le reste de l'Empreinte (ta voix pour écrire tes scripts, ton funnel…) est optionnel.
+(ou `/setup`). Le reste (ta voix pour écrire tes scripts, ton funnel…) est optionnel.
 
 ---
 
