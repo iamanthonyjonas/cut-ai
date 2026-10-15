@@ -113,7 +113,8 @@ if (!WIN) {
 // 9. Produits complémentaires (affichés seulement s'il y en a un d'installé)
 const catalogue = lireJSON(path.join(ROOT, "templates", "produits.json"))?.produits || [];
 const installes = catalogue.filter((p) => fs.existsSync(path.join(ROOT, ".claude", "skills", p.skill, "SKILL.md")));
-if (installes.length) ajoute("ok", `Produits installés : ${installes.map((p) => p.nom).join(", ")}`);
+const versionDe = (p) => { try { return fs.readFileSync(path.join(ROOT, ".claude", "skills", p.skill, "VERSION"), "utf8").trim(); } catch { return ""; } };
+if (installes.length) ajoute("ok", `Produits installés : ${installes.map((p) => p.nom + (versionDe(p) ? " " + versionDe(p) : "")).join(", ")}`);
 
 // mode « partager » : un résumé sans aucune donnée personnelle (ni nom, ni chemin) à coller au support
 const CLES = [[/Node/, "node"], [/Python/, "python"], [/ffmpeg/, "ffmpeg"], [/ffprobe/, "ffprobe"], [/Réglages/, "reglages"],
@@ -126,7 +127,7 @@ if (process.argv.includes("--partager")) {
     const cle = CLES.find(([re]) => re.test(l.titre))?.[1];
     if (cle) sortie.push(`${cle}: ${etat[l.etat]}`);
   }
-  sortie.push(`produits: ${installes.map((p) => p.id).join(", ") || "aucun"}`);
+  sortie.push(`produits: ${installes.map((p) => p.id + (versionDe(p) ? " " + versionDe(p) : "")).join(", ") || "aucun"}`);
   console.log("\nCopie ce bloc et colle-le à ton support (il ne contient ni ton nom ni aucun chemin) :\n");
   console.log(sortie.join("\n"));
   process.exit(lignes.some((l) => l.etat === "ko") ? 1 : 0);

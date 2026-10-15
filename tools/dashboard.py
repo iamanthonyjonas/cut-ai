@@ -95,13 +95,18 @@ def produits() -> list[dict]:
         catalogue = json.loads((MAISON / "templates" / "produits.json").read_text(encoding="utf-8"))["produits"]
     except (OSError, ValueError, KeyError):
         return []
-    return [{**p, "installe": (MAISON / ".claude" / "skills" / p["skill"] / "SKILL.md").is_file()} for p in catalogue]
+    def version(p):
+        try:
+            return (MAISON / ".claude" / "skills" / p["skill"] / "VERSION").read_text(encoding="utf-8").strip()
+        except OSError:
+            return ""
+    return [{**p, "installe": (MAISON / ".claude" / "skills" / p["skill"] / "SKILL.md").is_file(), "version": version(p)} for p in catalogue]
 
 
 def carte_produit(p: dict) -> str:
     e = html.escape
     if p["installe"]:
-        etat = '<span class="badge publie">Installé</span>'
+        etat = '<span class="badge publie">Installé' + (f' · v{e(p["version"])}' if p.get("version") else "") + "</span>"
         action = f'<button class="copy" type="button" data-copy="{e(p.get("essai", ""))}">Copier une phrase d\'essai</button>'
     elif p.get("bientot"):
         etat, action = '<span class="badge">Bientôt</span>', ""
