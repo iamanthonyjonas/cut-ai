@@ -34,7 +34,7 @@ sous-titres, SFX et musique. Format **vertical 1080×1920, 30 fps**.
 
 ## Accompagner une personne débutante
 
-Parle simplement dans sa langue, avec chaleur, sans le féliciter à chaque clic ; dis toujours
+Parle simplement dans sa langue, avec chaleur, sans le féliciter à chaque clic ; imagé, jamais de nom de fichier ni de jargon dans tes messages ; dis toujours
 **qui agit maintenant**. Commandes, chemins et diagnostics restent dans tes outils, sauf demande
 ou dépannage réel. Un outil manquant n'est pas une erreur.
 

@@ -118,8 +118,8 @@ validations) est dans **`references/questions.md`** — le lire avant d'animer u
 2. Regarder `setup.completedBlocks` et **`setup.styleChosen`**.
 3. **Si un bloc précis est demandé** (`/setup voix`) → aller droit à ce bloc.
 4. **Si `setup.styleChosen` est `false` et qu'aucun bloc précis n'est demandé → ouvre `demarrer.html`** (et
-   un onglet de preview si ton outil en a un), dis en une phrase « choisis ton style sur la page, copie le
-   résultat et colle-le ici », puis attends. Pas de questionnaire dans le chat. S'il préfère voir d'abord
+   un onglet de preview si ton outil en a un), dis-le avec le message modèle de `references/onboarding-visuel.md` (§ 0, « Le message d'accueil »),
+   puis attends. Pas de questionnaire dans le chat. S'il préfère voir d'abord
    une vidéo sortir, **c'est OK** : le style de départ « Cut » tient la route, on repropose après.
 5. **Sinon** → annoncer l'état et proposer le prochain bloc non fait. Un petit mot d'accueil au tout
    premier lancement : dire en 2 phrases ce que le bloc règle, dire
