@@ -13,7 +13,7 @@ Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie 
 
 C'est le même départ si la vidéo de formation dit simplement « lis INSTALL.md et installe tout ».
 L'IA vérifie ton ordinateur, explique ce qu'il reste à préparer, puis te dit quoi faire.
-**Quand elle te propose de commencer, réponds « vas-y » dans la conversation.**
+**Quand elle te propose de commencer, réponds « go » dans la conversation.**
 
 - **À installer** signifie que l'outil n'est pas encore présent. Ce n'est pas une erreur.
 - L'IA exécute les commandes. Tu n'as pas à les recopier dans un terminal.
@@ -62,11 +62,10 @@ pour l'utilisateur et ne lui demande pas de le lire.
 - **Une seule liste de « 3 choses »** : celle de l'introduction ci-dessous. N'en annonce pas une
   seconde avec d'autres étapes.
 - Commence par un constat réel et rassurant, sans garantir à l'avance que tout réussira.
-- Présente un tableau court avec des **fonctions compréhensibles** : base du système (Node.js),
-  outils du monteur (Python), traitement vidéo, moteur de montage, export vidéo, transcription,
-  réglages du projet.
-  États : **✅ Déjà prêt**, **À installer**, **À préparer**. Réserve **À réparer** aux échecs constatés.
-  Pas de croix rouges pour une absence normale avant l'installation.
+- **Pas de tableau dans le premier message** : il fait peur à un débutant. Une phrase suffit
+  (« une partie est déjà prête » ou « il me manque quelques outils »). Ne montre le détail par
+  fonction que s'il le demande ou si un outil bloque. Jamais de nom d'outil interne (Python, Pillow,
+  « brique », paquet), de croix rouge ou de « À réparer » pour une absence normale.
 - Pas de liste de commandes, chemins, noms de paquets ou choix de modèles dans ce premier message.
   Les outils de l'application peuvent afficher leurs propres commandes : explique au besoin
   « ce sont les opérations que j'exécute, tu n'as rien à recopier ».
@@ -80,7 +79,7 @@ pour l'utilisateur et ne lui demande pas de le lire.
   accord pour le plan annoncé ; ne redemande pas ensuite l'accord pour chacune de ses étapes.
   Une nouvelle action système non annoncée ou une permission de l'application reste à valider.
 
-Exemple de formulation, à adapter au bilan réel :
+Exemple de formulation, à adapter au bilan réel (court : le client lit en dix secondes) :
 
 > Bonjour, je suis Cut AI. Je suis presque prêt à monter toutes tes vidéos, mais j'ai besoin de 3 choses
 > avant : (1) installer mes outils de montage et d'export vidéo, (2) apprendre à t'écouter pour écrire tes
@@ -88,15 +87,14 @@ Exemple de formulation, à adapter au bilan réel :
 >
 > J'ai regardé ton ordinateur : une partie est déjà prête 😊
 >
-> [Tableau du bilan réel]
+> **L'installation prend environ 15 minutes.** Toi, tu n'as rien à faire : tu peux faire autre chose pendant
+> que je travaille. Je m'occupe de tout, tu n'as rien à recopier.
 >
-> L'installation prend environ 15 minutes. Toi, tu n'as rien à faire : tu peux faire autre chose pendant que
-> je travaille. Je m'occupe des commandes, tu n'as rien à recopier dans un terminal.
+> À savoir : un téléchargement d'environ 1,6 Go (seulement s'il manque), je règle aussi Claude Code et Codex
+> pour qu'ils te connaissent (avec une sauvegarde), et ton ordinateur peut te demander quelques autorisations :
+> clique sur Autoriser.
 >
-> La transcription nécessite un téléchargement d'environ 1,6 Go. Garde ton ordinateur connecté.
-> Si ta connexion est limitée, dis-le-moi : je pourrai choisir une version plus légère.
->
-> **Pour commencer, réponds simplement « vas-y » ici.**
+> **Pour commencer, réponds simplement « go ».**
 
 **Exception Node.js absent ou trop ancien :** c'est la prochaine action, donc ne demande pas
 « go » pour t'arrêter aussitôt. Dis : « Il manque Node.js, un outil gratuit nécessaire au montage.

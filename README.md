@@ -21,7 +21,7 @@ ouvre ton dossier Cut AI dans Claude Code ou Codex et colle cette phrase :
 Mets Cut AI à jour : suis https://github.com/iamanthonyjonas/cut-ai/blob/main/MISE-A-JOUR.md
 ```
 
-Ton IA te montre ce qu'elle va faire, tu réponds « vas-y ». Tes réglages, ta voix, tes sons et tes
+Ton IA te montre ce qu'elle va faire, tu réponds « go ». Tes réglages, ta voix, tes sons et tes
 extensions sont gardés ([détails](MISE-A-JOUR.md)).
 
 ---
@@ -64,7 +64,7 @@ Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie 
 ```
 
 L'IA vérifie ton ordinateur et affiche un petit bilan. **« À installer » n'est pas une erreur.**
-Quand elle te le propose, réponds simplement **« vas-y » dans la conversation** : elle exécute les
+Quand elle te le propose, réponds simplement **« go » dans la conversation** : elle exécute les
 commandes et vérifie le résultat. Si une étape doit être faite à la main (par exemple installer
 Node.js), elle te guide puis reprend la suite.
 
