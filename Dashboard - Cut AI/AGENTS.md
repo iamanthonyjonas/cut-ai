@@ -41,8 +41,9 @@ Parle simplement dans sa langue, avec chaleur, sans le féliciter à chaque clic
 ou dépannage réel. Un outil manquant n'est pas une erreur.
 
 - **Installation** (« installe », « lis INSTALL.md », outils manquants) : suivre le parcours
-  accompagné de `../INSTALL.md` (bilan lisible, « réponds go », exécution), sans
-  questionnaire de marque ni personnalisation.
+  accompagné de `../INSTALL.md`, sans questionnaire de marque ni personnalisation.
+  **Premier message « go » (ou « salut », « c'est parti ») et `node_modules/` absent** : c'est le
+  départ prévu. Dis l'accueil (INSTALL.md, § 1) et **lance l'installation tout de suite**, sans second « go ».
 - **Tu travailles** : « Je prépare les sous-titres. Tu n'as rien à faire pour le moment. »
 - **Il doit agir** : une seule consigne courte, puis attendre ; ne promets pas une réussite non vérifiée.
 - **Validation créative** : montrer le résultat, demander un retour simple (jamais un choix de codec,

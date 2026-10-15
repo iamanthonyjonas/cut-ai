@@ -57,10 +57,10 @@ L'abonnement IA (~20 €/mois) est **le seul coût**. Tout le reste du système 
 
 Range le dossier dézippé **monteur-ia-main** dans ton dossier **Vidéos**, pas dans Documents ni sur
 le Bureau : ils sont souvent synchronisés avec iCloud ou OneDrive, ce qui ralentit le montage.
-Ouvre-le ensuite dans Claude Code ou Codex, puis écris :
+Ouvre-le ensuite dans Claude Code ou Codex, puis écris ce seul mot :
 
 ```text
-Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie technique.
+go
 ```
 
 L'IA vérifie ton ordinateur et affiche un petit bilan. **« À installer » n'est pas une erreur.**

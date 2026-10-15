@@ -2,9 +2,8 @@
 
 Un seul point d'entrée. Quatre étapes, dans l'ordre.
 
-1. **Installe** : ouvre ce dossier dans Claude Code ou Codex et envoie
-   « Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie technique. »
-   Réponds **go** quand il te le propose. Détail : [INSTALL.md](INSTALL.md).
+1. **Installe** : ouvre ce dossier dans Claude Code ou Codex et envoie **go**.
+   Tout s'enclenche, environ 15 minutes, sans rien à faire. Détail : [INSTALL.md](INSTALL.md).
 2. **Télécharge l'app HyperFrames** (gratuite, Mac et Linux) : https://hyperframes.dev/studio.
 3. **Personnalise** en 2 minutes : ouvre [demarrer.html](demarrer.html) (double-clic), clique tes choix,
    copie le résultat et colle-le dans ta conversation.

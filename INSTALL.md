@@ -5,13 +5,15 @@ Videos sur Windows). Évite Documents et le Bureau : sur beaucoup d'ordinateurs,
 synchronisés avec iCloud ou OneDrive, qui retirent les fichiers du disque pour faire de la place,
 et chaque montage attend alors que tes rushes redescendent.
 
-Ouvre ensuite le dossier **cut-ai-main** dans Claude Code ou Codex, puis envoie ce message :
+Ouvre ensuite le dossier **cut-ai-main** dans Claude Code ou Codex, puis envoie ce seul mot :
 
 ```text
-Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie technique.
+go
 ```
 
-C'est le même départ si la vidéo de formation dit simplement « lis INSTALL.md et installe tout ».
+Tout s'enclenche : l'IA te dit ce qu'elle va faire (environ 15 minutes, sans rien à faire pour toi) et
+commence aussitôt. Si ton IA ne réagit pas, envoie plutôt :
+« Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie technique. »
 L'IA vérifie ton ordinateur, explique ce qu'il reste à préparer, puis te dit quoi faire.
 **Quand elle te propose de commencer, réponds « go » dans la conversation.**
 
@@ -50,6 +52,15 @@ Le protocole technique plus bas est destiné à toi. Ne le transforme pas en tut
 pour l'utilisateur et ne lui demande pas de le lire.
 
 ### 1. Vérifier, expliquer simplement, proposer de commencer
+
+**Cas n° 1, le départ normal : le premier message du client est « go »** (ou un simple bonjour), dans un
+dossier où `node_modules/` est absent. Ce « go » **vaut accord** pour le plan standard annoncé dans la
+formation et le README (outils, modèle de transcription de 1,6 Go s'il manque, branchement de Claude Code et
+Codex avec sauvegarde, mini-tests). Dis l'accueil ci-dessous **puis lance l'installation immédiatement**,
+sans lui redemander un « go » : il ne doit rien faire de plus. Une action système non annoncée, un mot de
+passe ou une permission de l'application restent à valider avec lui.
+**Cas n° 2 : il envoie « Lis INSTALL.md et accompagne-moi… »** : même accueil, qui se termine par
+« Pour commencer, réponds simplement “go” », puis attends.
 
 - Détecte le système et l'architecture, vérifie le dossier et les outils présents en lecture seule.
   Distingue un outil absent d'un outil présent mais non fonctionnel. Ne change rien à cette étape.
@@ -94,7 +105,7 @@ Exemple de formulation, à adapter au bilan réel (court : le client lit en dix 
 > pour qu'ils te connaissent (avec une sauvegarde), et ton ordinateur peut te demander quelques autorisations :
 > clique sur Autoriser.
 >
-> **Pour commencer, réponds simplement « go ».**
+> **Je commence tout de suite.** *(cas n° 2 : « Pour commencer, réponds simplement “go”. »)*
 
 **Exception Node.js absent ou trop ancien :** c'est la prochaine action, donc ne demande pas
 « go » pour t'arrêter aussitôt. Dis : « Il manque Node.js, un outil gratuit nécessaire au montage.
