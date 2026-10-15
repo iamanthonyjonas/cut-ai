@@ -78,7 +78,7 @@ puis un **débrief** où il dit ce qu'il aurait fait autrement, et tu retiens to
 1. **Il envoie sa vidéo brute** (sinon, demande seulement de la glisser ici). Annonce une fois :
    > « Je m'occupe de tout le montage avec les réglages de base, sans te poser de questions :
    > coupes, sous-titres, animations, bruitages. Habillage sombre et orange, ta vidéo reste en
-   > couleur. Ça me prend souvent une demi-heure, tu peux faire autre chose. Quand c'est prêt, tu me diras
+   > couleur. Ça prend en général entre 10 et 30 minutes, et toi tu n'as rien à faire : tu peux faire autre chose. Quand c'est prêt, tu me diras
    > tout ce que tu aurais fait autrement, et j'apprendrai ton style pour les prochaines. »
 2. **Monte d'une traite** : dérush (3) → montage (4) → SFX (6) → export. **Exception à l'ordre
    verrouillé, pour cette vidéo seulement** : pas d'écoute du dérush, pas de revue section par

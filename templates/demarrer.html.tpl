@@ -96,7 +96,7 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
   <h1 id="hello">Salut. Faisons ton <span class="cut-em">style</span>.</h1>
   <p class="sub">Quelques étapes, cinq minutes. Tu cliques, tu vois le résultat à côté, et à la fin tu copies tes réglages pour les coller dans ta conversation. Rien ne part sur Internet.</p>
   <nav class="steps" id="nav">
-    <a class="cut-pill" href="#s0">0 · HyperFrames</a><a class="cut-pill" href="#s1">1 · Toi</a><a class="cut-pill" href="#s2">2 · Ton style</a>
+    <a class="cut-pill" href="#s0">0 · Bonus</a><a class="cut-pill" href="#s1">1 · Toi</a><a class="cut-pill" href="#s2">2 · Ton style</a>
     <a class="cut-pill" href="#s3">3 · Ton appel à l'action</a><a class="cut-pill" href="#s4">4 · Ta première vidéo</a><a class="cut-pill" href="#s5">5 · Ta voix</a><a class="cut-pill" href="#s6">6 · Consommation</a><a class="cut-pill" href="#fin">Mes réglages</a>
   </nav>
 </header>
@@ -104,10 +104,10 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
 <main class="layout wrap">
 <div>
   <section class="step" id="s0">
-    <h2><span class="n">0</span>Installe HyperFrames</h2>
-    <p class="hint">C'est l'application gratuite qui te montre ton montage sur une timeline et exporte en un clic (Mac et Linux). Installe-la maintenant : tu en auras besoin pour voir ton Reel.</p>
-    <div class="callout" id="hfWin" style="display:none;background:var(--surface-2);color:var(--ink);border-color:var(--line-strong)"><b>Tu es sur Windows : l'app HyperFrames n'existe pas encore pour Windows.</b> Tu n'en as pas besoin pour démarrer. Ton IA ouvre l'aperçu de ton Reel dans ton navigateur et exporte ta vidéo dans ton dossier Téléchargements. Ignore le bouton ci-dessous.</div>
-    <div class="hf" id="hfBtn"><a class="cut-btn cut-btn--buy" href="https://hyperframes.dev/studio" target="_blank" rel="noopener">Télécharger HyperFrames</a><span class="note" style="margin:0">Déjà installée ? Passe à l'étape 1.</span></div>
+    <h2><span class="n">0</span>Un bonus : HyperFrames</h2>
+    <p class="hint"><b>Facultatif : tu n'en as pas besoin pour monter.</b> L'app gratuite HyperFrames sert seulement à voir ton montage sur une timeline, comme dans un logiciel de montage, et à exporter en un clic. Disponible sur Mac et Linux.</p>
+    <div class="callout" id="hfWin" style="display:none;background:var(--surface-2);color:var(--ink);border-color:var(--line-strong)"><b>Tu es sur Windows : l'app HyperFrames n'existe pas encore pour toi, et ce n'est pas grave.</b> C'est un bonus, pas une obligation. Ton IA ouvre l'aperçu de ton Reel dans ton navigateur et exporte ta vidéo dans ton dossier Téléchargements.</div>
+    <div class="hf" id="hfBtn"><a class="cut-btn cut-btn--buy" href="https://hyperframes.dev/studio" target="_blank" rel="noopener">Télécharger HyperFrames</a><span class="note" style="margin:0">Pas envie ? Passe à l'étape 1.</span></div>
   </section>
 
   <section class="step" id="s1">

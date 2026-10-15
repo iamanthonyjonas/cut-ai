@@ -74,12 +74,16 @@ pour l'utilisateur et ne lui demande pas de le lire.
 
 Exemple de formulation, à adapter au bilan réel :
 
-> J'ai vérifié ton ordinateur : une partie des outils est déjà prête 😊
+> Bonjour, je suis Cut AI. Je suis presque prêt à monter toutes tes vidéos, mais j'ai besoin de 3 choses
+> avant : (1) installer mes outils de montage et d'export vidéo, (2) apprendre à t'écouter pour écrire tes
+> sous-titres, (3) vérifier que tout marche avec un mini test.
+>
+> J'ai regardé ton ordinateur : une partie est déjà prête 😊
 >
 > [Tableau du bilan réel]
 >
-> Je vais installer ce qui manque et vérifier que le montage et les sous-titres fonctionnent.
-> Je m'occupe des commandes, tu n'as rien à recopier dans un terminal.
+> Ça prend en général entre 10 et 30 minutes. Toi, tu n'as rien à faire : tu peux faire autre chose pendant
+> que je travaille. Je m'occupe des commandes, tu n'as rien à recopier dans un terminal.
 >
 > La transcription nécessite un téléchargement d'environ 1,6 Go. Garde ton ordinateur connecté.
 > Si ta connexion est limitée, dis-le-moi : je pourrai choisir une version plus légère.
@@ -200,9 +204,10 @@ Après réussite seulement :
 >
 > Trois choses, dans l'ordre :
 >
-> 1. **Télécharge l'app HyperFrames, elle est gratuite** (Mac et Linux) : https://hyperframes.dev/studio.
->    Elle montre ton montage sur une timeline et fait l'export en un clic. **Sous Windows**, elle n'existe pas
->    encore : dis-le simplement, tu n'en as pas besoin (aperçu dans le navigateur, export par l'IA).
+> 1. **Un bonus, facultatif : l'app HyperFrames (gratuite).** Tu n'en as pas besoin : tout se monte sans elle.
+>    Elle sert seulement à **voir ton montage sur une timeline**, comme dans un logiciel de montage, et à
+>    exporter en un clic. Mac et Linux : https://hyperframes.dev/studio. Sous Windows, elle n'existe pas
+>    encore, et ça ne t'empêche de rien : je te montre l'aperçu dans ton navigateur et j'exporte ta vidéo.
 > 2. **Personnalise ton style en 2 minutes** : je t'ouvre une page avec des aperçus (ton style, tes
 >    sous-titres, ton appel à l'action). Tu cliques, tu copies le résultat, tu me le colles ici.
 > 3. **Ta première vidéo** : soit tu n'as pas encore tourné et je t'écris ton script puis ta légende,
