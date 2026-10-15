@@ -19,8 +19,9 @@ remplacent les anciennes (c'est un choix explicite), tout le reste est gardé.
 |---|---|
 | `brand.firstName`, `name`, `handle` (commence par `@`), `niche`, `language` | `brand.*` ; copie aussi `language` dans `derush.whisperLanguage` |
 | `visual.stylePreset` (`neutral`, `midnight`, `pulse`, `forest`, `ink`, `mono`) | `visual.stylePreset` |
+| `visual.accent` (hex), `visual.fontDisplay`, `visual.fontCaptions` (noms de polices livrées : Anton, ArchivoBlack, Inter, Teachers) | `visual.accent`, `visual.fontDisplay`, `visual.fontCaptions` : ces valeurs gagnent sur le preset ; `null` = celle du preset. Une police de sous-titres doit être dans `templates/style-presets.json` avec un `measureFile` |
 | `visual.captionsSkin` (`soft`, `block`, `outline`, `plate`, `shadow`, `underline`) | `visual.captionsSkin` |
-| `montage.defaultLayout` (`split` ou `faceplein`) | `montage.defaultLayout` |
+| `montage.defaultLayout` (`split` ou `faceplein`), `montage.layouts` (un ou deux) | `montage.defaultLayout` ; si `layouts` contient les deux, ajoute aussi à `montage.preferences` (après son OK implicite, sans le redemander) : « Alterner écran coupé et plein écran selon les phrases : plein écran pour l'accroche et les phrases fortes, écran coupé quand une animation aide. » |
 | `cta.types` (`keyword-dm`, `follow`, `share`, `none`), `defaultKeyword`, `dmTool` | `cta.types`, `cta.defaultKeyword`, `cta.dmTool` |
 | `audio.musique` = `mp3` | rien à écrire : demande-lui son MP3 à l'étape musique ; `aucune` = pas de musique |
 

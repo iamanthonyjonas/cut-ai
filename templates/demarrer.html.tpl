@@ -33,6 +33,15 @@ textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
 .opt[aria-pressed=true] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--surface); }
 .opt b { display: block; font-family: var(--font-display); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
 .opt small { display: block; color: var(--ink-3); font-size: 13px; line-height: 1.35; margin-top: 3px; }
+@font-face { font-family: "Anton"; src: url("assets/fonts/Anton-400.woff2") format("woff2"); }
+@font-face { font-family: "ArchivoBlack"; src: url("assets/fonts/ArchivoBlack-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 900; src: url("assets/fonts/Inter-900.woff2") format("woff2"); }
+@font-face { font-family: "Teachers"; font-weight: 400 800; src: url("assets/fonts/Teachers-var.ttf") format("truetype"); }
+.colors { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 6px; }
+.colors .dotc { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--line-strong); cursor: pointer; padding: 0; }
+.colors .dotc[aria-pressed=true] { outline: 3px solid var(--ink); outline-offset: 2px; }
+.colors input[type=color] { width: 44px; height: 44px; border: 0; background: none; padding: 0; cursor: pointer; }
+.colors input[type=text] { width: 120px; }
 .pv-mini { height: 96px; border-radius: 8px; margin-bottom: 9px; position: relative; overflow: hidden; border: 1px solid var(--line); }
 .pv-mini .m { position: absolute; left: 8px; right: 8px; top: 8px; height: 30%; border-radius: 6px; }
 .pv-mini .f { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(180deg,#8d7b66,#5b4d3d); }
@@ -53,6 +62,7 @@ textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
 .diag.split { grid-template-rows: 1fr 1fr; } .diag.split div:first-child { background: var(--ink-3); } .diag.split div:last-child { background: var(--ink); }
 .diag.full { background: var(--ink); position: relative; } .diag.full::after { content: ""; position: absolute; left: 12px; right: 12px; top: 10px; height: 14px; border-radius: 4px; background: var(--ink-3); }
 .panel { display: none; margin-top: var(--space-3); } .panel.on { display: block; }
+section.step.final { background: var(--slab); color: var(--on-slab); box-shadow: none; }
 .final.cut-slab { padding: var(--space-6); margin-bottom: var(--space-5); }
 .final h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.035em; font-size: 28px; margin: 0 0 var(--space-2); color: var(--on-slab); }
 .final .hint { color: var(--on-slab-2); }
@@ -64,11 +74,11 @@ textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
 .phone { width: 100%; max-width: 300px; margin: 0 auto; aspect-ratio: 9/16; border-radius: 34px; border: 7px solid #0b0a07; overflow: hidden; position: relative; box-shadow: var(--shadow-card); transition: background .25s; }
 .phone .handle { position: absolute; top: 34px; left: 18px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 7px; z-index: 3; }
 .phone .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--p-accent); }
-.phone .motion { z-index: 2; position: absolute; left: 16px; right: 16px; border-radius: 16px; padding: 14px; transition: all .25s; }
+.phone .motion { font-family: var(--p-fd, Anton), sans-serif; z-index: 2; position: absolute; left: 16px; right: 16px; border-radius: 16px; padding: 14px; transition: all .25s; }
 .phone .motion .bar { height: 8px; border-radius: 4px; margin: 7px 0; background: var(--p-accent); } .phone .motion .bar.s { width: 60%; opacity: .45; background: var(--p-text); }
 .phone .face { position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, #8d7b66, #5b4d3d); transition: all .25s; }
 .phone .face::after { content: ""; position: absolute; left: 50%; top: 22%; width: 38%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: #d9bfa4; box-shadow: 0 90px 0 40px #b9a083; }
-.phone .cap { position: absolute; left: 14px; right: 14px; text-align: center; font-weight: 800; font-size: 19px; line-height: 1.2; z-index: 3; transition: all .25s; }
+.phone .cap { font-family: var(--p-fc, Inter), sans-serif; position: absolute; left: 14px; right: 14px; text-align: center; font-weight: 800; font-size: 19px; line-height: 1.2; z-index: 3; transition: all .25s; }
 .phone .cta { position: absolute; left: 50%; transform: translateX(-50%); bottom: 18px; z-index: 4; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 99px; background: var(--p-accent); color: var(--p-bg); white-space: nowrap; }
 .cap.block span { background: var(--p-accent); color: var(--p-bg); padding: 2px 8px; }
 .cap.outline span { color: var(--p-text); text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 3px 6px #000; }
@@ -121,8 +131,15 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
     <div class="cards" id="presets"></div>
     <label class="f" style="margin-top:22px">Tes sous-titres</label>
     <div class="cards" id="skins"></div>
-    <label class="f" style="margin-top:22px">Ton cadrage</label>
-    <div class="cards" id="layouts">
+    <label class="f" style="margin-top:22px">Ta couleur (facultatif)</label>
+    <div class="colors" id="colors"></div>
+    <label class="f" style="margin-top:22px">Tes polices (facultatif)</label>
+    <div class="row">
+      <div><label class="f" for="fontDisplay" style="margin-top:0">Titres et animations</label><select id="fontDisplay"></select></div>
+      <div><label class="f" for="fontCaptions" style="margin-top:0">Sous-titres</label><select id="fontCaptions"></select></div>
+    </div>
+    <label class="f" style="margin-top:22px">Ton cadrage (tu peux garder les deux : ton IA les alterne selon les phrases)</label>
+    <div class="cards multi" id="layouts">
       <button class="opt" data-v="split" aria-pressed="true"><div class="diag split"><div></div><div></div></div><b>Écran coupé</b><small>Toi en bas, l'animation en haut.</small></button>
       <button class="opt" data-v="faceplein" aria-pressed="false"><div class="diag full"></div><b>Toi en plein écran</b><small>Les animations passent par-dessus.</small></button>
     </div>
@@ -189,7 +206,7 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
 
   <section class="step final cut-slab" id="fin">
     <h2>Tes réglages<span class="ok" id="okmsg">Copié</span></h2>
-    <p class="hint">Copie ce bloc et colle-le dans ta conversation avec ton IA (Claude Code ou Codex).</p>
+    <p class="hint">Ce bloc, ce sont tous tes choix de cette page, écrits pour ton IA. Tu n'as pas à le lire : clique sur « Copier mes réglages », colle-le dans ta conversation avec ton IA (Claude Code ou Codex) et envoie. Elle règle tout à ta place.</p>
     <pre id="out"></pre>
     <button class="cut-btn cut-btn--buy" id="copy">Copier mes réglages</button>
     <ol class="todo">
@@ -204,7 +221,7 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
 <aside class="preview" aria-label="Aperçu">
   <div class="phone" id="phone">
     <div class="handle" id="pHandle"><i class="dot"></i><span>@toncompte</span></div>
-    <div class="motion" id="pMotion"><div class="bar"></div><div class="bar s"></div><div class="bar s" style="width:40%"></div></div>
+    <div class="motion" id="pMotion"><div style="font-size:20px;letter-spacing:.02em;text-transform:uppercase;margin-bottom:6px">Ton titre</div><div class="bar"></div><div class="bar s"></div><div class="bar s" style="width:40%"></div></div>
     <div class="face" id="pFace"></div>
     <div class="cap soft" id="pCap"><span>Ta phrase <em>forte</em> ici</span></div>
     <div class="cta" id="pCta">Commente GUIDE</div>
@@ -218,7 +235,7 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
 const PRESETS = __PRESETS__;
 const SKINS = __SKINS__;
 const $ = (s) => document.querySelector(s);
-const state = { preset: "neutral", skin: "soft", layout: "split", ctas: ["keyword-dm"], mode: "script", music: "aucune" };
+const state = { preset: "cut", skin: "block", layouts: ["split"], accent: null, fontDisplay: null, fontCaptions: null, ctas: ["keyword-dm"], mode: "script", music: "aucune" };
 const FIELDS = ["scripts", "firstName", "handle", "name", "language", "niche", "keyword", "dmTool", "topic"];
 const SKIN_LABEL = { soft: "Doux", block: "Bloc", outline: "Contour", plate: "Plaque", shadow: "Ombre", underline: "Souligné" };
 
@@ -239,6 +256,23 @@ function buildCards() {
     `<button class="opt" data-v="${k}"><b>${SKIN_LABEL[k]}</b><small>${SKINS[k] || ""}</small></button>`).join("");
 }
 
+const FONTS_D = [["", "Celle du style"], ["Anton", "Anton (haute et serrée)"], ["ArchivoBlack", "Archivo Black (large et épaisse)"], ["Inter", "Inter (nette et moderne)"], ["Teachers", "Teachers (douce)"]];
+const FONTS_C = FONTS_D.filter((f) => f[0] !== "Teachers");
+function buildColors() {
+  const p = PRESETS.find((x) => x.id === state.preset);
+  const sw = ["#FF4B0F", "#E8590C", "#FFB300", "#2EC27E", "#58A6ff", "#7C5CFF", "#FF2E7E", "#E5E5E5"];
+  $("#colors").innerHTML = `<button type="button" class="dotc" data-c="" title="Celle du style" aria-pressed="${!state.accent}" style="background:${p.accent}"></button>` + sw.map((c) => `<button type="button" class="dotc" data-c="${c}" aria-label="${c}" aria-pressed="${(state.accent || "").toLowerCase() === c.toLowerCase()}" style="background:${c}"></button>`).join("") + `<input type="color" id="colorPick" value="${state.accent || p.accent}" aria-label="Autre couleur"><input type="text" id="colorHex" placeholder="#FF4B0F" value="${state.accent || ""}">`;
+  $("#colors").querySelectorAll(".dotc").forEach((b) => b.addEventListener("click", () => { state.accent = b.dataset.c || null; refresh(); buildColors(); }));
+  $("#colorPick").addEventListener("input", (e) => { state.accent = e.target.value; refresh(); $("#colorHex").value = state.accent; });
+  $("#colorHex").addEventListener("input", (e) => { const v = e.target.value.trim(); if (/^#[0-9a-fA-F]{6}$/.test(v)) { state.accent = v.toUpperCase(); refresh(); } else if (v === "") { state.accent = null; refresh(); } });
+}
+function buildFonts() {
+  $("#fontDisplay").innerHTML = FONTS_D.map((f) => `<option value="${f[0]}">${f[1]}</option>`).join("");
+  $("#fontCaptions").innerHTML = FONTS_C.map((f) => `<option value="${f[0]}">${f[1]}</option>`).join("");
+  $("#fontDisplay").value = state.fontDisplay || ""; $("#fontCaptions").value = state.fontCaptions || "";
+  $("#fontDisplay").addEventListener("change", (e) => { state.fontDisplay = e.target.value || null; refresh(); });
+  $("#fontCaptions").addEventListener("change", (e) => { state.fontCaptions = e.target.value || null; refresh(); });
+}
 function pick(groupId, key, multi) {
   const el = $("#" + groupId);
   el.addEventListener("click", (e) => {
@@ -247,27 +281,32 @@ function pick(groupId, key, multi) {
     if (multi) {
       const s = new Set(state[key]);
       if (v === "none") { s.clear(); s.add("none"); } else { s.delete("none"); s.has(v) ? s.delete(v) : s.add(v); }
+      if (key === "layouts" && s.size === 0) s.add(v);
       state[key] = [...s];
     } else {
       state[key] = v;
       if (key === "preset") state.skin = PRESETS.find((p) => p.id === v).skin;
     }
     refresh();
+    if (key === "preset") buildColors();
   });
 }
 
 function refresh() {
   const p = PRESETS.find((x) => x.id === state.preset);
   const mark = (id, test) => document.querySelectorAll("#" + id + " .opt").forEach((b) => b.setAttribute("aria-pressed", test(b.dataset.v)));
-  mark("presets", (v) => v === state.preset); mark("skins", (v) => v === state.skin); mark("layouts", (v) => v === state.layout);
+  mark("presets", (v) => v === state.preset); mark("skins", (v) => v === state.skin); mark("layouts", (v) => state.layouts.includes(v));
   mark("ctas", (v) => state.ctas.includes(v)); mark("modes", (v) => v === state.mode); mark("music", (v) => v === state.music);
   $("#kwPanel").classList.toggle("on", state.ctas.includes("keyword-dm"));
   $("#topicPanel").classList.toggle("on", state.mode === "script");
   // aperçu
   const ph = $("#phone"); ph.style.setProperty("--p-bg", p.bg); ph.style.setProperty("--p-accent", p.accent); ph.style.setProperty("--p-text", p.text); ph.style.background = p.bg; ph.style.color = p.text;
+  const acc = state.accent || p.accent; ph.style.setProperty("--p-accent", acc);
+  const fd = state.fontDisplay || "Anton", fc = state.fontCaptions || (p.id === "midnight" ? "Inter" : "Anton");
+  ph.style.setProperty("--p-fd", `"${fd}", Inter, sans-serif`); ph.style.setProperty("--p-fc", `"${fc}", Inter, sans-serif`);
   const m = $("#pMotion"), f = $("#pFace"), c = $("#pCap");
   m.style.background = p.surface;
-  if (state.layout === "split") { m.style.top = "78px"; m.style.height = "36%"; f.style.top = "52%"; f.style.height = "48%"; c.style.top = "50%"; c.style.transform = "translateY(-50%)"; }
+  if (state.layouts.includes("split")) { m.style.top = "78px"; m.style.height = "36%"; f.style.top = "52%"; f.style.height = "48%"; c.style.top = "50%"; c.style.transform = "translateY(-50%)"; }
   else { m.style.top = "78px"; m.style.height = "22%"; f.style.top = "0"; f.style.height = "100%"; c.style.top = "66%"; c.style.transform = "none"; }
   c.className = "cap " + state.skin;
   const hh = $("#handle").value.trim(); $("#pHandle span").textContent = hh ? (hh.startsWith("@") ? hh : "@" + hh) : "@toncompte";
@@ -303,8 +342,8 @@ function build() {
   const data = {
     version: 1,
     brand: { firstName: $("#firstName").value.trim() || null, name: $("#name").value.trim() || null, handle: h || null, niche: $("#niche").value.trim() || null, language: $("#language").value },
-    visual: { stylePreset: state.preset, captionsSkin: state.skin },
-    montage: { defaultLayout: state.layout },
+    visual: { stylePreset: state.preset, captionsSkin: state.skin, accent: state.accent, fontDisplay: state.fontDisplay, fontCaptions: state.fontCaptions },
+    montage: { defaultLayout: state.layouts.includes("split") ? "split" : "faceplein", layouts: state.layouts },
     cta: { types: state.ctas, defaultKeyword: state.ctas.includes("keyword-dm") ? kw : null, dmTool: state.ctas.includes("keyword-dm") ? $("#dmTool").value : null },
     audio: { musique: state.music },
     premiereVideo: { mode: state.mode, sujet: state.mode === "script" ? ($("#topic").value.trim() || null) : null },
@@ -312,8 +351,8 @@ function build() {
   return "CUTAI-REGLAGES v1\n" + JSON.stringify(data, null, 2);
 }
 
-buildCards(); load();
-pick("presets", "preset"); pick("skins", "skin"); pick("layouts", "layout"); pick("ctas", "ctas", true); pick("modes", "mode"); pick("music", "music");
+buildCards(); load(); buildColors(); buildFonts();
+pick("presets", "preset"); pick("skins", "skin"); pick("layouts", "layouts", true); pick("ctas", "ctas", true); pick("modes", "mode"); pick("music", "music");
 FIELDS.forEach((k) => $("#" + k).addEventListener("input", refresh));
 $("#copy").addEventListener("click", async () => {
   const t = $("#out").textContent;
