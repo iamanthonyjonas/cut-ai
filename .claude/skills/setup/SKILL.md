@@ -41,7 +41,7 @@ prêt (« écris “on garde” pour garder le réglage recommandé »).
 
    **Cette route s'applique uniquement si la personnalisation est demandée.** Si l'utilisateur
    veut monter une vidéo ou vient de finir l'installation, suivre le pipeline du fichier agent
-   avec le style Papier, sans lancer ce skill. L'habillage est monochrome, sa vidéo reste en couleur.
+   avec le style Cut, sans lancer ce skill. L'habillage est monochrome, sa vidéo reste en couleur.
    Si la personnalisation est demandée sans bloc précis et que le style n'est pas choisi,
    proposer D (Visuel) en premier. Les autres blocs restent optionnels.
 
@@ -120,7 +120,7 @@ validations) est dans **`references/questions.md`** — le lire avant d'animer u
 4. **Si `setup.styleChosen` est `false` et qu'aucun bloc précis n'est demandé → ouvre `demarrer.html`** (et
    un onglet de preview si ton outil en a un), dis en une phrase « choisis ton style sur la page, copie le
    résultat et colle-le ici », puis attends. Pas de questionnaire dans le chat. S'il préfère voir d'abord
-   une vidéo sortir, **c'est OK** : le style de départ « Papier » tient la route, on repropose après.
+   une vidéo sortir, **c'est OK** : le style de départ « Cut » tient la route, on repropose après.
 5. **Sinon** → annoncer l'état et proposer le prochain bloc non fait. Un petit mot d'accueil au tout
    premier lancement : dire en 2 phrases ce que le bloc règle, dire
    que ça prend ~15 min et qu'on peut s'arrêter entre deux blocs (tout est sauvegardé).
@@ -216,7 +216,7 @@ encore ces marqueurs, les insérer après l'intro, en montrant l'emplacement à 
 > ne peux pas deviner à ta place ».
 
 > **Et s'il ne sait pas encore ?** C'est fréquent, et c'est légitime. Le style de départ
-> « Papier » (noir & blanc, sans couleur) est propre et utilisable tel quel : **propose de monter
+> « Cut » (sombre et orange, sans couleur) est propre et utilisable tel quel : **propose de monter
 > d'abord, de voir le rendu, et de choisir après**. Ne force jamais un choix esthétique à quelqu'un
 > qui n'a pas encore vu une seule de ses vidéos sortir — il choisira mal, et changera de toute
 > façon. Redis-lui que **rien n'est définitif** : `/setup visuel` se relance à tout moment, tout le
@@ -231,11 +231,11 @@ Lire `templates/style-presets.json` et **présenter les presets par leur `label`
 sans jargon, en disant clairement que c'est un **point de départ modifiable**, pas un moule.
 
 > « J'ai 5 styles prêts. Tu en prends un, et on ajuste ce que tu veux après. Ou tu me donnes tes
-> propres couleurs si tu les as déjà. Et si tu ne sais pas encore, on garde le noir & blanc, tu
+> propres couleurs si tu les as déjà. Et si tu ne sais pas encore, on garde le sombre et orange, tu
 > montes une vidéo, et tu choisis en voyant le résultat. »
 
 - **Toujours offrir la 3e porte** (« je ne sais pas encore ») : laisser `visual.stylePreset` à
-  `null`, ne PAS mettre `styleChosen` à `true`, monter en Papier, et reproposer après la vidéo.
+  `null`, ne PAS mettre `styleChosen` à `true`, monter en Cut, et reproposer après la vidéo.
   Un choix forcé avant d'avoir vu un rendu est un choix qui sera refait.
 - Ne PAS présenter `neutral` comme un style parmi les autres : c'est le point de départ, il est
   déjà actif.

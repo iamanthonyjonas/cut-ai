@@ -1,4 +1,4 @@
-# Premier montage : qualité immédiate avec le style Papier
+# Premier montage : qualité immédiate avec le style Cut
 
 Lire avant la première vidéo d'un client ou une section utilisant le style de départ. Complète
 la méthode `montage-talking-head.md` ; pour la première vidéo, remplace ses arrêts de validation
@@ -11,7 +11,7 @@ base, puis **monter d'une traite** jusqu'à l'export avec bruitages. Aucun quest
 validation intermédiaire, aucune commande montrée. Tenir `work/premiere-video.md` à jour pour
 pouvoir reprendre après une interruption.
 
-Réglages de base : style Papier, cadrage `split` calé sur le visage réel, sous-titres découpés
+Réglages de base : style Cut, cadrage `split` calé sur le visage réel, sous-titres découpés
 selon `sous-titres.md`, bruitages avec sobriété (source : `sfx-musique.md`), pas de musique, voix brute mise
 au bon volume (skill `derush`, étape 7 ; nettoyage Adobe proposé au débrief).
 
@@ -37,8 +37,8 @@ préférences apprises (fichier agent, section 🧠).
 
 ## Direction visuelle prête à utiliser
 
-**Papier est un habillage éditorial abouti.** Le fond est blanc cassé, les formes et les labels
-noirs, les sous-titres blancs sur bandeau noir. La vidéo du visage garde ses couleurs naturelles.
+**Cut est un habillage abouti.** Le fond est noir, l'orange ne sert qu'à l'élément principal de la
+scène et aux sous-titres (bandeau orange, texte sombre), les formes et les labels sont blancs. La vidéo du visage garde ses couleurs naturelles.
 Toutes les valeurs proviennent des tokens du preset, jamais d'une identité inventée ou empruntée.
 
 - **Composition :** le visage reste le repère. En split, le haut illustre une idée principale,

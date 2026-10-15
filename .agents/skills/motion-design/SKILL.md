@@ -33,7 +33,7 @@ sombre ni jaune.
 | Condition observable | Fichier |
 |---|---|
 | **`visual.motionStyle = "apple"`** (le style Apple : écran partagé blanc, vraies interfaces, 3D douce, zooms, sous-titres à mot-clé italique) | `references/style-apple.md` (**à lire avant toute compo**) |
-| Premier montage, style Papier ou référence de qualité à appliquer | `references/premier-montage.md` |
+| Premier montage, style Cut ou référence de qualité à appliquer | `references/premier-montage.md` |
 | Vidéo talking-head à monter (split-screen, master, visage, export final) | `references/montage-talking-head.md` |
 | Panneau visage NOIR dans le studio | `references/visage-carre-noir.md` |
 | Vidéo source HDR (`color_transfer` = `arib-std-b67` ou `smpte2084`) | `references/transcodage-video.md` |

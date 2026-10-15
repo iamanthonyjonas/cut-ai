@@ -21,7 +21,7 @@ Ce projet sert **un seul format** : les Reels Instagram de {{FIRST_NAME}} ({{BRA
 **vraie vidéo talking-head + motion design {{BRAND_NAME}} par-dessus, section par section**, avec
 sous-titres, SFX et musique. Format **vertical 1080×1920, 30 fps**.
 
-> 🎨 **Style visuel actif : Papier (le style de départ), prêt à monter, personnalisable plus tard**. Fond `#f7f7f5`, accent `#131313`,
+> 🎨 **Style visuel actif : Cut (le style de départ), prêt à monter, personnalisable plus tard**. Fond `#0f0f10`, accent `#FF4B0F`,
 > sous-titres Inter, skin « block », cadrage par défaut `split`.
 > Ces valeurs viennent de `brand.config.json` et vivent dans `brand/tokens.css` (généré).
 > **Ne jamais écrire une couleur, une police ou une taille de sous-titre en dur dans une compo** :
@@ -77,14 +77,14 @@ puis un **débrief** où il dit ce qu'il aurait fait autrement, et tu retiens to
 
 1. **Il envoie sa vidéo brute** (sinon, demande seulement de la glisser ici). Annonce une fois :
    > « Je m'occupe de tout le montage avec les réglages de base, sans te poser de questions :
-   > coupes, sous-titres, animations, bruitages. Habillage noir et blanc, ta vidéo reste en
+   > coupes, sous-titres, animations, bruitages. Habillage sombre et orange, ta vidéo reste en
    > couleur. Ça me prend souvent une demi-heure, tu peux faire autre chose. Quand c'est prêt, tu me diras
    > tout ce que tu aurais fait autrement, et j'apprendrai ton style pour les prochaines. »
 2. **Monte d'une traite** : dérush (3) → montage (4) → SFX (6) → export. **Exception à l'ordre
    verrouillé, pour cette vidéo seulement** : pas d'écoute du dérush, pas de revue section par
    section, pas d'accord avant les SFX. Les **contrôles automatiques restent obligatoires**
    (re-transcription, `_cuts.json`, `npm run check`, snapshots, `check_export.py`) : tu valides toi-même
-   ce que le client aurait validé. Réglages de base : style Papier (ou celui de ses réglages s'il en a
+   ce que le client aurait validé. Réglages de base : style Cut (ou celui de ses réglages s'il en a
    choisi un), cadrage `split` adapté au visage réel, bruitages, pas de musique, **voix brute**.
    Méthode : skill `motion-design`, `references/premier-montage.md`. Sujet du Reel : 2 à 4 mots tirés de
    ses premières phrases, jamais une question. Une ligne de nouvelles à chaque étape. Ne t'arrête que sur
@@ -108,7 +108,7 @@ préférences apprises (section suivante) appliquées d'office.
   Propose aussi l'app HyperFrames (gratuite, https://hyperframes.dev/studio) une fois, à l'installation. Le débrief fait partie de la première vidéo.
 - **Débrief repoussé** : si `../work/premiere-video.md` annonce « débrief à faire », le reproposer
   une fois en début de conversation, suivre la note, puis la supprimer, qu'il accepte ou non.
-- Ne pas marquer `setup.styleChosen = true` sans choix explicite (garder le noir et blanc en est
+- Ne pas marquer `setup.styleChosen = true` sans choix explicite (garder le style de départ en est
   un). Ne jamais écraser une identité déjà renseignée. L'habillage ne filtre jamais le visage.
 - Ne jamais inventer une identité « en attendant » : tokens `var(--brand-*)`, polices livrées,
   réglages éprouvés. `compositions/exemple-section.html` montre le niveau visuel attendu ; son

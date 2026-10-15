@@ -31,12 +31,12 @@ const sync = (dir, ...args) => execFileSync(process.execPath, ['scripts/sync.mjs
   { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 const config = () => JSON.parse(read(root, 'brand.config.example.json'));
 
-test('un dossier neuf fonctionne en Papier sans identité ni questionnaire', (t) => {
+test('un dossier neuf fonctionne en Cut sans identité ni questionnaire', (t) => {
   const dir = fixture(t);
   const output = sync(dir);
   assert.match(output, /Personnalisation possible plus tard/);
   assert.doesNotMatch(output, /⚠️|❌|obligatoire|PAS ENCORE PERSONNALISÉ/);
-  assert.match(read(dir, 'brand/tokens.css'), /--brand-bg: #f7f7f5/);
+  assert.match(read(dir, 'brand/tokens.css'), /--brand-bg: #0f0f10/);
   assert.match(read(dir, 'brand/fonts.css'), /Inter-900.woff2/);
   assert.equal(fs.existsSync(path.join(dir, 'brand.config.json')), false);
   const codex = read(dir, 'AGENTS.md');

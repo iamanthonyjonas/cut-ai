@@ -28,7 +28,7 @@ Adapter les exemples à ce qui a réellement été monté, garder la structure :
 > - **Les animations** : des schémas comme ici, de vraies images ou vidéos d'illustration,
 >   des captures d'écran, des animations par-dessus ton visage, plus, moins, ou pas du tout.
 > - **Les sous-titres** : police, couleur, taille, position, une ou deux lignes, style du bandeau.
-> - **Les couleurs** : garder le noir et blanc, ou mettre les tiennes.
+> - **Les couleurs** : garder le style de départ, ou mettre les tiennes.
 >
 > Réponds comme tu veux, en vrac ou en vocal. « Rien à changer » est aussi une réponse.
 > Je corrige cette vidéo avec tes retours, puis je retiens tout pour les prochaines. »
@@ -85,7 +85,7 @@ voir (cadrage, taille des sous-titres) s'écrivent pendant la correction, à l'e
 | Retour | Où l'enregistrer |
 |---|---|
 | Couleurs, polices, sous-titres (skin, lignes, position) | `visual.*` selon le bloc D, puis `setup.styleChosen = true` |
-| « Je garde le noir et blanc » | `visual.stylePreset = "neutral"`, `setup.styleChosen = true` |
+| « Je garde le style de départ » | `visual.stylePreset = "cut"`, `setup.styleChosen = true` |
 | Visage plein écran ou split par défaut | `montage.defaultLayout` (`"faceplein"` ou `"split"`) |
 | Un mélange (ex. accroche en plein écran, le reste en split) | `montage.defaultLayout` = le cadrage majoritaire, et le mélange en préférence |
 | Cadrage du visage recalé pendant la correction | `montage.splitTransform` ou `montage.fullFaceTransform` / `fullFaceOrigin` (réglage technique : l'écrire dès qu'il est validé à l'image) |
@@ -111,7 +111,7 @@ sont recopiées dans `CLAUDE.md` / `AGENTS.md`, relus à chaque conversation. Co
 me dire de changer quelque chose. »
 
 **« Rien à changer »** : même résumé (« je garde ce style tel quel »), puis après OK
-`visual.stylePreset = "neutral"` si aucun style n'était choisi, `setup.styleChosen = true`,
+`visual.stylePreset = "cut"` si aucun style n'était choisi, `setup.styleChosen = true`,
 `setup.firstVideoDone = true`, sync.
 
 **Il veut débriefer plus tard** : ne rien enregistrer et laisser `firstVideoDone` à `false` ;

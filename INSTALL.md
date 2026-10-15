@@ -21,7 +21,7 @@ L'IA vérifie ton ordinateur, explique ce qu'il reste à préparer, puis te dit 
 - Les menus et les réponses peuvent différer de la vidéo : l'installation s'adapte à ton ordinateur.
 
 Une fois les vérifications terminées, **envoie ta première vidéo brute** : l'IA la monte en entier
-avec des réglages de base (habillage noir et blanc, ta vidéo reste en couleur), sans questionnaire.
+avec des réglages de base (habillage sombre et orange, ta vidéo reste en couleur), sans questionnaire.
 Tu lui dis ensuite ce que tu aurais fait autrement, et elle retient ton style pour les suivantes.
 
 **Pas encore d'agent installé ?** Commence par [Installer l'agent IA](#installer-lagent-ia-avant-tout).
@@ -356,7 +356,7 @@ npx hyperframes doctor
 ✅ Succès : Node, FFmpeg/FFprobe et Chrome au vert. (Docker, Kokoro ou MusicGen absents, version plus récente
 disponible ou mémoire basse = bénin, ce n'est pas un échec.) Tu peux lancer `/setup visuel` : les
 couleurs et les sous-titres peuvent être personnalisés plus tard. Tu peux aussi envoyer ta vidéo
-et demander un premier montage avec le style Papier, sans questionnaire préalable.
+et demander un premier montage avec le style Cut, sans questionnaire préalable.
 
 ### Windows
 
@@ -435,7 +435,7 @@ npx hyperframes doctor
 ✅ Succès : Node, FFmpeg/FFprobe et Chrome au vert. (Docker, Kokoro ou MusicGen absents, version plus récente
 disponible ou mémoire basse = bénin, ce n'est pas un échec.) Tu peux lancer `/setup visuel` : les
 couleurs et les sous-titres peuvent être personnalisés plus tard. Tu peux aussi envoyer ta vidéo
-et demander un premier montage avec le style Papier, sans questionnaire préalable.
+et demander un premier montage avec le style Cut, sans questionnaire préalable.
 
 ---
 

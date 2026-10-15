@@ -91,7 +91,7 @@ police. Le `@font-face` existe bien dans `fonts.css` et Chrome le résout correc
 
 `compositions/exemple-section.html` illustre le dérush en 8 secondes : piste brute, silences,
 piste montée. `index.html` la montre au-dessus de la zone réservée à la vidéo, avec les
-sous-titres. Lancer `npm run dev` pour voir l’animation. Le style de départ Papier est prêt
+sous-titres. Lancer `npm run dev` pour voir l’animation. Le style de départ Cut est prêt
 sans personnalisation ; le guide `motion-design/references/premier-montage.md` explique comment
 obtenir cette qualité sur les vrais montages.
 

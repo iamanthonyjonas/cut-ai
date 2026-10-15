@@ -63,7 +63,7 @@ sonne faux. » On n'écrit qu'après OK.
 
 ## Bloc D — Visuel : si la personnalisation est demandée
 
-> Ne pas ouvrir ce questionnaire pour un premier montage : le style Papier est déjà prêt.
+> Ne pas ouvrir ce questionnaire pour un premier montage : le style Cut est déjà prêt.
 > Si l’utilisateur demande à personnaliser, proposer ce bloc.
 >
 > **Aucun défaut proposé pour D1.** C'est volontaire : un défaut accepté par réflexe, c'est
@@ -71,13 +71,13 @@ sonne faux. » On n'écrit qu'après OK.
 > D1 — on les saute si le preset convient tel quel.
 >
 > **« Je ne sais pas encore » est une réponse valable à D1** : laisser `visual.stylePreset` à
-> `null` et `styleChosen` à `false`, monter en style « Papier » (noir & blanc, propre), et
+> `null` et `styleChosen` à `false`, monter en style « Cut » (sombre et orange, propre), et
 > reproposer le bloc D une fois la première vidéo livrée. Quelqu'un qui n'a jamais vu une de ses
 > vidéos sortir choisit mal — autant le laisser voir d'abord.
 
 | # | Question | Champ | Défaut | Validation |
 |---|---|---|---|---|
-| D1 | « J'ai 5 styles prêts, tu en choisis un et on ajuste après. Ou tu me donnes tes couleurs si tu les as déjà. Et si tu ne sais pas encore, on garde le noir & blanc et tu choisis en voyant ta 1re vidéo. » puis lister `label` + `description` des presets | `visual.stylePreset` | **aucun** | l'`id` doit exister ; **ne pas présenter `neutral` comme une option** (il est déjà actif) ; s'il a déjà une identité (site, logo, chaîne), prendre SES couleurs plutôt qu'un preset ; « je ne sais pas » → laisser `null`, monter en Papier, reproposer après |
+| D1 | « J'ai 5 styles prêts, tu en choisis un et on ajuste après. Ou tu me donnes tes couleurs si tu les as déjà. Et si tu ne sais pas encore, on garde le sombre et orange et tu choisis en voyant ta 1re vidéo. » puis lister `label` + `description` des presets | `visual.stylePreset` | **aucun** | l'`id` doit exister ; **ne pas présenter `neutral` comme une option** (il est déjà actif) ; s'il a déjà une identité (site, logo, chaîne), prendre SES couleurs plutôt qu'un preset ; « je ne sais pas » → laisser `null`, monter en Cut, reproposer après |
 | D2 | « Tu veux ajuster la couleur de fond ? » | `visual.bg` | celle du preset | hex valide `#rgb`/`#rrggbb` ; **refuser `#000000`/`#000`** → proposer un quasi-noir teinté de sa couleur |
 | D3 | « Et la couleur d'accent, celle qui ressort ? » | `visual.accent` | celle du preset | hex valide ; `npm run sync` calcule les ratios de contraste et avertit — **relayer l'avertissement**, proposer 2-3 alternatives, laisser trancher |
 | D4 | « La couleur des blocs/cartes (un peu plus contrastée que le fond) ? » | `visual.surface` | celle du preset | hex valide |

@@ -7,8 +7,8 @@
  *
  * Aucune identité visuelle n'est versionnée : tokens.css et fonts.css sont GÉNÉRÉS.
  * Tant que le style n'est pas choisi (`/setup visuel`), on retombe sur le preset
- * `neutral` (« Papier ») : noir & blanc, propre, utilisable tel quel — mais sans
- * aucune couleur de marque, donc sans identité empruntée à qui que ce soit.
+ * `cut` (« Cut ») : sombre et orange, propre, utilisable tel quel, sans
+ * identité empruntée à qui que ce soit.
  *
  * Node pur, zéro dépendance, cross-platform.
  */
@@ -41,7 +41,7 @@ function loadConfig() {
   if (fs.existsSync(configPath)) {
     return { config: readJSON(configPath), source: "brand.config.json", isExample: false };
   }
-  log("Premier démarrage : utilisation du style Papier. La personnalisation reste optionnelle.");
+  log("Premier démarrage : utilisation du style Cut. La personnalisation reste optionnelle.");
   return { config: readJSON(examplePath), source: "brand.config.example.json", isExample: true };
 }
 
@@ -132,7 +132,7 @@ function resolveStyle(config, presetsFile) {
     muted: visual.muted ?? mix(text, bg, 0.42),
   };
 
-  // Choisi = un preset nommé, ou un choix explicite enregistré (garder Papier en est un).
+  // Choisi = un preset nommé, ou un choix explicite enregistré (garder le style de départ en est un).
   const chosen = config?.setup?.styleChosen === true || (Boolean(wanted) && !preset.isUnset);
   const capSize = Number(visual.captionsSize);
   const captionsSize = Number.isFinite(capSize) && capSize >= 30 && capSize <= 100 ? Math.round(capSize) : 50;
@@ -720,7 +720,7 @@ function main() {
     process.exit(1);
   }
   if (!style.chosen) {
-    log("✅ Réglages synchronisés. Style Papier disponible pour ton premier montage.");
+    log("✅ Réglages synchronisés. Style Cut disponible pour ton premier montage.");
     log("L'habillage est blanc cassé et noir ; ta vidéo reste en couleur.");
     log("Personnalisation possible plus tard avec /setup visuel.");
     log("Ce message confirme les réglages, pas les tests d'installation.");

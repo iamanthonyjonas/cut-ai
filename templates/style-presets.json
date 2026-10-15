@@ -5,7 +5,7 @@
     "Le bloc D de /setup en fait choisir un, PUIS l'utilisateur ajuste ce qu'il veut.",
     "Aucun preset ne reproduit l'identité d'un créateur existant : le premier de la liste",
     "('neutral') est le style Papier : éditorial, contrasté et prêt pour un premier montage.",
-    "Ajouter un preset = ajouter une entrée ici. Rien d'autre à toucher."
+    "('cut') est le style de départ : sombre, orange vif, contrasté et prêt pour un premier montage."
   ],
   "captionSkins": {
     "_comment": "Skin = l'apparence du bandeau de sous-titres. Rendu par templates/tokens.css.tpl.",
@@ -25,10 +25,34 @@
   },
   "presets": [
     {
-      "id": "neutral",
-      "label": "Papier (le style de départ)",
-      "description": "Fond blanc cassé, texte noir, aucune couleur. Habillage éditorial contrasté, sous-titres en bandeau noir, schémas animés lisibles. Prêt pour ton premier montage, personnalisable plus tard. Les images du visage restent en couleur.",
+      "id": "cut",
+      "label": "Cut (le style de départ)",
+      "description": "Fond noir, accent orange, sous-titres en bandeau orange. Un rendu net et vif, prêt pour ton premier montage, personnalisable plus tard. Les images du visage restent en couleur.",
       "isUnset": true,
+      "visual": {
+        "bg": "#0f0f10",
+        "surface": "#1b1b1d",
+        "text": "#ffffff",
+        "muted": "#a3a3a8",
+        "accent": "#FF4B0F",
+        "fontDisplay": "Anton",
+        "fontBody": "Inter",
+        "fontCaptions": "Inter",
+        "captionsSkin": "block",
+        "captionsPosition": "split-jointure",
+        "captionsLines": 1
+      },
+      "montage": {
+        "defaultLayout": "split"
+      },
+      "cta": {
+        "style": "comment-field"
+      }
+    },
+    {
+      "id": "neutral",
+      "label": "Papier",
+      "description": "Fond blanc cassé, texte noir, aucune couleur. Habillage éditorial sobre : à choisir si tu veux un rendu clair et neutre.",
       "visual": {
         "bg": "#f7f7f5",
         "surface": "#e8e8e4",

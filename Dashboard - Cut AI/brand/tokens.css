@@ -9,19 +9,19 @@
    Les STRUCTURES (easings, durées, safe areas, utilitaires) sont fixes : c'est la méthode,
    elle est la même pour tout le monde.
 
-   Style actif : neutral, style de départ, pas encore personnalisé (/setup visuel)
+   Style actif : cut, style de départ, pas encore personnalisé (/setup visuel)
    ========================================================================== */
 
 :root {
   /* --- Palette ------------------------------------------------------------ */
-  --brand-bg: #f7f7f5;            /* Fond principal. Jamais noir pur.            */
-  --brand-surface: #e8e8e4;  /* Cartes / blocs surélevés.                   */
-  --brand-text: #131313;        /* Texte principal, lisible sur le fond.       */
-  --brand-muted: #6e6e68;      /* Texte secondaire / métadonnées.             */
-  --brand-accent: #131313;    /* Accent unique. Jamais décoratif.            */
-  --brand-contrast: #ffffff;/* Couleur lisible POSÉE SUR l'accent.         */
-  --brand-stroke: #ffffff;    /* Contour de lisibilité (sous-titres, titres).*/
-  --brand-surface-contrast: #383837; /* Surface qui tranche (rare).*/
+  --brand-bg: #0f0f10;            /* Fond principal. Jamais noir pur.            */
+  --brand-surface: #1b1b1d;  /* Cartes / blocs surélevés.                   */
+  --brand-text: #ffffff;        /* Texte principal, lisible sur le fond.       */
+  --brand-muted: #a3a3a8;      /* Texte secondaire / métadonnées.             */
+  --brand-accent: #FF4B0F;    /* Accent unique. Jamais décoratif.            */
+  --brand-contrast: #0f0f10;/* Couleur lisible POSÉE SUR l'accent.         */
+  --brand-stroke: #0b0b0b;    /* Contour de lisibilité (sous-titres, titres).*/
+  --brand-surface-contrast: #d6d6d6; /* Surface qui tranche (rare).*/
 
   /* Alias de compatibilité — du code plus ancien parle encore de `white`/`yellow`/`light`.
      Ils suivent maintenant le style choisi : ne PAS les utiliser dans du code neuf. */

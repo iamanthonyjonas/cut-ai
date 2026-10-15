@@ -82,7 +82,7 @@ On monte celle-ci.
 ```
 
 **Pour cette première vidéo, le monteur fait tout, sans te poser de questions** : coupes,
-sous-titres, animations, bruitages, avec des réglages de base (habillage noir et blanc, **ta
+sous-titres, animations, bruitages, avec des réglages de base (habillage sombre et orange, **ta
 vidéo reste en couleur**). Ça prend un moment : tu peux faire autre chose en attendant.
 
 Ensuite vient le **débrief** : tu regardes ta vidéo et tu lui dis tout ce que tu aurais fait
@@ -170,7 +170,7 @@ finissent par la marque du client.
 **Mes vidéos vont ressembler à celles des autres utilisateurs ?**
 Non, et le système est construit pour l'empêcher. **Aucune couleur de marque n'est livrée** : les
 couleurs, les polices et l'allure des sous-titres sont générées depuis ton `/setup`, et le style
-de départ est volontairement en noir et blanc : beau, mais neutre, et il te le rappelle. Ce qui
+de départ est volontairement en sombre et orange : beau, mais neutre, et il te le rappelle. Ce qui
 est partagé, c'est la **méthode** : le rythme des coupes, le découpage des sous-titres, les safe
 zones Instagram, les règles de motion. Ça, c'est ce que tu es venu chercher. Le reste est à toi.
 
