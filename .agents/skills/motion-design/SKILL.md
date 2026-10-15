@@ -107,6 +107,7 @@ config. **Aucun hex n'est cité ici : il n'y a pas de « bonne » couleur, il y 
 | Texte            | `--brand-text`      | `visual.text`     | Texte principal. Lisible sur le fond, clair OU sombre.         |
 | Muted            | `--brand-muted`     | dérivée           | Texte secondaire / métadonnées.                                |
 | **Accent**       | `--brand-accent`    | `visual.accent`   | L'accent unique. Hooks, mots-clés, chiffres, CTA.              |
+| **Secondaire**   | `--brand-accent-2`  | `visual.accent2`  | Appui : 2e série d'un graphique, filets, labels. Sans elle = texte. Jamais sur l'élément de l'accent. |
 | Sur l'accent     | `--brand-contrast`  | dérivée           | Ce qu'on pose SUR un aplat d'accent (calculé pour le contraste).|
 | Contour          | `--brand-stroke`    | dérivée           | Contour de lisibilité (sous-titres, gros titres).              |
 

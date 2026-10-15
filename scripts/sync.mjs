@@ -193,6 +193,7 @@ function generateTokensCss(style, presetsFile) {
     VISUAL_TEXT: v.text,
     VISUAL_MUTED: v.muted,
     VISUAL_ACCENT: v.accent,
+    VISUAL_ACCENT2: /^#[0-9a-fA-F]{6}$/.test(v.accent2 || "") ? v.accent2 : v.text,
     VISUAL_CONTRAST: v.contrast,
     VISUAL_STROKE: v.stroke,
     FONT_DISPLAY: v.fontDisplay,

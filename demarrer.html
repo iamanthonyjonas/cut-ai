@@ -92,7 +92,7 @@ textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
 .pv-mini .m { position: absolute; left: 8px; right: 8px; top: 8px; height: 30%; border-radius: 6px; }
 .pv-mini .f { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: linear-gradient(180deg,#8d7b66,#5b4d3d); }
 .pv-mini .c { position: absolute; left: 6px; right: 6px; top: 52%; text-align: center; font-weight: 800; font-size: 10px; line-height: 1.1; }
-.pv-mini .c span { padding: 1px 4px; }
+.pv-mini .c span { padding: 1px 4px; } .pv-mini .c.block span, .pv-mini .c.plate span { box-shadow: 0 0 0 1px rgba(0,0,0,.3); }
 .pv-mini .c.block span { background: var(--q-a); color: var(--q-b); }
 .pv-mini .c.outline span, .pv-mini .c.soft span { color: var(--q-t); text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
 .pv-mini .c.plate span { background: rgba(0,0,0,.62); color: #fff; border-radius: 5px; }
@@ -180,6 +180,9 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
     <div class="cards" id="skins"></div>
     <label class="f" style="margin-top:22px">Ta couleur (facultatif)</label>
     <div class="cards" id="colors"></div>
+    <label class="f" style="margin-top:22px">Ta couleur secondaire (facultatif)</label>
+    <p class="note" style="margin:0 0 6px">Pour les éléments d'appui : deuxième courbe, filets, petits labels. Les propositions vont avec ta couleur principale.</p>
+    <div class="cards" id="colors2"></div>
     <label class="f" style="margin-top:22px">Tes polices (facultatif)</label>
     <label class="f">Titres et animations</label><div class="cards" id="fontsD"></div>
     <label class="f">Sous-titres</label><div class="cards" id="fontsC"></div>
@@ -280,7 +283,7 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
 const PRESETS = [{"id":"cut","label":"Cut (le style de départ)","short":"Fond noir, accent orange, sous-titres en bandeau orange","bg":"#0f0f10","surface":"#1b1b1d","text":"#ffffff","accent":"#FF4B0F","skin":"block"},{"id":"neutral","label":"Papier","short":"Fond blanc cassé, texte noir, aucune couleur","bg":"#f7f7f5","surface":"#e8e8e4","text":"#131313","accent":"#131313","skin":"block"},{"id":"midnight","label":"Minuit","short":"Bleu nuit profond, accent bleu clair lumineux","bg":"#0d1220","surface":"#182036","text":"#ffffff","accent":"#58a6ff","skin":"outline"},{"id":"pulse","label":"Pulse","short":"Presque noir, accent magenta électrique","bg":"#121012","surface":"#1e1a1e","text":"#ffffff","accent":"#ff2e7e","skin":"block"},{"id":"forest","label":"Forêt","short":"Vert très sombre, accent vert clair","bg":"#0f1e18","surface":"#172c23","text":"#ffffff","accent":"#6ee7a8","skin":"shadow"},{"id":"ink","label":"Encre","short":"Fond papier clair, texte noir, accent rouge","bg":"#f2efe6","surface":"#e3ded0","text":"#141210","accent":"#d7263d","skin":"underline"},{"id":"mono","label":"Mono","short":"Noir et blanc strict, zéro couleur","bg":"#101010","surface":"#1c1c1c","text":"#ffffff","accent":"#ffffff","skin":"outline"}];
 const SKINS = {"block":"Bloc plein : fond dans la couleur d'accent, texte dans la couleur de fond, angle","outline":"Texte seul avec un gros contour sombre, sans fond","plate":"Plaque sombre arrondie, légèrement translucide, texte clair","shadow":"Texte clair avec une ombre portée dure décalée dans l'accent","underline":"Texte clair souligné d'une barre pleine dans l'accent","soft":"Texte clair sans fond, ombre douce et diffuse (style éditorial / Apple)"};
 const $ = (s) => document.querySelector(s);
-const state = { preset: "cut", skin: "block", layouts: ["split"], accent: null, fontDisplay: null, fontCaptions: null, ctas: ["keyword-dm"], mode: "script", music: "aucune" };
+const state = { preset: "cut", skin: "block", layouts: ["split"], accent: null, accent2: null, fontDisplay: null, fontCaptions: null, ctas: ["keyword-dm"], mode: "script", music: "aucune" };
 const FIELDS = ["scripts", "firstName", "handle", "name", "language", "niche", "keyword", "dmTool", "topic"];
 const SKIN_LABEL = { soft: "Doux", block: "Bloc", outline: "Contour", plate: "Plaque", shadow: "Ombre", underline: "Souligné" };
 
@@ -304,15 +307,25 @@ function buildCards() {
 const FONTS_D = [["", "Celle du style"], ["Anton", "Anton"], ["ArchivoBlack", "Archivo Black"], ["Inter", "Inter"], ["Teachers", "Teachers"]];
 const FONTS_C = FONTS_D.filter((f) => f[0] !== "Teachers");
 const COLORS = [["", "Celle du style"], ["#FF4B0F", "Orange"], ["#FFB300", "Jaune"], ["#2EC27E", "Vert"], ["#58A6FF", "Bleu"], ["#7C5CFF", "Violet"], ["#FF2E7E", "Rose"], ["#E5E5E5", "Blanc"]];
-function miniPv(p, acc, fc) { return `<div class="pv-mini" style="background:${p.bg};--q-a:${acc};--q-b:${p.bg};--q-t:${p.text}"><div class="m" style="background:${p.surface}"><i style="display:block;height:6px;width:70%;margin:8px;border-radius:3px;background:${acc}"></i></div><div class="f"></div><div class="c ${state.skin}" ${fc ? `style="font-family:'${fc}',Inter,sans-serif"` : ""}><span>Ta phrase forte</span></div></div>`; }
+function miniPv(p, acc, fc, acc2) { return `<div class="pv-mini" style="background:${p.bg};--q-a:${acc};--q-b:${p.bg};--q-t:${p.text}"><div class="m" style="background:${p.surface}"><i style="display:block;height:6px;width:70%;margin:8px 8px 4px;border-radius:3px;background:${acc};box-shadow:0 0 0 1px rgba(0,0,0,.3)"></i>${acc2 ? `<i style="display:block;height:4px;width:45%;margin:0 8px;border-radius:2px;background:${acc2};box-shadow:0 0 0 1px rgba(0,0,0,.3)"></i>` : ""}</div><div class="f"></div><div class="c ${state.skin}" ${fc ? `style="font-family:'${fc}',Inter,sans-serif"` : ""}><span>Ta phrase forte</span></div></div>`; }
 function buildColors() {
   const p = PRESETS.find((x) => x.id === state.preset);
   const cur = (state.accent || "").toLowerCase();
-  $("#colors").innerHTML = COLORS.map(([c, n]) => `<button type="button" class="opt" data-c="${c}" aria-pressed="${c ? cur === c.toLowerCase() : !state.accent}">${miniPv(p, c || p.accent)}<b>${n}</b></button>`).join("")
+  $("#colors").innerHTML = COLORS.map(([c, n]) => `<button type="button" class="opt" data-c="${c}" aria-pressed="${c ? cur === c.toLowerCase() : !state.accent}">${miniPv(p, c || p.accent, null, state.accent2)}<b>${n}</b></button>`).join("")
     + `<div class="opt" style="cursor:default"><div class="pv-mini" style="display:grid;place-items:center;background:var(--surface)"><input type="color" id="colorPick" value="${state.accent || p.accent}" aria-label="Autre couleur" style="width:60px;height:60px"></div><b>Ta couleur</b><input type="text" id="colorHex" placeholder="#FF4B0F" value="${state.accent || ""}" style="margin-top:6px;padding:8px 10px;font-size:14px"></div>`;
-  $("#colors").querySelectorAll("button.opt").forEach((b) => b.addEventListener("click", () => { state.accent = b.dataset.c || null; refresh(); buildColors(); }));
-  $("#colorPick").addEventListener("input", (e) => { state.accent = e.target.value.toUpperCase(); $("#colorHex").value = state.accent; refresh(); });
-  $("#colorHex").addEventListener("input", (e) => { const v = e.target.value.trim(); if (/^#[0-9a-fA-F]{6}$/.test(v)) { state.accent = v.toUpperCase(); refresh(); } else if (v === "") { state.accent = null; refresh(); } });
+  $("#colors").querySelectorAll("button.opt").forEach((b) => b.addEventListener("click", () => { state.accent = b.dataset.c || null; refresh(); buildColors(); buildColors2(); }));
+  $("#colorPick").addEventListener("input", (e) => { state.accent = e.target.value.toUpperCase(); $("#colorHex").value = state.accent; refresh(); buildColors2(); });
+  $("#colorHex").addEventListener("input", (e) => { const v = e.target.value.trim(); if (/^#[0-9a-fA-F]{6}$/.test(v)) { state.accent = v.toUpperCase(); refresh(); buildColors2(); } else if (v === "") { state.accent = null; refresh(); } });
+}
+function hsl(hex) { const n = parseInt(hex.slice(1), 16), r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; let h = 0, s = 0; if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; } return [h, s, l]; }
+function toHex(h, s, l) { h = ((h % 360) + 360) % 360; const a = s * Math.min(l, 1 - l), f = (n) => { const k = (n + h / 30) % 12; return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))).toString(16).padStart(2, "0"); }; return ("#" + f(0) + f(8) + f(4)).toUpperCase(); }
+function buildColors2() {
+  const p = PRESETS.find((x) => x.id === state.preset), base = state.accent || p.accent, [h, s, l] = hsl(base);
+  const dark = hsl(p.bg)[2] < .5;
+  const list = [["", "Aucune", null], ["#F5F5F2", "Blanc cassé", "#F5F5F2"], ["#1A1A1A", "Noir doux", "#1A1A1A"], ["c", "Complémentaire", toHex(h + 180, Math.min(s, .8), dark ? Math.max(l, .55) : Math.min(l, .45))], ["a1", "Voisine", toHex(h + 30, Math.min(s, .85), l)], ["a2", "Voisine froide", toHex(h - 40, Math.min(s, .7), dark ? Math.max(l, .6) : Math.min(l, .45))], ["g", "Gris", dark ? "#9A9AA0" : "#6B6B70"]];
+  const cur = (state.accent2 || "").toLowerCase();
+  $("#colors2").innerHTML = list.map(([k, n, c]) => `<button type="button" class="opt" data-c="${c || ""}" aria-pressed="${c ? cur === c.toLowerCase() : !state.accent2}">${miniPv(p, base, null, c)}<b>${n}</b></button>`).join("");
+  $("#colors2").querySelectorAll("button.opt").forEach((b) => b.addEventListener("click", () => { state.accent2 = b.dataset.c || null; refresh(); buildColors2(); }));
 }
 function buildFonts() {
   const card = (id, list, key) => { $("#" + id).innerHTML = list.map(([v, n]) => `<button type="button" class="opt" data-f="${v}" aria-pressed="${(state[key] || "") === v}"><div class="pv-mini" style="display:grid;place-items:center;background:var(--surface-2);font-family:'${v || "Inter"}',Inter,sans-serif;font-size:26px;font-weight:900;color:var(--ink)">Aa Ta phrase</div><b>${n}</b></button>`).join("");
@@ -334,7 +347,7 @@ function pick(groupId, key, multi) {
       if (key === "preset") state.skin = PRESETS.find((p) => p.id === v).skin;
     }
     refresh();
-    if (key === "preset" || key === "skin") buildColors();
+    if (key === "preset" || key === "skin") { buildColors(); buildColors2(); }
   });
 }
 
@@ -352,6 +365,7 @@ function refresh() {
   ph.style.setProperty("--p-fd", `"${fd}", Inter, sans-serif`); ph.style.setProperty("--p-fc", `"${fc}", Inter, sans-serif`);
   const m = $("#pMotion"), f = $("#pFace"), c = $("#pCap");
   m.style.background = p.surface;
+  const b3 = m.querySelectorAll(".bar")[2]; if (b3) { b3.style.background = state.accent2 || ""; b3.style.opacity = state.accent2 ? 1 : ""; }
   if (state.layouts.includes("split")) { m.style.top = "78px"; m.style.height = "36%"; f.style.top = "52%"; f.style.height = "48%"; c.style.top = "50%"; c.style.transform = "translateY(-50%)"; }
   else { m.style.top = "78px"; m.style.height = "22%"; f.style.top = "0"; f.style.height = "100%"; c.style.top = "66%"; c.style.transform = "none"; }
   c.className = "cap " + state.skin;
@@ -388,7 +402,7 @@ function build() {
   const data = {
     version: 1,
     brand: { firstName: $("#firstName").value.trim() || null, name: $("#name").value.trim() || null, handle: h || null, niche: $("#niche").value.trim() || null, language: $("#language").value },
-    visual: { stylePreset: state.preset, captionsSkin: state.skin, accent: state.accent, fontDisplay: state.fontDisplay, fontCaptions: state.fontCaptions },
+    visual: { stylePreset: state.preset, captionsSkin: state.skin, accent: state.accent, accent2: state.accent2, fontDisplay: state.fontDisplay, fontCaptions: state.fontCaptions },
     montage: { defaultLayout: state.layouts.includes("split") ? "split" : "faceplein", layouts: state.layouts },
     cta: { types: state.ctas, defaultKeyword: state.ctas.includes("keyword-dm") ? kw : null, dmTool: state.ctas.includes("keyword-dm") ? $("#dmTool").value : null },
     audio: { musique: state.music },
@@ -397,7 +411,7 @@ function build() {
   return "CUTAI-REGLAGES v1\n" + JSON.stringify(data, null, 2);
 }
 
-buildCards(); load(); buildColors(); buildFonts();
+buildCards(); load(); buildColors(); buildColors2(); buildFonts();
 pick("presets", "preset"); pick("skins", "skin"); pick("layouts", "layouts", true); pick("ctas", "ctas", true); pick("modes", "mode"); pick("music", "music");
 FIELDS.forEach((k) => $("#" + k).addEventListener("input", refresh));
 $("#copy").addEventListener("click", async () => {

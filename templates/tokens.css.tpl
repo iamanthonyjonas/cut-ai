@@ -19,6 +19,7 @@
   --brand-text: {{VISUAL_TEXT}};        /* Texte principal, lisible sur le fond.       */
   --brand-muted: {{VISUAL_MUTED}};      /* Texte secondaire / métadonnées.             */
   --brand-accent: {{VISUAL_ACCENT}};    /* Accent unique. Jamais décoratif.            */
+  --brand-accent-2: {{VISUAL_ACCENT2}}; /* Couleur secondaire : éléments d'appui (2e série, labels, filets). Jamais sur le même élément que l'accent. */
   --brand-contrast: {{VISUAL_CONTRAST}};/* Couleur lisible POSÉE SUR l'accent.         */
   --brand-stroke: {{VISUAL_STROKE}};    /* Contour de lisibilité (sous-titres, titres).*/
   --brand-surface-contrast: {{VISUAL_SURFACE_CONTRAST}}; /* Surface qui tranche (rare).*/
