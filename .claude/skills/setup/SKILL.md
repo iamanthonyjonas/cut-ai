@@ -23,9 +23,11 @@ description: >-
 ## Ton message à l'ouverture de la page (à dire, à adapter, jamais en jargon)
 
 **Interdit dans ce message :** « bloc », « CUTAI-REGLAGES », « config », « JSON », un nom de fichier ou de
-commande, « fichier », « appliquer », et toute phrase sur ce que tu as vérifié ou créé. Pour lire l'état
-sans afficher d'échec, utilise des commandes qui ne plantent pas (`test -f brand.config.json && echo oui || echo non`).
-Crée la configuration en silence ; ne la mentionne pas. Puis ouvre la page et écris, dans la langue du client :
+commande, « fichier », « appliquer », et toute phrase sur ce que tu as vérifié ou créé. **Aucune commande qui peut échouer** : le client voit « Échec » en rouge. N'inspecte rien avant
+d'ouvrir la page (pas de `grep`, pas de `test` qui renvoie une erreur). Fais UNE seule commande, qui
+finit toujours par `; true` : Mac `[ -f brand.config.json ] || cp brand.config.example.json brand.config.json; open demarrer.html; true`,
+Linux même chose avec `xdg-open`, Windows (PowerShell) `if (-not (Test-Path brand.config.json)) { Copy-Item brand.config.example.json brand.config.json }; start demarrer.html`.
+Ne mentionne ni la configuration ni cette commande. Puis écris, dans la langue du client :
 
 > Ta page de réglages vient de s'ouvrir dans ton navigateur. C'est ton atelier : tu y choisis le look de
 > tes Reels, un peu comme tu choisirais la déco d'une pièce.
