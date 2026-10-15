@@ -1,0 +1,90 @@
+# Le repo versionne le CERVEAU du système (skills, design system, tools, templates),
+# jamais les médias ni ce qui est propre à TON installation.
+
+# Personnalisation locale (générée par /setup — propre à chaque utilisateur)
+brand.config.json
+# Clés d'API (HEYGEN_API_KEY…) : jamais versionnées
+.env
+
+# Design system GÉNÉRÉ depuis templates/*.tpl + brand.config.json (npm run sync).
+# Versionner ces fichiers reviendrait à livrer l'identité visuelle de quelqu'un d'autre
+# comme réglage d'usine : c'est exactement ce qu'on ne veut pas.
+brand/tokens.css
+brand/fonts.css
+brand/fonts/
+
+# Exports finaux (régénérés par ffmpeg depuis les compositions)
+renders/*
+!renders/.gitkeep
+
+# Rushes, proxys et médias bruts
+assets/video/*
+!assets/video/.gitkeep
+# Placeholder de démo (remplacé par TON dérush à la première vidéo)
+!assets/video/base.mp4
+assets/music/*
+!assets/music/.gitkeep
+!assets/music/README.md
+assets/sfx/*
+!assets/sfx/.gitkeep
+!assets/sfx/README.md
+# Pack de démarrage livré (SFX générés, libres de droits) — versionné, ça marche hors-ligne.
+# Tes propres SFX déposés à la racine de assets/sfx/ restent, eux, ignorés (droits d'auteur).
+!assets/sfx/starter/
+
+# Médias du dérush : on garde timeline.json / *_cuts.json (contrat d'interface),
+# on jette vidéos/audio
+derush/**/*.mp4
+derush/**/*.mov
+derush/**/*.mp3
+derush/**/*.wav
+derush/**/*.m4a
+
+# Fichiers de travail temporaires
+work/*
+!work/.gitkeep
+
+# Dossier de test jetable pour snapshoter une sous-compo isolée (cf. motion-design).
+# Il contient un HTML racine : versionné, il casserait le lint (multiple_root_compositions).
+probe/
+
+# Caches générés par le studio HyperFrames
+.thumbnails/
+.waveform-cache/
+snapshots/
+
+# Système
+.DS_Store
+node_modules/
+*.log
+__pycache__/
+
+# Reels (un Reel = un projet, dans reels/<nom>/) : le montage est suivi (index.html, compositions/,
+# coupes, outils du Reel, style), pas les médias lourds ni les copies régénérées ou sous licence :
+# sons posés (copies de la bibliothèque, Pack SFX compris), polices, GSAP, instructions générées.
+reels/*/assets/video/*
+reels/*/derush/**/*.mp4
+reels/*/derush/**/*.mov
+reels/*/derush/**/*.mp3
+reels/*/derush/**/*.wav
+reels/*/derush/**/*.m4a
+reels/*/exports/
+reels/*/renders/
+reels/*/work/
+reels/*/snapshots/
+reels/*/probe/
+reels/*/.thumbnails/
+reels/*/.waveform-cache/
+reels/*/.hyperframes/
+reels/*/.transcode-cache/
+reels/*/assets/sons/
+reels/*/assets/heygen/
+reels/*/assets/vendor/
+reels/*/brand/fonts/
+reels/*/CLAUDE.md
+reels/*/AGENTS.md
+
+.sauvegarde-mise-a-jour-*/
+
+# Page générée par tools/dashboard.py (liste de tes Reels)
+dashboard.html

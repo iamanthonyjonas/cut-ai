@@ -1,0 +1,161 @@
+# Sous-titres (caption layer)
+
+> Lu quand des sous-titres sont à produire. Le découpage se décide **par unité grammaticale**, pas par
+> largeur : lire ce fichier AVANT d'écrire le moindre chunk.
+
+## Apparence : ne rien décider, tout hériter
+
+**Tu n'écris JAMAIS le style d'un sous-titre.** Police, couleurs, fond, contour, arrondi : tout est
+déjà résolu dans `brand/tokens.css` (généré depuis `brand.config.json` + le preset de style). Une
+compo de sous-titres charge `brand/fonts.css` + `brand/tokens.css`, pose `class="cap"`, et c'est
+tout.
+
+- Police : `visual.fontCaptions` · Apparence : `visual.captionsSkin`, parmi **5 skins** —
+  `block` (fond plein dans l'accent), `outline` (contour, sans fond), `plate` (plaque arrondie),
+  `shadow` (ombre portée), `underline` (souligné). Description de chacun dans `captionSkins` de
+  `templates/style-presets.json`.
+- Nombre de lignes : `visual.captionsLines` (défaut 1) · Taille : `--brand-cap-size` = `visual.captionsSize` (défaut 50 px ; `montage_captions.py` mesure la largeur à cette taille).
+- Pour **essayer** un autre skin sur une seule compo : ajouter `cap-skin-<nom>` à un `.cap`.
+  Pour **changer le défaut** de toutes les vidéos : `/setup visuel`, jamais une règle CSS en dur.
+
+⛔ **Un `background`, une `color` ou un `font-family` écrit en dur dans une compo de sous-titres est
+un bug**, pas un raccourci : il survit au changement de style et fait sortir la vidéo suivante avec
+l'apparence de la précédente. Si le créateur veut modifier l'allure de ses sous-titres, la réponse
+est `/setup visuel` ou un nouveau skin, jamais un patch local.
+
+---
+
+## Mot-clé en emphase
+
+Dans `MANUAL` de `tools/montage_captions.py`, `*mot*` passe le mot en italique dans la police
+d'emphase (`visual.fontCaptionsEmphasis`, règle `.cap em` de `brand/tokens.css`). Un mot-clé par
+chunk au plus, et pas sur chaque chunk : le nom, le chiffre ou le verbe qui porte la phrase.
+
+## Découpage (c'est ça, la méthode — et elle, elle est commune)
+
+**Découpage — RÈGLES DÉTERMINISTES** (depuis `transcript.json`, mesurer la largeur avec
+`PIL.ImageFont.truetype` sur le vrai TTF pour garantir 1 ligne ; corriger les mots propres à ta niche
+mal transcrits) :
+1. **Jamais de ponctuation de fin affichée** : retirer `. , ; : ! ?` du texte affiché.
+2. **Jamais à cheval sur 2 phrases** : un `. ! ?` ferme TOUJOURS le sous-titre courant ; la phrase
+   suivante repart sur un nouveau sous-titre (même si ça fait 1-2 mots).
+3. **Blocs insécables** gardés ensemble : noms propres composés, nombres composés (`30 000`).
+4. **Couper à une frontière logique** — bons points de coupe (priorité) : (a) après une **virgule** ;
+   (b) **avant un connecteur** qui démarre une nouvelle bribe : conjonctions (`et mais ou donc car puis
+   ensuite alors comme`), subordonnants/relatifs (`qui que qu' dont où quand si parce`), prépositions
+   de tête (`à au aux dans sur avec pour par en vers chez sans sous entre`), pronoms sujets (`il elle on
+   ils elles ça ce je tu nous vous`), `voire`, `certains`. Prendre le **1er bon point** une fois ≥2
+   mots → chunks plus courts et variés (2-4 mots). ⚠️ **Exception : « de »/« à » qui suivent un verbe**
+   (périphrase : « vient **de** donner », « prêt **à** copier », « en train **de** ») **ne sont PAS des
+   points de coupe** — ils appartiennent au groupe verbal, ne jamais démarrer un sous-titre dessus.
+5. **Ne JAMAIS finir un sous-titre sur un mot faible** (il s'accroche au suivant) :
+   articles/déterminants (`le la les un une des du de d' l' mon ma ses…`), prépositions (`à de en dans
+   sur avec pour par sans…`), conjonctions (`et ou mais donc car que qui dont`), formes élidées
+   (`qu' d' l' j' n'…`), **nombres** (s'accrochent au nom : « deux minutes », « 30 000 personnes »). Si
+   la coupe forcée (taille/largeur) tombe sur un mot faible, reculer d'un mot.
+6. **Taille** : **viser 2-3 tokens** par sous-titre (défaut idéal — plus granulaire que ce que l'algo
+   tend à produire) ; **max 4** seulement si ça reste court ET cohérent ; largeur **≤ 900 px** (la
+   limite que `tools/montage_captions.py` applique, à la taille de sous-titres du style) →
+   **jamais de débordement**.
+
+**Découpage par UNITÉ GRAMMATICALE — le nerf de la guerre.** Chaque sous-titre = **UNE unité qui se
+tient**. `tools/montage_captions.py` produit un **premier jet légal en largeur mais SANS conscience
+grammaticale** (il empile 2-3 mots gloutonnement) → le découpage **FINAL se décide par unité
+grammaticale**, à revoir **avant de livrer**. Règles (par ordre de force) :
+
+1. **Nom + adjectif = insécable.** Ne JAMAIS orpheliner l'adjectif de son nom, ni le coller à la phrase
+   suivante. « prompts secrets », « documentation officielle » restent ensemble.
+2. **Groupe verbal = insécable**, y compris les **périphrases** : ne pas couper entre le
+   (semi-)auxiliaire et son infinitif/participe. « vient de te donner », « est déjà écrit », « prêt à
+   copier-coller », « en train de », « commence à » = un seul bloc.
+3. **Ne JAMAIS fusionner la fin d'une unité avec le début de la suivante** : « secretsˇpour Claude
+   Code », « écritˇprêt à » = interdits. En cas de conflit, re-couper **à la frontière** entre les deux
+   unités.
+4. **Trop large pour garder l'unité entière → ISOLER le mot seul**, jamais le coller à un voisin
+   étranger. « tous ces prompts secrets » trop long → « tous ces prompts » / « secrets » / « pour
+   Claude Code » (un adjectif ou un mot fort seul = OK, ça donne même du rythme).
+5. **Un nom / sujet peut rester SEUL** pour l'emphase (« Anthropic », « ABSOLUMENT », « RESTAURER »).
+6. **Adjectif/adverbe de CHUTE isolé = OK et FRÉQUENT** (rythme + emphase). Le créateur isole souvent
+   **le dernier mot qui porte l'accent** : « OFFICIELLE », « VRAIMENT », « SIMPLEMENT ». Donc « ils ont
+   partagé ça » · « **dans leur documentation** » · « **officielle** » (et NON « dans leur » ·
+   « documentation officielle »). ⇒ La **règle 1** (nom+adjectif ensemble) est le **défaut**, mais elle
+   **cède** quand l'adjectif final porte l'accent → on l'isole. En cas de doute, isoler le mot fort.
+7. **En cas de doute : couper plus court.** Chunks courts/variés (souvent 2-3 mots) = lisent mieux,
+   collent mieux à la voix, ne débordent jamais.
+8. **Caler sur l'audio réel** + corriger les mots mal transcrits (homophones propres à ta niche).
+
+**Exemple de référence CANONIQUE — un découpage COMPLET dicté mot-à-mot par le créateur. C'est LE
+modèle de rythme à reproduire** (exemple générique, niche IA) :
+
+| Voix off | ✅ Cible (dictée par le créateur) |
+|---|---|
+| Anthropic vient de te donner tous ses prompts secrets pour Claude Code, et c'est gratuit | `ANTHROPIC` · `VIENT DE TE DONNER` · `TOUS SES PROMPTS SECRETS` · `POUR CLAUDE CODE` · `ET C'EST GRATUIT` |
+| Ils ont partagé ça dans leur documentation officielle | `ILS ONT PARTAGÉ ÇA` · `DANS LEUR DOCUMENTATION` · `OFFICIELLE` |
+| En gros, tu copies la bonne phrase, tu la colles, et il sait exactement quoi faire | `EN GROS` · `TU COPIES` · `LA BONNE PHRASE` · `TU LA COLLES` · `ET IL` · `SAIT EXACTEMENT` · `QUOI FAIRE` |
+| C'est de découvrir des demandes que t'aurais jamais pensé à faire | `C'EST DE DÉCOUVRIR` · `DES DEMANDES` · `QUE T'AURAIS` · `JAMAIS PENSÉ` · `À FAIRE` |
+| Si tu veux le lien, commente CODE et je te l'envoie directement en DM | `SI TU VEUX LE 🔗` · `COMMENTE CODE` · `ET JE TE L'ENVOIE` · `DIRECTEMENT EN DM` |
+
+> Le découpage COMPLET d'un Reel vit dans `tools/montage_captions.py` (liste **`MANUAL`**, un chunk par
+> sous-titre par clip). Le rythme : **fin (2-3 mots)**, connecteurs qui démarrent, mots forts /
+> adjectifs de chute isolés, groupes grammaticaux intacts, jamais plus de 900 px de large.
+
+**⚠️ MÉTA-RÈGLE — le découpage final est l'OREILLE du créateur.** Les règles 1-8 donnent un bon
+brouillon, mais **toujours PROPOSER le découpage au créateur et implémenter SES chunks exacts** via la
+liste `MANUAL` de `tools/montage_captions.py` — plus fiable que n'importe quel algo.
+`tools/montage_captions.py` ne fait que le **timing + la largeur + le section-aware** ; le
+**groupement = dicté/validé par le créateur**. Une fois qu'il dicte, coller au mot près.
+
+**⚠️ RÈGLE SYSTÉMATIQUE — SOUS-TITRES SECTION-AWARE (cause d'un bug récurrent)** :
+Un sous-titre est **LIÉ à une séquence visuelle**. Le générateur **DOIT connaître les frontières des
+sections** (les `data-start` du master) et, **automatiquement** (pas en override manuel) :
+1. **Aucun sous-titre ne DÉBORDE d'une section** : à chaque frontière de section, le sous-titre le plus
+   proche **démarre PILE sur la frontière** (snap), et le précédent **finit PILE dessus**. Sinon le
+   dernier sous-titre d'une section « bave » sur la section suivante.
+2. **La hauteur `y` vient de la SECTION**, pas d'une plage de temps bricolée. Valeurs par défaut
+   (`visual.captionsPosition`) : split → **920** (jointure), plein-écran VISAGE → **1140**, plein-écran
+   MOTION/IMAGES → **1500**. Un sous-titre prend le `y` de la section qui contient son `start`.
+
+Pourquoi le bug arrivait : le timing des sous-titres était interpolé **dans les clips** (dérush), en
+ignorant les **sections** (montage). Or clips ≠ sections (une section = souvent un sous-ensemble d'un
+clip). Implémentation de réf : `tools/montage_captions.py` → liste `SECTIONS = [(start, y), …]`, snap
+des starts sur `BOUNDS`, `y_for(start)` par section. **Garder `SECTIONS` synchro avec les `data-start`
+du master** (= `derush/<cut>_cuts.json`).
+
+Timing = continu (chaque caption jusqu'au start du suivant, sauf override). Répartir sur
+`data-track-index = idx%4` (sinon erreurs `overlapping_clips_same_track` quand end==next.start). Donner
+un `id="cap-N"` à chaque (sinon warning `studio_missing_editable_id` + non éditable dans le studio).
+
+**Position (règle quasi immuable — défauts `visual.captionsPosition`)** :
+- **Split-screen** → sous-titre **pile à la jointure** (centre `y=920`).
+- **Plein écran VISAGE** → sous-titre **à ~59 %** (`y≈1140`, un peu sous le centre ; « plus bas » = %
+  plus GRAND).
+- **Plein écran MOTION / IMAGES** → **plus bas** (centre `y≈1500`), sous le visuel pour ne pas le couvrir.
+- **Plein écran B-ROLL** (une vidéo filmée qui occupe tout le cadre) → **`y≈1100`**, juste SOUS
+  le milieu. À 1500 le sous-titre tombe sur le bas de l'image, souvent la zone inutile
+  (bureau, clavier, décor). Géré par `Y_MEDIA` dans `tools/sections.py`.
+
+**Implémentation** : compo dédiée `compositions/captions.html` (fond transparent, un
+`<div class="cap clip" id="cap-N">` par sous-titre, positionné par `top:Ypx` — le reste du
+positionnement vient de `.cap` dans `tokens.css`). Branchée 2 fois :
+- dans le master `index.html` comme overlay (track-index élevé) **+ `brand/fonts.css` et
+  `brand/tokens.css` dans le head du master** → visible/éditable dans le studio ;
+- et rendue avec tout le montage par l'export natif (bouton Export de l'app, `npm run render`).
+  Ancien export : elle part dans le calque `work/overlay.mov` (`tools/build_overlay.py`).
+
+**Mot « lien » dans un CTA** → interdit (shadowban) : utiliser l'emoji `cta.linkEmoji` (défaut 🔗).
+**⚠️ TIMING — sur les VRAIS MOTS, jamais au prorata du texte.**
+Par défaut `tools/montage_captions.py` répartit chaque phrase **proportionnellement au nombre de
+caractères** de ses chunks. Ça DÉRIVE : les premiers durent trop et tous les suivants arrivent en
+retard (mesuré sur un hook de 3,7 s : jusqu'à **+0,35 s**). Ça s'entend — « le sous-titre arrive
+un peu après ma voix » — sans qu'on sache le nommer.
+→ Lancer **une fois** `python3 tools/build_words.py` : il transcrit le cut **mot à mot**
+(whisper-cli `-ml 1 -sow`, **prise par prise** — sur le fichier entier ce mode hallucine) et écrit
+`derush/<video>_words.json`. `montage_captions.py` le détecte tout seul et cale chaque sous-titre
+sur **son 1er mot** (alignement `difflib`, robuste aux variantes « 4 »/« quatre »).
+
+**⚠️ SNAP aux frontières — les DEUX bords.** Snapper le début ne suffit pas : sans borner la
+**durée** à `section.end`, le dernier sous-titre d'une section reste affiché ~0,5 s **sur la
+section suivante** (il « bave » sur le plan d'après — très visible quand on passe du split au
+plein écran).
+
+Détail dans `references/patterns.md`.

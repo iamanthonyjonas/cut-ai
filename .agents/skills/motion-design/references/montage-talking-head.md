@@ -1,0 +1,235 @@
+# Montage talking-head — format, master, visage, export
+
+## 0. ⛔ Les frontières de section viennent des VRAIES COUPES (bug récurrent)
+
+**Symptôme** : au passage plein-écran → split, on voit ~0,2 s de la **fin de la prise précédente**
+(le créateur regarde ailleurs, il n'a pas encore attaqué sa phrase).
+
+**Cause** : les `data-start` du master avaient été pris dans le **`timeline.json` Whisper**. Or
+(a) Whisper démarre un segment **0,1–0,25 s trop tôt** (il englobe le souffle qui précède la voix),
+et (b) le `concat` ffmpeg du dérush arrondit chaque prise à la frame → les bornes réelles du fichier
+sont **~+0,07 s** (jusqu'à +0,12 s en fin de timeline) après les bornes théoriques. La fenêtre du
+visage s'ouvrait donc **avant le jump-cut**.
+
+**Règle** :
+- Les `data-start` / `data-duration` des sections, les **fenêtres du visage** et les **bornes de
+  phrase des sous-titres** viennent **TOUS** de **`derush/<cut>_cuts.json`** (les jump-cuts mesurés
+  dans le fichier livré — cf skill `derush` §7bis). **Jamais** de Whisper, jamais d'une valeur tapée à
+  la main.
+- **Une seule source, lue par les 3 générateurs** (sous-comps, master, sous-titres) : sinon ils se
+  désynchronisent. Réf : `tools/sections.py` + `tools/build_master.py` (le master est **généré**, plus
+  édité à la main).
+- En cas de doute sur une frontière, **arrondir vers le TARD** : quelques frames de motion en trop
+  sont invisibles, quelques frames du visage d'avant se voient tout de suite.
+
+## 0bis. ⛔ Le RENDER injecte toutes les sous-comps dans UN SEUL document
+
+Le **studio** monte chaque sous-composition dans **son propre iframe** → tout y semble parfait. Le
+**render**, lui, **injecte le DOM et le CSS de TOUTES les sous-comps dans un document unique**. Deux
+conséquences invisibles en preview, qui peuvent ruiner un export complet :
+
+**a) Le CSS des sous-comps est GLOBAL.**
+- ❌ **Jamais de `html, body { height: 920px }`** dans une sous-comp : le 920 d'un split écrase le
+  1920 des plein-écrans → **le calque entier est rogné à 920 px**. Mettre `html, body { width:100%;
+  height:100% }` et porter la taille sur **la racine scopée**.
+- ❌ **Jamais de sélecteur nu** (`#panel`, `.item`, `#win`) : il touche les autres sections. **Tout
+  scoper** sous la racine : `#<composition-id> .panel { … }`, et les id internes deviennent des
+  **classes** (un id doit rester unique dans le document unique).
+- ❌ **Jamais de sélecteur GSAP nu** : `tl.from("#win", …)` attrape le `#win` d'**une autre** section.
+  Toujours `tl.from("#<composition-id> .win", …)`.
+- ❌ **Jamais de `const`/`let` au top-level** d'un script de sous-comp (portée globale partagée) →
+  envelopper la timeline dans une **IIFE**.
+
+**b) Les `<script>` des sous-comps ne sont montés QUE si le master les référence par un chemin qui
+NE REMONTE PAS.** Avec `data-composition-src="../compositions/x.html"` (master hors racine), le
+runtime monte le DOM + le CSS mais **PAS les scripts** : **aucune timeline ne tourne**, tout reste
+figé à l'état CSS initial — et **le studio n'en montre rien**.
+→ **Le calque d'export (master sans le visage) doit vivre À LA RACINE**, à côté d'`index.html`, et
+référencer `compositions/…` à l'identique. Deux HTML racines = erreur de lint
+`multiple_root_compositions` → on l'**écrit, on rend, puis on le supprime** (cf `tools/build_overlay.py --render`).
+
+**Contrôle obligatoire avant de livrer** : `npm run check` ne voit RIEN de tout ça (il valide la
+structure, pas la vidéo rendue). Lancer **`python3 tools/check_export.py`** sur la vidéo exportée :
+il vérifie (A) l'opacité du calque section par section et (B) que les timelines tournent vraiment
+(un élément posé à `opacity:0` par GSAP doit être invisible au début de sa section).
+
+## 0ter. Les 5 pièges SILENCIEUX de la composition par couches
+
+> Aucun n'est détecté par le lint, et certains ne se voient QUE dans le studio (le rendu final,
+> lui, peut être correct). Réflexe : **lire la console du navigateur AVANT de deviner** — elle
+> nomme le problème en quelques secondes.
+
+**a) Un B-ROLL ne va JAMAIS dans une sous-composition.**
+Dans une sous-comp, le `data-start="0"` d'une `<video>` est relatif à la compo, mais le
+**runtime média le lit en ABSOLU** → la vidéo s'affiche **dès 0 s**, sur toute la timeline, et
+**recouvre les autres sections**. Symptôme : « une vidéo figée au début du reel, et mes autres
+sections sont noires ».
+→ Le b-roll est une `<video>` **dans le master**, sans `class="clip"` (comme le `<video>` visage),
+avec des `data-start` **absolus**. Déclare-le dans `tools/sections.py` :
+`("s3-demo", "full", [3], {"media": "demo-broll-v1.mp4"})`. Bonus : il reste en couche native et
+c'est ffmpeg qui le composite, au lieu du render HyperFrames qui le rasteriserait.
+
+**b) Les `<script src>` d'une sous-comp NE SONT PAS chargés en composition par couches.**
+Une lib tierce (three.js, un plugin GSAP) référencée dans une sous-comp reste `undefined` quand
+le master monte les couches → le panneau sort **vide**. → La charger dans le **`<head>` du master**.
+La garder aussi dans la sous-comp si tu veux pouvoir la snapshoter isolément.
+
+**c) `tl.seek()` SUPPRIME les callbacks GSAP.**
+Le studio déplace la tête de lecture avec `seek()` → un `onUpdate` qui redessine un canvas
+(2D ou WebGL) **n'est jamais appelé en preview**, alors qu'il l'est au render. Panneau vide dans
+le studio, correct dans l'export.
+→ Doubler l'`onUpdate` d'un `gsap.ticker.add()` qui redessine quand `tl.time()` a changé. Sans
+risque **si et seulement si** la fonction de dessin est **analytique** (l'image ne dépend que de `t`).
+
+**d) `tl.to([sel1, sel2], …)` n'est PAS résolu dans une sous-comp.**
+Un tween visant plusieurs sélecteurs d'un coup est **silencieusement ignoré** (console :
+`GSAP target … not found`) : l'élément qui devait disparaître reste à l'écran, la couleur qui
+devait changer ne change pas.
+→ **UN SEUL sélecteur (chaîne) par tween.** Répéter l'appel autant de fois que nécessaire.
+
+**e) Un `<script type="application/json">` d'une sous-comp n'est pas monté.**
+`getElementById(...).textContent` → `null`. → Mettre les données en **littéral JS** dans le script.
+
+**Bonus canvas / WebGL** : `new THREE.WebGLRenderer({ …, preserveDrawingBuffer: true })` est
+**obligatoire**, sinon le buffer est vidé avant que le capteur de frames lise le canvas →
+**snapshot et render tout noirs**. Et fixer `setPixelRatio(2)` en dur (jamais
+`window.devicePixelRatio`, qui varie d'une machine à l'autre et casse le déterminisme).
+
+**Bonus lint** : pas de commentaire HTML entre deux `<script src>` du `<head>` — le lint le parse
+comme du script inline (`invalid_inline_script_syntax`).
+
+**Bonus snapshot** : `hyperframes snapshot` prend un **DOSSIER**, pas un fichier. Pour snapshoter
+une sous-comp isolée : un dossier `probe/` avec `index.html` = copie de la compo **+ un symlink
+`probe/assets` et un symlink `probe/brand`** (sans eux les chemins `assets/…` et `brand/…` partent en 404), puis **supprimer
+`probe/`** (deux compositions racines = erreur de lint).
+
+## 1. La règle de format (le défaut vient de la config)
+
+Le cadrage de départ vient de `brand.config.json` → `montage.defaultLayout` (posé par le preset
+de style, ajustable au bloc F du setup). Deux valeurs :
+
+- **`"split"`** : chaque section démarre en **split-screen** —
+  motion design en HAUT (**1080×920**), **visage en BAS**. Le cadrage du visage = `montage.splitTransform`.
+- **`"faceplein"`** : chaque section démarre **visage en plein écran** (**1080×1920**, `.face-full`,
+  cadrage = `montage.fullFaceTransform`), et le motion/les visuels se posent **PAR-DESSUS** le visage
+  en **surimpression `background: transparent`** (jamais un panneau opaque qui coupe l'écran). On voit
+  le créateur en continu ; les animations flottent près de sa tête.
+
+**Dans les deux cas, le créateur dirige section par section** — il peut passer n'importe quelle
+section en : visage plein écran seul, visuel/motion plein écran seul (recouvre le visage), ou split.
+Formats techniques de section : `1080×920` (split) ou `1080×1920` (full). On commence TOUT sur le
+`defaultLayout` choisi, puis on ajuste au fil des retours.
+
+> Ancien nom : `montage.splitByDefault` (booléen) a été remplacé par `montage.defaultLayout`. Si tu
+> lis un vieux config avec `splitByDefault: true`, traite-le comme `defaultLayout: "split"`.
+
+## 2. Master natif `index.html` (les pièges)
+
+- 1080×1920, `data-duration` = durée vidéo. **Charger `brand/fonts.css` + `brand/tokens.css` dans le
+  `<head>` du master** — SINON les `var(--brand-*)` et les polices des sous-comps **ne se résolvent
+  pas** dans la composition par couches (→ couleurs noires au lieu de l'accent, police par défaut).
+  Diag : une couleur en dur (le temps du test) s'affiche, mais `var(--brand-accent)` non.
+- `<audio src="assets/video/base.mp4" data-volume="1" data-start="0" data-duration="DUREE" data-track-index="9">` = voix off (toute la durée).
+- Sections via `data-composition-src` avec **style explicite `width/height/overflow`** (sinon la
+  sous-compo se rend en plein écran et recouvre tout). Split → host `1080×920` `top:0` ; full → host
+  `1080×1920` `top:0`.
+- La **vidéo du visage** = surface plein cadre + `clip-path`/`transform` (pattern OBLIGATOIRE
+  ci-dessous, contre le bug du carré noir → `references/visage-carre-noir.md`). **SANS `class="clip"`**
+  ; `data-start`/`data-duration` couvrent SEULEMENT la/les fenêtre(s) split (sinon elle déborde sur
+  les sections full). `.face-bottom` ET `.face-full` en `background: transparent`.
+- **⚠️ ORDRE DOM = LAYERING (pas le track-index)** : le `.face-full` (plein-écran VISAGE) doit être
+  **APRÈS toutes les sections** dans le DOM, sinon une section (même hors de sa fenêtre) peut
+  **peindre par-dessus** le plein-écran → on voit la section au lieu du visage. Ordre correct :
+  **`sections` < `.face-full` < `captions`**. Et **mettre `class="clip"` sur chaque host de section
+  `data-composition-src`** (visibilité gérée par le framework ; sans ça un host peut « rester peint »).
+- **Piège animation vs placement studio** : quand on repositionne un élément dans le studio, ça ajoute
+  la propriété CSS **`translate`** (individuelle) sur l'élément. Si l'animation GSAP d'entrée joue
+  aussi sur la **position** (`y`/`x`), les deux se combinent → petit **glissement/décalage** à
+  l'apparition. Solution : pour les entrées, animer **uniquement `opacity` + `scale`** (qui composent
+  proprement avec `translate`), PAS `x/y`. L'élément apparaît alors pile où il a été placé.
+
+## 3. Placement du visage en split-screen — PATTERN OBLIGATOIRE
+
+> Si le panneau visage apparaît NOIR dans le studio → `references/visage-carre-noir.md` (diagnostic
+> Mode A / Mode B).
+
+**Le cadrage du visage (transform CSS du split ET crop ffmpeg de l'export) se lit dans
+`brand.config.json` → `montage.splitTransform` et `montage.faceCrop`** (calibrés par `/setup` selon
+la caméra et la distance de tournage). Les valeurs ci-dessous sont un **exemple par défaut** (caméra
+type DJI Osmo Pocket 3, cadrage habituel) — reprendre la STRUCTURE, remplacer les nombres par ceux de
+la config.
+
+**Reprendre la STRUCTURE telle quelle — mais JAMAIS les nombres.** Les valeurs de `transform`
+ci-dessous décrivent une caméra et une distance de tournage précises : recopiées sans calibration,
+elles donnent le cadrage de quelqu'un d'autre. Elles se lisent dans `montage.splitTransform` /
+`montage.fullFaceTransform`, calibrés par `/setup technique`.
+
+```css
+/* Wrapper plein cadre, clippé à la moitié basse (clip en espace écran, wrapper non transformé) */
+.face-bottom { position:absolute; inset:0; overflow:hidden; background:transparent; clip-path: inset(920px 0 0 0); }
+/* Vidéo = SURFACE PLEIN CADRE ; cadrage du visage via transform = montage.splitTransform */
+.face-bottom video { position:absolute; inset:0; width:1080px; height:1920px; object-fit:cover;
+  transform-origin:0 0; transform: translate(-216px, 410px) scale(1.40); }
+/* Plein-écran VISAGE : fond TRANSPARENT obligatoire + léger zoom sur la tête.
+   transform = paint-only, la box reste plein cadre. */
+.face-full { position:absolute; inset:0; overflow:hidden; background:transparent; }
+.face-full video { position:absolute; inset:0; width:1080px; height:1920px; object-fit:cover;
+  transform: scale(2); transform-origin: center 35%; }
+```
+**Plein écran VISAGE** (quand une section entière = juste le visage en grand, ex. « pattern break ») :
+utiliser `.face-full` (surface plein cadre, fond transparent) avec un **zoom serré sur la tête**
+(exemple `transform: scale(2); transform-origin: center 35%` — le visage est ainsi HAUT, les
+sous-titres passent dessous ; **`transform-origin` % plus GRAND = visage plus HAUT**, ajuster selon la
+vidéo) — et **sous-titres à ~59 % (`y≈1140`, sous le centre)** (cf `references/sous-titres.md`). Le
+`<video>` plein cadre n'a PAS le bug du split (il est déjà plein cadre).
+
+Les `<video>` visage : **SANS `class="clip"`** (le framework gère leur visibilité via les data-attrs ;
+ne jamais animer width/height/top/left d'une `<video>`), `src="assets/video/base.mp4"` (la même source
+que la voix off, jamais un fichier séparé → ne se compose pas), `data-start`/`data-duration`/`data-media-start`/`data-track-index`
+(track au-dessus des sections).
+
+**Ajustement du cadrage = UNIQUEMENT via `transform`** : `scale` = zoom · **2e valeur de `translate`**
+= hauteur (plus petit = plus haut) · 1re valeur = horizontal. ⚠️ **NE PAS dragger/resizer la vidéo dans
+le studio** (repositionne la surface → re-déclenche le carré noir). Une fois calé, reporter les valeurs
+dans `montage.splitTransform`.
+
+**Correspondance transform ↔ crop (indispensable à `/setup` et à l'export)** : le crop de `base.mp4`
+qui CORRESPOND au transform de l'exemple = **`crop=771:714:154:364,scale=1080:1000`** (overlay à `0:920`
+sur les fenêtres split). **Formule générale** : pour `transform: translate(Tx, Ty) scale(S)`, la zone
+source visible est `src_x = (0 .. 1080 - Tx) / S`, `src_y = (920 - Ty .. 1920 - Ty) / S` →
+`crop=w:h:x:y` puis `scale=1080:1000`. C'est ce crop qui est stocké dans `montage.faceCrop`. Si le
+transform change, recalculer le crop avec cette formule.
+
+### 3bis. Le format `face` — visage plein écran
+
+Une section peut valoir `"face"` dans `tools/sections.py` : **le visage seul, en grand, sans aucun
+motion** (pas de `compositions/<id>.html` à créer). C'est le pattern « pattern break » : on enlève
+tout le décor pour revenir sur la personne, une phrase, puis on repart.
+
+- Cadrage : `montage.fullFaceTransform` (+ `montage.fullFaceOrigin`), calibrés par `/setup`.
+  Zoom modéré sur la tête ; **un `transform-origin` en % plus GRAND = visage plus HAUT**.
+- `build_master.py` pose ces `<video>` **après** les sections (l'ordre DOM fait le layering) dans
+  un wrapper `.face-full` à **fond transparent** — un fond opaque redéclenche le carré noir.
+- Sous-titre : **`Y_FACE = 1140`**, un peu SOUS le centre. Au centre il tomberait sur la bouche.
+
+## 4. Export final natif (bouton Export de l'app, ou `npm run render`)
+
+Le rendu HyperFrames ramollissait le visage parce que le master **agrandissait** `base.mp4`, une copie
+réduite en 1080 (zoom ×1,4 environ). Ce n'était pas le moteur de rendu : posée à l'échelle 1, une
+vidéo sort aussi nette qu'en ffmpeg (mesuré sur un rush DJI 1728×3072, SSIM 0,976 contre 0,982).
+Donc :
+- **`python3 tools/build_faces.py`**, après tout dérush ou changement de cadrage : il pré-cadre le
+  visage **dans le dérush pleine résolution** (même zone que l'ancien export, calculée par
+  `tools/cadrage.py` depuis `montage.splitTransform` / `fullFaceTransform`, `transform-origin`
+  compris) et écrit `assets/video/visage-split.mp4` et `visage-plein.mp4` (1080×1920). La première
+  ligne dit d'où vient le visage ; un « ⚠️ visage moins net » donne la raison du repli sur `base.mp4`.
+- **`python3 tools/build_master.py --write`** pose alors ces vidéos **sans aucun transform** (surface
+  plein cadre + `clip-path`, la forme anti carré noir), les sons déjà posés sont gardés.
+- **Export** : dans l'app HyperFrames, bouton **Export** (MP4 1080p 30 im/s, dans Téléchargements) ;
+  ailleurs `npm run render` (`exports/FINAL.mp4`). Puis `python3 tools/check_export.py [fichier]`.
+- Un crop retrouvé à la main reste la source d'erreur n°1 : ne jamais l'écrire soi-même.
+
+**Secours, ancien export ffmpeg** (si l'export natif déraille) : `python3 tools/build_overlay.py
+--render` (calque motion + sous-titres en `work/overlay.mov`), `python3 tools/build_final.py`
+(composite le visage relu dans le dérush, `exports/FINAL.mp4`), puis `python3 tools/build_sfx.py
+--ffmpeg` (SFX et musique remixés, `exports/FINAL_SFX_MUSIC.mp4`). Même cadrage, via `tools/cadrage.py`.

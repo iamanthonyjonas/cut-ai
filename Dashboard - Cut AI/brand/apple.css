@@ -1,0 +1,24 @@
+/* Habillage « Apple » des animations (cf. skill motion-design,
+   references/style-apple.md). Copié tel quel dans brand/apple.css par scripts/sync.mjs.
+   Aucune couleur en dur : tout dérive des tokens de marque (--brand-text = blanc, --brand-bg =
+   quasi-noir, --brand-accent = l'accent) par color-mix. Police = celle du corps (Inter). */
+:root {
+  --ap-ink: color-mix(in srgb, var(--brand-bg) 94%, var(--brand-text));       /* texte principal */
+  --ap-ink-2: color-mix(in srgb, var(--brand-bg) 52%, var(--brand-text));     /* texte secondaire */
+  --ap-ink-3: color-mix(in srgb, var(--brand-bg) 30%, var(--brand-text));     /* tertiaire */
+  --ap-fill: color-mix(in srgb, var(--brand-bg) 5%, var(--brand-text));       /* gris système clair */
+  --ap-line: color-mix(in srgb, var(--brand-bg) 9%, transparent);
+  --ap-bg-top: var(--brand-text);
+  --ap-bg-bot: color-mix(in srgb, var(--brand-bg) 7%, var(--brand-text));
+  --ap-shadow: 0 1px 2px color-mix(in srgb, var(--brand-bg) 6%, transparent),
+               0 12px 28px color-mix(in srgb, var(--brand-bg) 7%, transparent),
+               0 40px 90px color-mix(in srgb, var(--brand-bg) 12%, transparent);
+  --ap-font: var(--brand-font-body), system-ui, sans-serif;
+}
+/* Fond du panneau : blanc qui glisse vers un gris très léger. */
+.ap-bg { position:absolute; inset:0; background:linear-gradient(180deg, var(--ap-bg-top) 0%, var(--ap-bg-bot) 100%); }
+/* Ombre de sol diffuse, reculée en 3D (sinon elle traverse les cartes inclinées). */
+.ap-floor { position:absolute; left:140px; right:140px; bottom:70px; height:90px; border-radius:50%;
+  background:color-mix(in srgb, var(--brand-bg) 14%, transparent); filter:blur(40px); transform:translateZ(-400px) scale(1.3); }
+/* Carte / fenêtre blanche, bord fin, ombre douce en trois couches. */
+.ap-card { background:var(--brand-text); border:1px solid var(--ap-line); box-shadow:var(--ap-shadow); }

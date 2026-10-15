@@ -1,0 +1,617 @@
+---
+name: motion-design
+description: >-
+  Motion design et montage vidéo pour la marque du créateur (Reels, Stories,
+  TikTok, YouTube) : design system de marque + workflow HyperFrames. Use when: creating a
+  composition, a clip or a motion graphic for the brand; monter une vidéo talking-head (split-screen,
+  sections, export final ffmpeg); générer les sous-titres; poser les SFX et la musique. Entrée : un
+  cut validé et la timeline.json produite par le skill derush.
+---
+<!-- Copie générée — éditer .claude/skills/motion-design/ puis npm run sync -->
+
+# Motion Design System (marque du créateur)
+
+Identité visuelle de la marque pour tout contenu vidéo / motion
+design. Format-agnostique : 1080×1920 (Reels/Stories), 1920×1080 (YouTube), 1080×1080 (clips
+intégrables), 4K.
+
+Toutes les valeurs d'identité (couleurs, polices, skin de sous-titres, offre) se lisent dans
+`brand.config.json` (blocs `visual`, `cta`, `audio`) et vivent dans **`brand/tokens.css`**, qui est
+**généré** (`npm run sync`) depuis cette config et le preset de style choisi.
+
+⛔ **Aucune couleur, police ou taille en dur dans une compo.** Toujours `var(--brand-*)`. Un hex en
+dur survit au changement de style : la vidéo suivante sortira avec l'apparence de la précédente.
+Les tokens : `--brand-bg` · `--brand-surface` · `--brand-surface-contrast` · `--brand-text` ·
+`--brand-muted` · `--brand-accent` · `--brand-contrast` (à poser SUR l'accent) · `--brand-stroke`
+(contour de lisibilité) · `--brand-negative` (dataviz seulement).
+`--brand-white` / `--brand-yellow` sont des **alias historiques** de `--brand-text` /
+`--brand-accent` : ne pas les employer dans du code neuf, leur nom ment dès que le style n'est ni
+sombre ni jaune.
+
+**Références (chargées à la demande, selon la branche) :**
+
+| Condition observable | Fichier |
+|---|---|
+| **`visual.motionStyle = "apple"`** (le style Apple : écran partagé blanc, vraies interfaces, 3D douce, zooms, sous-titres à mot-clé italique) | `references/style-apple.md` (**à lire avant toute compo**) |
+| Premier montage, style Papier ou référence de qualité à appliquer | `references/premier-montage.md` |
+| Vidéo talking-head à monter (split-screen, master, visage, export final) | `references/montage-talking-head.md` |
+| Panneau visage NOIR dans le studio | `references/visage-carre-noir.md` |
+| Vidéo source HDR (`color_transfer` = `arib-std-b67` ou `smpte2084`) | `references/transcodage-video.md` |
+| Sous-titres à produire | `references/sous-titres.md` |
+| SFX / musique (UNIQUEMENT après validation du montage par le créateur ; première vidéo : d'une traite) | `references/sfx-musique.md` |
+| Section CTA « commente un mot-clé », ou image qui zoome (Ken Burns) | `references/patterns.md` |
+| Police display statique de la marque | `references/coluna-statique.md` |
+| Projet Remotion (legacy) | `references/remotion.md` |
+
+---
+
+## 0. Principe fondateur — MOTION FIRST, ZÉRO REDONDANCE TEXTE
+
+**La règle absolue du motion design de la marque :**
+
+> **Pas de gros texte. Pas de hook textuel. Pas de mot cinématique. Pas de titre plein écran.**
+> Le motion design est 100% visuel : schémas, icônes, animations, flows, dataviz, comparaisons.
+
+**Pourquoi :** le créateur parle déjà en voiceover, et des sous-titres sont ajoutés à l'étape de
+montage. Tout gros texte affiché devient triplement redondant (voix + sous-titres + overlay). Le
+motion design doit **ajouter** une couche d'info, pas redire.
+
+**Question à se poser avant chaque section** :
+> "Comment je rends cette idée **visuelle** au lieu de la dire en gros texte ?"
+
+### Petits labels = OK / Gros textes = NON
+
+| ✅ Autorisé                                                  | ❌ Interdit                                          |
+|--------------------------------------------------------------|-----------------------------------------------------|
+| Labels de colonnes en display body UPPERCASE (22-36 px)      | Hooks plein écran type "Y VOIR CLAIR" (150+ px)    |
+| Tags catégoriels courts ("GRATUIT", "3× / SEMAINE")          | Phrases écrites qui reprennent la voix off          |
+| Chiffres / valeurs dans un schéma                            | Mots cinématiques ("PUISSANT", "RÉVOLUTIONNAIRE")  |
+| Numérotation / étapes ("1", "2", "3")                        | Tout titre centré en grosse police display          |
+| Mots-clés intégrés à un visuel (label sur un bloc)           | Texte qui résume le contenu parlé                   |
+
+### Conséquence pour les polices
+
+- **Une seule famille body partout** (`visual.fontBody`) pour les labels du motion.
+- **Pas de police display en motion.** Le body porte tout, hooks compris (en graisse Black). La
+  police display (`visual.fontDisplay`) est réservée aux formats statiques
+  (`references/coluna-statique.md`) : en vidéo, elle n'a aucune utilité (pas de gros pavé de texte).
+- **Mono** : seulement pour des prompts/terminaux/code affichés.
+
+---
+
+## 1. Identité de marque
+
+Tout vient de `brand.config.json` :
+
+- **Compte** : `brand.name`
+- **Handle** : `brand.handle`
+- **Auteur signataire** : `brand.firstName`
+- **Niche / positionnement** : `brand.niche`. Ton direct et factuel, voix de « pote qui te
+  dit ce qui marche vraiment ». Pas de corporate speak.
+- **Assets perso** : `assets/images/avatar.png`, `assets/images/portrait.png` du dossier Cut AI
+  (rangés par le setup ; à copier dans `assets/images/` du Reel qui les utilise), pour les
+  lower-thirds intro/outro.
+
+---
+
+## 2. Palette de couleurs
+
+Source de vérité = `brand/tokens.css` (variables `--brand-*`), **généré** depuis `visual.*` de la
+config. **Aucun hex n'est cité ici : il n'y a pas de « bonne » couleur, il y a la sienne.**
+
+| Rôle             | Variable            | Source            | Usage                                                          |
+|------------------|---------------------|-------------------|----------------------------------------------------------------|
+| Background       | `--brand-bg`        | `visual.bg`       | Fond principal. **JAMAIS noir pur** (ça bave à l'écran).       |
+| Surface          | `--brand-surface`   | `visual.surface`  | Cartes / blocs surélevés sur le fond.                          |
+| Surface contrast | `--brand-surface-contrast` | dérivée    | Surface qui tranche avec le fond (rare).                       |
+| Texte            | `--brand-text`      | `visual.text`     | Texte principal. Lisible sur le fond, clair OU sombre.         |
+| Muted            | `--brand-muted`     | dérivée           | Texte secondaire / métadonnées.                                |
+| **Accent**       | `--brand-accent`    | `visual.accent`   | L'accent unique. Hooks, mots-clés, chiffres, CTA.              |
+| Sur l'accent     | `--brand-contrast`  | dérivée           | Ce qu'on pose SUR un aplat d'accent (calculé pour le contraste).|
+| Contour          | `--brand-stroke`    | dérivée           | Contour de lisibilité (sous-titres, gros titres).              |
+
+Les valeurs « dérivée » sont calculées par `scripts/sync.mjs` à partir du fond, du texte et de
+l'accent (ratios WCAG) : ne jamais les demander à l'utilisateur, ni les écrire à la main.
+
+### Règles d'usage des couleurs (principes de méthode — conservés)
+
+- **L'accent n'est jamais décoratif.** Il ancre une info : un chiffre, une entité nommée, un mot-clé,
+  un résultat surprenant, un CTA. Si tu colories une phrase entière en accent, tu as raté la hiérarchie.
+- **Maximum un accent par "moment visuel"** (un plan, un slide, un titre).
+- L'accent est **plat, mat, brut** : aplat pur, jamais de gradient.
+- L'accent s'applique **en texte brut sur fond sombre** : pas de pills translucides à bord, pas de
+  cards à bord accent pour des labels.
+- **Le fond est toujours `var(--brand-bg)`.** Le contour de titre passe par `var(--brand-stroke)`,
+  jamais par un noir écrit en dur (il devient illisible sur un style à fond clair).
+
+### Couleurs autorisées
+
+- Palette de marque ci-dessus, **en aplats**, plus l'opacité 10% du ghost number (§6).
+- Bleu / rouge / vert **uniquement en data visualisation explicite** : graphique, indicateur up/down.
+- L'image reste **telle quelle** : pas de dégradé multi-couleurs, pas de filtre Instagram-style, pas
+  de translucide.
+
+---
+
+## 3. Typographies
+
+### Polices (entièrement issues de `visual.fontBody` / `fontDisplay` / `fontCaptions`)
+
+```
+Body     → var(--brand-font-body)  (la police du créateur, déclarée dans brand/fonts.css)
+            Usage : TOUS les textes. Hooks, sous-titres, paragraphes, lower-thirds, captions.
+
+Mono     → var(--brand-font-mono)  (Courier New / ui-monospace — technique, pas identitaire)
+            Usage : code, prompts, terminaux, valeurs techniques.
+```
+
+**Le body (`visual.fontBody`) est la seule police du motion.** Pas de police display en vidéo : un
+hook géant, c'est le body en graisse Black. (La display `visual.fontDisplay` reste réservée aux
+formats STATIQUES : sa spéc est dans `references/coluna-statique.md`, ne l'utilise pas en motion.)
+
+### Le body — le corps
+
+- **Body par défaut** : Regular (400). **Pas Light** (trop fin sur fond sombre).
+- **Emphase forte** : Black (900), dans la même phrase. Outil principal pour donner des ancres à l'œil.
+- **Emphase douce** : Regular Italic. Pour parenthèses, apartés, nuances.
+- **Sous-titres / section titles** : Black, 10-20 px au-dessus du corps.
+- **Slide number / numérotation** : SemiBold (600), 20 px, blanc.
+- **Lower-third / handle vidéo** : SemiBold pour le nom, Regular pour le handle.
+
+### Hiérarchie typographique de référence
+
+| Élément                          | Graisse        | Taille (1080×1350)         | Couleur          |
+|----------------------------------|----------------|----------------------------|------------------|
+| Hook géant / mot cinématique     | Black 900      | 90–150 px (line-height 0.9)| Blanc + accent   |
+| Sous-titre / section title       | Black 900      | 50 px (line-height 62)     | Blanc            |
+| Body paragraphe                  | Regular 400    | 40 px (line-height 55)     | Blanc            |
+| Body emphase forte (1-3 mots)    | Black 900      | 40 px                      | Blanc ou accent  |
+| Body emphase douce               | Regular italic | 40 px                      | Blanc            |
+| Métadonnée / numérotation        | SemiBold 600   | 20 px                      | Blanc            |
+| Ghost number (déco)              | Bold 700       | 180 px                     | Blanc 10% op.    |
+
+**Adaptation aux formats vidéo** :
+- 1080×1920 (Reels/Stories) → **multiplier les tailles par ≈1.4**
+- 1080×1080 (square clips intégrables) → tailles de référence
+- 4K → ×2
+
+### Règles d'emphase dans le corps (le détail clé)
+
+1. Tu écris en **Regular**.
+2. Dans chaque phrase, tu mets **1 à 3 mots en Black** pour donner des ancres à l'œil. **Pas 5, pas
+   une phrase entière.**
+3. **L'italique** sert aux apartés, nuances, citations courtes. Sparingly.
+4. **L'accent** sert à **un seul élément par bloc** : le chiffre, le nom propre, le mot-clé.
+
+### Familles et traitements autorisés
+
+- **Tout est sans serif.** Pas de serif (Times, Georgia, Playfair), pas de "fun" / handwritten /
+  script, pas de police display en motion.
+- **Casse** : casse normale. L'UPPERCASE reste un effet ponctuel (un mot), pas un mode de titrage.
+- **Décorations** : aucune. Le soulignement existe dans un seul cas, l'underline accent sous un mot
+  (§6) ; pas de barré / strike-through décoratif.
+- **Tracking par défaut** (pas de letter-spacing élargi pour faire "stylé").
+
+---
+
+## 4. Règles motion (le cœur du skill)
+
+### Fond
+- **Toujours `var(--brand-bg)`**. Pas de fond blanc, sauf inversion intentionnelle pour un plan choc
+  (et préférer un blanc cassé même là).
+- Pour des **clips à intégrer dans un montage existant** : fond transparent OK si l'animation est
+  conçue pour s'intégrer dans une vidéo qui a déjà son fond.
+
+### Transitions
+- **Cut sec** (par défaut), **slide rapide** (200-300 ms), **fade très court**. Ces trois-là, et rien d'autre.
+
+### Apparition de texte
+- **Par mot ou par bloc**, jamais lettre par lettre.
+- Exception : effet "machine à écrire" pour un prompt mono (terminal).
+
+### Easing et durées — source unique = le JSON de tokens (§8)
+
+Les valeurs canoniques vivent dans `motion.easing` (`inOut`, `outExpo`) et `motion.duration`
+(`appearMs`, `holdHookMs`, `holdWordMs`, `slideTransitionMs`) du §8, exprimées en **ms**.
+Conversions : **secondes (HyperFrames) = ms ÷ 1000** · **frames @30 fps = ms × 30 ÷ 1000**.
+
+Plages et règles d'usage (ne figurent pas dans le JSON) :
+- **Apparition d'un élément** : 250-400 ms.
+- **Hold time pour un hook** : ≥ 1,2 s après apparition.
+- **Hold time pour le body** : ≈ 0,4 s par mot affiché.
+- **Mots en accent** : peuvent apparaître **après** les mots blancs (delay 100-200 ms) pour effet
+  d'accent — l'accent arrive en dernier, comme une révélation.
+- **Frame budget (à 30 fps)** : 250 ms = **7-8 frames** · 400 ms = **12 frames** · 1,2 s = **36
+  frames** · calcul précis `duration_ms * fps / 1000`.
+- Springs Remotion : `references/remotion.md`.
+
+---
+
+## 5. Lower-third / identité / safe areas
+
+### Lower-third (identité bas-gauche)
+- **Avatar** circulaire `assets/images/avatar.png` (copié dans le Reel), ≈ 76×85 px (×1.4 en 1080×1920).
+- **Texte sur 2 lignes** à droite de l'avatar :
+  - Ligne 1 : `brand.firstName` — SemiBold, blanc
+  - Ligne 2 : `brand.handle` — Regular, blanc ou muted `var(--brand-muted)`
+- **Position** : bottom-left, à 68 px du bord gauche (au-delà du minimum de 54 px, cf. safe areas).
+
+### Watermark / signature
+- Logo ou handle dans un coin, opacité 70-90%.
+
+### Safe areas — 1080×1920 (Reels/Stories/TikTok)
+
+Une seule table de vérité. Elle vaut pour le **contenu motion important** (texte, labels, schémas,
+éléments-clés), pas pour les médias : **vidéos, images et illustrations PEUVENT déborder** hors cadre
+(c'est souvent souhaitable). Ne JAMAIS rétrécir un média pour tenir dans la safe area.
+
+| Bord | Marge | Pourquoi |
+|---|---|---|
+| **Haut** | **150 px minimum** (idéalement 220 px) | Le plus critique : Instagram superpose le nom d'utilisateur + la photo de profil, ils CACHENT le contenu du haut. |
+| **Bas** | **380 px** | Caption, likes, commentaires. Le visage du talking-head y est OK. |
+| **Côtés** | **100 px** (54 px = plancher absolu) | **Instagram redimensionne/recadre les côtés selon l'appareil** → un élément posé à 54 px du bord se fait rogner. |
+
+En **split-screen**, le contenu motion du panneau HAUT doit démarrer à **y ≥ 150 px** (ne pas coller
+le haut du panneau).
+
+**Les côtés valent AUSSI en plein écran** : une carte / fenêtre / mockup plein écran se cadre à
+**~105 px des bords**, pas 54.
+
+⚠️ **Ghost number : JAMAIS collé au bord droit.** Le poser **en haut à droite du bloc** qu'il numérote
+(il peut passer **derrière** la carte et être partiellement recouvert — c'est le rendu voulu), à
+l'intérieur de la marge de 100 px. Collé au bord, il est le premier élément rogné par Instagram.
+
+✅ *Réflexe à chaque section (split ou plein écran)* : « un élément important est-il dans la bande
+haute (< 150 px), en bas (> 1540 px) ou à moins de **100 px** d'un bord latéral ? » → si oui, le
+décaler vers le centre.
+
+### Safe areas — 1080×1080 (clips square intégrables)
+- **Top/Bottom** : 68 px · **Left/Right** : 68 px · Zone safe : padding 68 px, zone utile 944×944.
+
+### 5.6 Remplissage fond flou (média qui ne remplit pas la zone)
+
+Dès qu'un **média affiché** (image OU vidéo), en **plein écran ou split-screen**, **ne remplit pas
+toute la zone** (il tient soit en largeur soit en hauteur → vide en haut/bas ou sur les côtés) :
+
+- ❌ **NE PAS cropper** pour forcer le remplissage (perte de contenu).
+- ❌ Pas de barres noires.
+- ✅ **Dupliquer le média en arrière-plan, beaucoup plus grand, flouté + légèrement assombri**, pour
+  combler tout le vide → petit effet « fond flou » (façon Reels/YouTube). Le média net reste entier,
+  centré, à sa taille pleine largeur (ou pleine hauteur).
+
+Recette ffmpeg : `[m]split[bg][fg]; [bg]scale=<plus grand que la zone>,crop=<zone>,gblur=sigma=26,eq=brightness=-0.06[bgb]; [fg]scale=<pleine largeur/hauteur>[fgs]; [bgb][fgs]overlay=(W-w)/2:(H-h)/2`.
+En CSS (compo HyperFrames) : un `<img>`/`<video>` de fond en `filter:blur(28px) brightness(0.9)`,
+`transform:scale(1.25)`, `object-fit:cover` sous le média net.
+Réflexe à chaque média d'une compo : « est-ce que ça remplit toute la zone ? » — si non → fond flou.
+
+---
+
+## 6. Patterns motion transposables (un CATALOGUE, pas une signature)
+
+> Ces patterns sont des options. Les poser tous, à chaque vidéo, dans le même ordre, c'est ce qui
+> rend deux comptes indistinguables. Avant d'en placer un : « est-ce que cette section en a besoin,
+> ou est-ce que je le mets parce qu'il est écrit ici ? »
+
+### Le "ghost number"
+- Grand chiffre décoratif, **Bold 180 px**, `var(--brand-text)` **à 10% d'opacité**, en haut à droite.
+- **Usage strict** : un ghost = une entrée d'énumération (raison 1, outil 2, étape 3).
+- Pas de ghost sur cover, intro, transition, synthèse, CTA.
+- En vidéo : repère visuel d'un chapitre/section, respecter "une entrée numérotée = un ghost".
+
+### L'underline d'accent
+- Texte en blanc, Black ~44 px.
+- Soulignement `var(--brand-accent)` épais (≈ 6 px) sous un mot-clé.
+- **En motion** : animer un trait accent qui se trace **de gauche à droite** sur 300-400 ms.
+
+### Le "circular cutout"
+- Cercle bordé (`var(--brand-text)`) contenant un logo, un visage, ou une preuve.
+- Posé sur une image principale comme focus visuel news-style.
+- En vidéo : overlay d'invité, citation d'auteur, mini-screenshot.
+
+### Le "speech bubble emoji"
+- Sur les CTA, un emoji 💬 à 100 px ajoute du volume.
+- En motion : marqueur visuel d'interactivité (commenter, DM).
+
+> Patterns de **section entière** (CTA « commente un mot-clé », image qui zoome / Ken Burns) : `references/patterns.md`.
+
+---
+
+## 7. Anti-slop pour les textes à l'écran
+
+Détail complet dans `design-system/writing-anti-slop.md`. Les overlays texte tombent souvent dans le
+slop IA. À éviter :
+
+### Mots à blacklister dans tout overlay
+crucial · fondamental · indéniablement · incontournable · primordial · révolutionnaire · fascinant · remarquable · formidable · considérablement · significativement · effectivement · notamment · ainsi (début de phrase) · en effet · certes · davantage · pléthore · paradigme · synergie · holistique · robuste · levier (abstrait) · optimiser (sauf technique) · catalyseur.
+
+### Expressions à bannir
+- "Dans le monde de..." / "Dans un monde où..." / "À l'ère de..."
+- "Il est important de noter que..."
+- "Ce n'est pas X. C'est Y." (formule IA surutilisée — montre le contraste autrement)
+- "La vraie question, c'est..."
+- "Saviez-vous que..." / "Vous êtes-vous déjà demandé..."
+- Hooks vagues (→ un chiffre, un nom propre, un contraste concret).
+- Règles de 3 forcées ("Plus rapide, plus simple, plus efficace").
+- Slogans corporate ("Libérez votre potentiel", "Transformez votre business").
+- Voiceover qui résume le visuel ("Comme vous pouvez le voir...").
+
+### Règles d'écriture pour overlays
+1. **Spécifique uniquement.** Chiffres précis, noms propres. Pas de couverture.
+2. **Zéro hedging.** Bannir : "pourrait", "potentiellement", "éventuellement", "peut-être".
+3. **Accents propres partout** (selon `brand.language`). Pas de "methode", "deja", "idee".
+4. **Pas de tirets longs (—)** dans les overlays. Virgules ou phrases courtes.
+5. **Tutoiement** par défaut.
+
+---
+
+## 8. Tokens techniques (à exporter dans chaque projet)
+
+**Schéma** des tokens, pas des valeurs : les couleurs et polices réelles se lisent dans
+`brand/tokens.css` (généré). Les seules valeurs en dur ci-dessous sont la **typographie** et le
+**motion** — elles relèvent de la méthode, pas de l'identité, et sont identiques pour tout le monde.
+
+```json
+{
+  "colors": {
+    "background": "<visual.bg>",
+    "surface": "<visual.surface>",
+    "surfaceContrast": "<dérivée>",
+    "text": "<visual.text>",
+    "muted": "<dérivée>",
+    "accent": "<visual.accent>",
+    "contrast": "<dérivée — à poser SUR l'accent>",
+    "stroke": "<dérivée — contour de lisibilité>"
+  },
+  "fonts": {
+    "body": "<visual.fontBody>, system-ui, sans-serif",
+    "captions": "<visual.fontCaptions>, sans-serif",
+    "mono": "Courier New, ui-monospace, monospace"
+  },
+  "typography": {
+    "cover":      { "family": "body", "weight": 900, "sizeMin": 90, "sizeMax": 150, "lineHeight": 0.9 },
+    "body":       { "family": "body", "weight": 400, "size": 40, "lineHeight": 55 },
+    "bodyStrong": { "family": "body", "weight": 900 },
+    "bodyItalic": { "family": "body", "weight": 400, "style": "italic" },
+    "subtitle":   { "family": "body", "weight": 900, "size": 50, "lineHeight": 62 }
+  },
+  "motion": {
+    "easing": {
+      "inOut":  "cubic-bezier(0.65, 0, 0.35, 1)",
+      "outExpo":"cubic-bezier(0.16, 1, 0.3, 1)"
+    },
+    "duration": {
+      "appearMs": 300,
+      "holdHookMs": 1200,
+      "holdWordMs": 400,
+      "slideTransitionMs": 250
+    }
+  },
+  "profile": {
+    "name": "<brand.firstName>",
+    "handle": "<brand.handle>"
+  }
+}
+```
+
+---
+
+## 9. Formats vidéo de référence
+
+| Format               | Dimensions  | Usage                              |
+|----------------------|-------------|------------------------------------|
+| Reel / Story / TikTok | 1080×1920  | Vertical, plein écran mobile       |
+| Square (clips intégrables) | 1080×1080 | Inserts dans un montage existant |
+| YouTube / horizontal | 1920×1080  | Vidéos longues, podcasts vidéo     |
+| Carrousel (référence statique) | 1080×1350 | Hors scope ce skill          |
+
+---
+
+## 10. Checklist anti-slop avant export motion
+
+- [ ] Le premier plan accroche en moins de **1,5 s** (chiffre, nom propre, contraste, ou question concrète).
+- [ ] Aucun mot/expression de la blacklist (§7) dans les overlays.
+- [ ] Accents propres partout (selon `brand.language`).
+- [ ] Pas de tirets longs (—) dans les overlays texte.
+- [ ] L'accent `var(--brand-accent)` est utilisé sur **1 mot/chiffre maximum par plan**.
+- [ ] Aucune police display : tout est en `var(--brand-font-body)`, hooks compris (graisse Black).
+- [ ] **Aucun hex, aucun nom de police écrit en dur** dans la compo : uniquement des `var(--brand-*)`.
+- [ ] Le corps est en Regular avec 1-3 mots en Black pour les ancres.
+- [ ] Le fond est `var(--brand-bg)`, pas du noir pur (ou transparent pour clip intégrable).
+- [ ] Aucun emoji décoratif sans utilité (pas de ✨ 🚀 💯 génériques). Si emoji : Apple/iOS style, 1-2 par moment max.
+- [ ] L'identité (handle, avatar) est visible **au moins une fois** dans la vidéo finale. Si
+  `brand.handle` et l'avatar (`assets/images/avatar.png` du dossier Cut AI) n'existent pas (cas d'une première vidéo), on saute
+  ce point : ne jamais afficher un marqueur `{{...}}` ni inventer un nom.
+- [ ] Easing utilisé est conforme (§4 / §8).
+
+---
+
+## 11. Usage avec HyperFrames (référence rapide)
+
+HyperFrames = HTML + CSS + GSAP, raisonnement en **secondes** (pas en frames). Le design system se
+branche via 4 fichiers dans **`brand/`** :
+
+- `brand/tokens.css` — **généré** : variables CSS (`--brand-bg`, `--brand-accent`, easings, durées,
+  safe areas, skins de sous-titres) +
+  classes utilitaires (`.brand-stage`, `.brand-surface`, `.brand-label`, `.brand-ghost`,
+  `.brand-underline`, `.brand-cutout`).
+- `brand/fonts.css` — **généré** : les `@font-face` locaux des polices du style (`assets/fonts/`).
+  **Jamais** de `@import` Google Fonts : appel réseau qui casse le rendu déterministe.
+- `brand/motion.js` — `window.BRAND.ease` (`inOut`/`outExpo` via CustomEase, fallback
+  `power2.inOut`/`expo.out`), `window.BRAND.dur` (secondes), helpers `drawStroke` / `traceUnderline`
+  / `enterFromLeft`.
+- `brand/atoms.html` — galerie de référence des atoms SVG.
+
+Brancher dans une composition :
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/CustomEase.min.js"></script>
+<link rel="stylesheet" href="brand/fonts.css" />
+<link rel="stylesheet" href="brand/tokens.css" />
+<!-- ... <script src="brand/motion.js"></script> avant la timeline -->
+```
+
+Easings : `BRAND.ease.outExpo` pour les entrées, `BRAND.ease.inOut` pour le standard. Durées :
+`BRAND.dur.appear` (0.3s), `BRAND.dur.slide` (0.25s), etc. — valeurs canoniques dans le JSON §8.
+
+Règles HyperFrames à respecter : tout élément timé porte `class="clip"` +
+`data-start`/`data-duration`/`data-track-index` ; une seule `gsap.timeline({paused:true})` enregistrée
+sur `window.__timelines["<composition-id>"]` ; logique déterministe (pas de
+`Date.now()`/`Math.random()`/fetch). Toujours `npm run check` après modification.
+
+**Fond transparent (overlay CapCut)** : `--format mov`/`webm`/`png-sequence` rendent automatiquement
+avec transparence ; `--format mp4` garde le fond `var(--brand-bg)`.
+
+### 11.1 Motion self-check : après toute modif d'animation
+
+`npm run check` valide la structure, pas le **mouvement**. Après avoir écrit ou modifié des
+animations (GSAP, CSS, Anime), prendre des images à des instants choisis (début, pendant l'entrée,
+fin de chaque animation), puis les regarder réellement :
+
+```bash
+npx hyperframes snapshot --at 0.3,1.2,2.5
+```
+
+- Chaque tween tombe sur le bon temps de la voix.
+- Un élément resté figé d'une image à l'autre = bug silencieux à corriger. La console du
+  navigateur signale aussi `GSAP target … not found`.
+- Toute motion non triviale (arc, stagger, pulse) : regarder la trajectoire sur plusieurs images
+  **avant** le rendu final.
+- Diagnostic détaillé des tweens : `npx hyperframes keyframes` (skill `hyperframes-keyframes`) ;
+  un sélecteur `__unresolved__` écrit en dur = même bug silencieux (un sélecteur construit dans le
+  script, comme `scope + ' .x'` de l'exemple livré, n'est pas lisible par l'outil : c'est normal).
+
+---
+
+## 12. PIPELINE « talking-head → motion overlay » (montage natif HyperFrames)
+
+**Déclencheur** : le créateur fournit une vidéo de lui qui parle (plein cadre vertical 1080×1920,
+format Reel). Objectif : ajouter du motion design par-dessus, **section par section**, et produire la
+vidéo finale montée — **prévisualisable en live dans le studio** (compo `index`).
+
+Les 7 étapes, dans l'ordre. Chaque étape n'est finie que quand son **critère** est vérifié.
+
+**Étape 1 — Sonder la source.**
+`ffprobe -v error -select_streams v:0 -show_entries stream=color_transfer,color_primaries,width,height,bit_rate -of default=noprint_wrappers=1 SRC` : dims, durée, audio, **espace couleur**.
+✅ *Critère* : les 5 valeurs (largeur, hauteur, durée, présence audio, `color_transfer`) sont connues et notées.
+
+**Étape 2 — Transcrire et découper en sections.**
+`whisper-cli --model <env.whisperModel> --language <derush.whisperLanguage>` (défaut modèle :
+`ggml-large-v3-turbo` ; défaut langue : celle de `brand.language`). Découper en sections par **sujet**,
+calées sur les timestamps. **Corriger les mots propres à ta niche mal transcrits** (noms de produits,
+jargon → cf. tes homophones connus).
+✅ *Critère* : chaque section a un `start`/`end` en secondes issu des timestamps, la liste couvre 100 %
+de la durée sans trou ni chevauchement, et le format de chaque section est décidé (cadrage de départ =
+`montage.defaultLayout` — `"split"` ou `"faceplein"` —, le créateur écarte du défaut section par
+section — `references/montage-talking-head.md`).
+
+**Étape 3 — Transcoder la vidéo → `assets/video/base.mp4`.**
+Cas courant **SDR** (`color_transfer=bt709`) : **aucun tonemap** — réduire le dérush (pleine
+résolution) en 1080×1920, keyframes denses, `-crf 14`, son copié :
+```bash
+ffmpeg -y -i derush/<cut>_enhanced.mp4 -map 0:v:0 -map 0:a:0 -vf scale=1080:1920:flags=lanczos -c:v libx264 -crf 14 -g 30 -keyint_min 30 -sc_threshold 0 -pix_fmt yuv420p -c:a copy -movflags +faststart assets/video/base.mp4
+```
+`base.mp4` sert au **son** et au repli. Le **visage du montage et de l'export** est pré-cadré dans le
+dérush pleine résolution par `python3 tools/build_faces.py` (via `<cut>_cuts.json` → `source`), à
+relancer après tout dérush ou changement de cadrage ; `base.mp4` doit toujours être tiré de **ce**
+dérush (le script le vérifie et, sinon, retombe sur `base.mp4` en le signalant).
+▶ **Vidéo source HDR (`color_transfer` = `arib-std-b67` ou `smpte2084`) → lis
+`references/transcodage-video.md` AVANT de lancer ffmpeg** (tonemap zscale obligatoire).
+✅ *Critère* : `ffprobe` de la sortie renvoie `color_transfer=bt709` ET le seek dans le studio ne
+freeze pas (keyframes denses).
+
+**Étape 4 — Construire chaque section (compo HyperFrames de marque).**
+**Motion-first** (§0), `motion.js` **inliné** (pas `<script src>` externe : sinon race au 1er play →
+`BRAND is not defined`). GSAP + CustomEase **vendus en local** (`assets/vendor/`).
+▶ Section CTA « commente un mot-clé » ou image qui zoome → `references/patterns.md`.
+✅ *Critère* : **CHAQUE section du découpage (étape 2) a sa compo**, elle passe la **checklist §10**
+ligne à ligne, elle respecte les safe areas (§5), et `npm run check` est vert.
+
+**Étape 5 — Logos (§12.1) et médias.**
+Toute marque, tout produit ou outil **nommé dans la voix** (CapCut, Claude, ChatGPT, Instagram…) se
+montre avec son **vrai logo** (skill `thesvg`, couleurs d'origine), au moins à sa première
+apparition : jamais une icône inventée à sa place, un logo officiel rassure. Absent de theSVG
+(marque récente) : demande au client le logo ou une capture, une seule fois.
+✅ *Critère* : tout logo/média est **vendu en local** dans le Reel (`assets/logos/`, `assets/images/`
+du Reel ; un logo ou une image du client rangé dans les `assets/` du dossier Cut AI,
+`../../assets/…`, s'y **copie** au même chemin : le rendu ne voit que le dossier du Reel), zéro appel
+CDN au rendu, et tout média qui ne remplit pas sa zone a son **fond flou** (§5.6).
+
+**Étape 6 — Master natif `index.html`.**
+▶ **Vidéo talking-head à assembler (visage + sections + audio) → `references/montage-talking-head.md`**
+(ordre DOM, hosts de section, `clip-path` du visage).
+▶ **Panneau visage NOIR dans le studio → `references/visage-carre-noir.md`** (Mode A / Mode B,
+diagnostic console en 5 s).
+✅ *Critère* : dans le studio, sur toute la durée, on voit le visage (jamais un carré noir), chaque
+section apparaît dans sa fenêtre et **uniquement** dans sa fenêtre, la voix off court de 0 à la fin, et
+les `var(--brand-*)` se résolvent (accent = accent, pas noir).
+
+**Étape 7 — Preview live + révision section par section.**
+Ouvrir la compo `index`, montrer au créateur, corriger.
+✅ *Critère* : **le créateur a vu la preview et validé section par section.** C'est CE feu vert qui
+débloque les sous-titres finaux, l'export et les SFX — rien avant.
+**Exception première vidéo** (fichier agent, section 🟢, et `references/premier-montage.md`) : pas
+de revue ici, le montage va d'une traite jusqu'aux SFX et à l'export ; le débrief final tient lieu de
+revue. Tu valides toi-même chaque section sur snapshots, et tu découpes les sous-titres selon
+`references/sous-titres.md` sans attendre de dictée.
+
+**Après validation, dans cet ordre :**
+1. ▶ **Sous-titres à produire → lis `references/sous-titres.md` AVANT d'écrire le moindre chunk** (le
+   découpage se décide par **unité grammaticale**, pas par largeur ; les chunks finaux sont **dictés
+   par le créateur**).
+2. ▶ **SFX / musique → UNIQUEMENT après validation du montage : `references/sfx-musique.md`.**
+   (« mets le sound effect ET la musique » = SFX + musique de fond par défaut.) Ils se posent dans
+   le montage, l'export les emporte.
+3. ▶ **Export final natif → `references/montage-talking-head.md` §4** : bouton Export de l'app
+   HyperFrames, ou `npm run render`. Visages pré-cadrés (`tools/build_faces.py`) : visage net.
+
+### 12.1 Logos → skill theSVG
+
+Le skill `thesvg` est livré avec Cut AI (rien à installer). CDN : `https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/{slug}/{variant}.svg` ; registre des slugs : `.../src/data/icons.json`. **Toujours les couleurs d'origine** (pas de recolorage mono). **Vendre en local** (`assets/logos/` du Reel), jamais de CDN au rendu (déterminisme). Sur fond sombre, marques monochromes (GitHub…) → variant `dark` (= logo blanc).
+
+### 12.2 Fluidité : faire vite, sans re-travail
+
+Version complète des réflexes résumés dans le fichier agent (section « Fluidité »).
+
+> Constat d'audit : le **compute réel** (ffmpeg/whisper/render) pèse à peine **~2-3 %** du temps.
+> Le temps part dans les **itérations** (assets refaits 4-6×) et le **volume de sortie**
+> (réécritures HTML entières, longs messages), jamais dans la machine.
+
+1. **Une session par grosse étape.** Ne pas enchaîner script → dérush → montage → SFX → publication
+   dans un seul contexte (contexte saturé → auto-compaction en plein montage). `/clear` entre les
+   étapes lourdes. Première vidéo : pas de `/clear` demandé au client, la continuité passe par
+   `work/premiere-video.md`.
+2. **Cadrer AVANT de produire l'asset** (dérush, b-roll, écran plein) : demander la cible précise
+   **une seule fois** au lieu de deviner par itérations. Dérush → appliquer d'emblée les valeurs du
+   bloc `derush` de `brand.config.json` (`padStart`, `padEnd`, `silenceDb`, `islandDuration`), pas
+   de re-tune au jugé.
+3. **Valider le CONCEPT motion sur 1 snapshot** d'une section-témoin **avant** de décliner toutes
+   les sections → évite les refontes « c'est moche ».
+4. **Un seul contrôle visuel : `hyperframes snapshot`** (déterministe, zéro cache navigateur). Le
+   navigateur sert **uniquement au visionnage de la vidéo finale**. **Versionner les assets dès le
+   départ** (`hook-broll-v2.mp4`…) pour ne jamais se battre avec le cache studio.
+5. **Serveur preview vivant toute la session** (`npm run dev` en arrière-plan, lancé une fois) : ne
+   pas le tuer ni le relancer.
+6. **Éditer, pas réécrire** : `Edit` ciblé plutôt que `Write` d'un HTML entier (chaque réécriture
+   coûte 9-23 s). Réponses de review courtes. Peu de délibération sur le rote (lint, transcode,
+   remux).
+7. **hyperframes en local** (`npm i -D hyperframes`) plutôt que `npx --yes hyperframes@version`
+   (re-résolution réseau à chaque appel).
+
+### 12.3 Ranger le Reel (étape 8, après publication)
+
+Un Reel = un projet : chaque Reel a son dossier `reels/<nom>/` dans le dossier Cut AI, créé
+par `python3 tools/nouveau_reel.py "<sujet>"` (`--ouvrir` l'ouvre dans l'app HyperFrames). On ne
+remet plus de plan de travail à zéro : une fois le Reel posté, `python3 tools/ranger_reel.py`
+depuis son dossier (l'en-tête du script fait foi).
+
+- Copie les vidéos finales (`*FINAL*`) vers `~/Movies/reels-publies/<nom>/` (Windows :
+  `~/Videos/…`, hors du projet).
+- Marque le Reel publié (`meta.json` : `monteurIa.etat = "publie"`) : il garde le style qu'il avait
+  au moment du post, et prouve que la première vidéo est passée.
+- Pose la note « débrief à faire » dans `work/premiere-video.md` **du dossier Cut AI** si le
+  débrief de la première vidéo n'a pas eu lieu.
+- `--alleger` efface en plus les médias du dérush, les fichiers de travail et les rendus
+  intermédiaires ; le montage, ses vidéos et les vidéos finales restent.
+- Le dossier du Reel reste en place : il se rouvre d'un clic dans l'app pour une retouche ou une
+  nouvelle version. **Jamais deux Reels dans un même dossier** : un nouveau Reel = un nouveau dossier.

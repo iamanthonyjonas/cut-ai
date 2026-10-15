@@ -1,0 +1,46 @@
+/* Charte Cut AI (design system « Cut AI ») : tokens et composants partagés par demarrer.html, dashboard.html et les pages produit.
+   Source : le design system Cut AI (tokens.json, bundle.css). Un seul aplat `cut` par écran. */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&family=Google+Sans+Flex:wght@400..700&family=Google+Sans+Code:wght@400..700&display=swap");
+:root {
+  --canvas: #efefef; --surface: #ffffff; --surface-2: #f7f7f7; --slab: #0e0d0c; --line: #e2e1df; --line-strong: #8e877b;
+  --ink: #16130c; --ink-2: #4a443a; --ink-3: #6b6459; --on-slab: #f7f7f7; --on-slab-2: #a39c90;
+  --cut: #ff4b0f; --on-cut: #ffffff; --cut-text: #c2370a; --glow: rgba(255, 157, 0, 0.22); --focus: #0073e6;
+  --shadow-card: 0 1px 2px rgba(22,19,12,.06), 0 12px 32px rgba(22,19,12,.07); --shadow-cut: 0 8px 24px rgba(255,75,15,.32);
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
+  --radius-sm: 10px; --radius-md: 18px; --radius-lg: 28px; --radius-pill: 999px;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-text: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-code: "Google Sans Code", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #0c0c0c; --surface: #16130c; --surface-2: #201c14; --slab: #16130c; --line: #2a2620; --line-strong: #6e675b;
+    --ink: #f7f7f7; --ink-2: #c9c3b8; --ink-3: #a39c90; --cut-text: #ff6a33; --focus: #4da3ff;
+    --shadow-card: 0 1px 0 rgba(255,255,255,.04), 0 12px 32px rgba(0,0,0,.5);
+  }
+}
+.cut-page { background: var(--canvas); color: var(--ink); font-family: var(--font-text); -webkit-font-smoothing: antialiased; }
+.cut-grid { background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 104px 104px; background-position: center top; }
+.cut-em { color: var(--cut-text); }
+.cut-slab { background: var(--slab); color: var(--on-slab); border-radius: var(--radius-lg); padding: var(--space-6); position: relative; overflow: hidden; }
+.cut-slab::before { content: ""; position: absolute; inset: -40% 20% auto; height: 80%; background: radial-gradient(closest-side, var(--glow), transparent); pointer-events: none; }
+.cut-slab > * { position: relative; }
+.cut-slab .cut-em { color: var(--cut); } .cut-slab .cut-note { color: var(--on-slab-2); }
+.cut-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: 48px; padding: 0 22px; border-radius: var(--radius-pill); border: 1px solid transparent; font-family: var(--font-display); font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1; cursor: pointer; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+.cut-btn:hover { transform: translateY(-1px); } .cut-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.cut-btn--primary { background: var(--ink); color: var(--canvas); } .cut-btn--ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.cut-btn--buy { height: 60px; padding: 0 30px; background: var(--cut); color: var(--on-cut); font-size: 19px; font-weight: 700; box-shadow: var(--shadow-cut); }
+.cut-pill { display: inline-flex; align-items: center; gap: var(--space-2); height: 32px; padding: 0 14px; border-radius: var(--radius-pill); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-card); font-size: 14px; white-space: nowrap; text-decoration: none; }
+.cut-rec { width: 8px; height: 8px; border-radius: 50%; background: var(--cut); flex: none; animation: cut-rec 1.6s ease-out infinite; }
+@keyframes cut-rec { 0% { box-shadow: 0 0 0 0 rgba(255,75,15,.45); } 100% { box-shadow: 0 0 0 8px rgba(255,75,15,0); } }
+.cut-tc { font-family: var(--font-code); font-size: 13px; font-weight: 500; line-height: 1; letter-spacing: .02em; text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--ink-3); }
+.cut-note { font-size: 14px; line-height: 1.45; color: var(--ink-3); margin: 0; }
+.cut-lane { position: relative; height: 36px; border-radius: var(--radius-sm); background: var(--surface-2); overflow: hidden; --at: .5; }
+.cut-lane i { position: absolute; top: 5px; bottom: 5px; border-radius: 7px; background: var(--ink); opacity: .9; }
+.cut-lane i:nth-child(2) { background: var(--ink-2); } .cut-lane i:nth-child(3) { background: var(--ink-3); }
+.cut-lane .cut-playhead { position: absolute; top: 2px; bottom: 2px; width: 2px; margin-left: -1px; left: calc(100% * var(--at)); background: var(--cut); }
+.cut-lane .cut-playhead::before { content: ""; position: absolute; top: -2px; left: -8px; width: 18px; height: 9px; border-radius: 5px 0 5px 0; background: var(--cut); }
+.cut-playhead--run { animation: cut-lecture 7s linear infinite; }
+@keyframes cut-lecture { from { --at: 0; } to { --at: 1; } }
+@property --at { syntax: "<number>"; inherits: true; initial-value: .5; }
+@media (prefers-reduced-motion: reduce) { .cut-rec, .cut-playhead--run { animation: none; } .cut-btn { transition: none; } }

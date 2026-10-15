@@ -1,0 +1,29 @@
+{
+  "_comment": "Catalogue des produits complémentaires affichés dans « Mes produits » du dashboard. 'skill' = dossier dans .claude/skills/ qui prouve l'installation. 'bientot' = pas encore disponible.",
+  "produits": [
+    {
+      "id": "decodeur-ai",
+      "nom": "Décodeur AI",
+      "skill": "decodeur-ai",
+      "pitch": "Colle le lien d'un Reel qui cartonne : il t'explique pourquoi ça marche, côté script et côté montage, et t'écrit ta version.",
+      "phrase": "Lis le INSTALL.md du Décodeur AI et installe-le.",
+      "essai": "Décode ce Reel : <colle le lien ici>"
+    },
+    {
+      "id": "motion-mastery",
+      "nom": "Motion Design Mastery",
+      "skill": "motion-mastery",
+      "pitch": "La méthode pour décider quoi animer et comment, section par section, avec ton identité.",
+      "phrase": "Lis le INSTALL.md du Motion Design Mastery et installe-le.",
+      "essai": "Storyboard mes animations pour ce Reel."
+    },
+    {
+      "id": "carrousel-ai",
+      "nom": "Carrousel AI",
+      "skill": "carrousel-ai",
+      "pitch": "Transforme une idée ou un Reel en carrousel prêt à publier, avec ta légende.",
+      "phrase": "Lis le INSTALL.md du Carrousel AI et installe-le.",
+      "essai": "Transforme ce Reel en carrousel."
+    }
+  ]
+}
