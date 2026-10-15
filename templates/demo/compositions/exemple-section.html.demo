@@ -70,13 +70,13 @@
     #exemple-section .gap { position:absolute; top:106px; height:112px; width:54px;
       border-radius:14px; background:var(--brand-surface); }
     #exemple-section .gap::after { content:""; position:absolute; left:10px; right:10px; top:54px;
-      height:4px; border-radius:2px; background:var(--brand-text); }
+      height:4px; border-radius:2px; background:var(--brand-accent-2); }
     #exemple-section .gap-a { left:275px; }
     #exemple-section .gap-b { left:539px; }
     #exemple-section .gap-caption { position:absolute; top:244px; left:40px; margin:0;
       font-size:32px; line-height:1.2; font-weight:600; }
     #exemple-section .connector { position:absolute; right:56px; top:240px; width:44px;
-      height:64px; color:var(--brand-text); }
+      height:64px; color:var(--brand-accent-2); }
     #exemple-section .result { position:absolute; left:32px; top:382px; width:812px; height:128px;
       border-radius:20px; background:var(--brand-accent); }
     #exemple-section .done { position:absolute; right:44px; top:318px; width:44px; height:44px;
