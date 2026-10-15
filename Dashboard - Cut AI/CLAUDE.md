@@ -4,6 +4,7 @@
 > `AGENTS.md`) : édite le `.tpl` puis lance `node ../scripts/sync.mjs`. Max 32 Kio, sinon Codex
 > tronque la fin : le détail va dans les skills.
 
+
 > **Charger un skill** :
 > Claude Code : utilise l'outil **Skill** (ou tape `/<nom>`). S'il ne le trouve pas (c'est le cas dans l'app HyperFrames), **ouvre le fichier** `../.claude/skills/<nom>/SKILL.md` et relis-le.
 
@@ -42,8 +43,7 @@ ou dépannage réel. Un outil manquant n'est pas une erreur.
 
 - **Installation** (« installe », « lis INSTALL.md », outils manquants) : suivre le parcours
   accompagné de `../INSTALL.md`, sans questionnaire de marque ni personnalisation.
-  **Premier message « go » (ou « salut », « c'est parti ») et `node_modules/` absent** : c'est le
-  départ prévu. Dis l'accueil (INSTALL.md, § 1) et **lance l'installation tout de suite**, sans second « go ».
+  Premier message « go » : voir le 🚦 en haut (départ prévu, pas de second « go »).
 - **Tu travailles** : « Je prépare les sous-titres. Tu n'as rien à faire pour le moment. »
 - **Il doit agir** : une seule consigne courte, puis attendre ; ne promets pas une réussite non vérifiée.
 - **Validation créative** : montrer le résultat, demander un retour simple (jamais un choix de codec,
