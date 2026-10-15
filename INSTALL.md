@@ -82,12 +82,13 @@ Exemple de formulation, à adapter au bilan réel :
 >
 > [Tableau du bilan réel]
 >
-> Toi, tu n'as rien à faire : tu peux faire autre chose pendant que je travaille. Je m'occupe des commandes, tu n'as rien à recopier dans un terminal.
+> L'installation prend environ 15 minutes. Toi, tu n'as rien à faire : tu peux faire autre chose pendant que
+> je travaille. Je m'occupe des commandes, tu n'as rien à recopier dans un terminal.
 >
 > La transcription nécessite un téléchargement d'environ 1,6 Go. Garde ton ordinateur connecté.
 > Si ta connexion est limitée, dis-le-moi : je pourrai choisir une version plus légère.
 >
-> **Pour commencer, réponds simplement « go » ici.**
+> **Pour commencer, réponds simplement « vas-y » ici.**
 
 **Exception Node.js absent ou trop ancien :** c'est la prochaine action, donc ne demande pas
 « go » pour t'arrêter aussitôt. Dis : « Il manque Node.js, un outil gratuit nécessaire au montage.
