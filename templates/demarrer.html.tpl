@@ -132,12 +132,10 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
     <label class="f" style="margin-top:22px">Tes sous-titres</label>
     <div class="cards" id="skins"></div>
     <label class="f" style="margin-top:22px">Ta couleur (facultatif)</label>
-    <div class="colors" id="colors"></div>
+    <div class="cards" id="colors"></div>
     <label class="f" style="margin-top:22px">Tes polices (facultatif)</label>
-    <div class="row">
-      <div><label class="f" for="fontDisplay" style="margin-top:0">Titres et animations</label><select id="fontDisplay"></select></div>
-      <div><label class="f" for="fontCaptions" style="margin-top:0">Sous-titres</label><select id="fontCaptions"></select></div>
-    </div>
+    <label class="f">Titres et animations</label><div class="cards" id="fontsD"></div>
+    <label class="f">Sous-titres</label><div class="cards" id="fontsC"></div>
     <label class="f" style="margin-top:22px">Ton cadrage (tu peux garder les deux : ton IA les alterne selon les phrases)</label>
     <div class="cards multi" id="layouts">
       <button class="opt" data-v="split" aria-pressed="true"><div class="diag split"><div></div><div></div></div><b>Écran coupé</b><small>Toi en bas, l'animation en haut.</small></button>
@@ -256,22 +254,23 @@ function buildCards() {
     `<button class="opt" data-v="${k}"><b>${SKIN_LABEL[k]}</b><small>${SKINS[k] || ""}</small></button>`).join("");
 }
 
-const FONTS_D = [["", "Celle du style"], ["Anton", "Anton (haute et serrée)"], ["ArchivoBlack", "Archivo Black (large et épaisse)"], ["Inter", "Inter (nette et moderne)"], ["Teachers", "Teachers (douce)"]];
+const FONTS_D = [["", "Celle du style"], ["Anton", "Anton"], ["ArchivoBlack", "Archivo Black"], ["Inter", "Inter"], ["Teachers", "Teachers"]];
 const FONTS_C = FONTS_D.filter((f) => f[0] !== "Teachers");
+const COLORS = [["", "Celle du style"], ["#FF4B0F", "Orange"], ["#FFB300", "Jaune"], ["#2EC27E", "Vert"], ["#58A6FF", "Bleu"], ["#7C5CFF", "Violet"], ["#FF2E7E", "Rose"], ["#E5E5E5", "Blanc"]];
+function miniPv(p, acc, fc) { return `<div class="pv-mini" style="background:${p.bg};--q-a:${acc};--q-b:${p.bg};--q-t:${p.text}"><div class="m" style="background:${p.surface}"><i style="display:block;height:6px;width:70%;margin:8px;border-radius:3px;background:${acc}"></i></div><div class="f"></div><div class="c ${state.skin}" ${fc ? `style="font-family:'${fc}',Inter,sans-serif"` : ""}><span>Ta phrase forte</span></div></div>`; }
 function buildColors() {
   const p = PRESETS.find((x) => x.id === state.preset);
-  const sw = ["#FF4B0F", "#E8590C", "#FFB300", "#2EC27E", "#58A6ff", "#7C5CFF", "#FF2E7E", "#E5E5E5"];
-  $("#colors").innerHTML = `<button type="button" class="dotc" data-c="" title="Celle du style" aria-pressed="${!state.accent}" style="background:${p.accent}"></button>` + sw.map((c) => `<button type="button" class="dotc" data-c="${c}" aria-label="${c}" aria-pressed="${(state.accent || "").toLowerCase() === c.toLowerCase()}" style="background:${c}"></button>`).join("") + `<input type="color" id="colorPick" value="${state.accent || p.accent}" aria-label="Autre couleur"><input type="text" id="colorHex" placeholder="#FF4B0F" value="${state.accent || ""}">`;
-  $("#colors").querySelectorAll(".dotc").forEach((b) => b.addEventListener("click", () => { state.accent = b.dataset.c || null; refresh(); buildColors(); }));
-  $("#colorPick").addEventListener("input", (e) => { state.accent = e.target.value; refresh(); $("#colorHex").value = state.accent; });
+  const cur = (state.accent || "").toLowerCase();
+  $("#colors").innerHTML = COLORS.map(([c, n]) => `<button type="button" class="opt" data-c="${c}" aria-pressed="${c ? cur === c.toLowerCase() : !state.accent}">${miniPv(p, c || p.accent)}<b>${n}</b></button>`).join("")
+    + `<div class="opt" style="cursor:default"><div class="pv-mini" style="display:grid;place-items:center;background:var(--surface)"><input type="color" id="colorPick" value="${state.accent || p.accent}" aria-label="Autre couleur" style="width:60px;height:60px"></div><b>Ta couleur</b><input type="text" id="colorHex" placeholder="#FF4B0F" value="${state.accent || ""}" style="margin-top:6px;padding:8px 10px;font-size:14px"></div>`;
+  $("#colors").querySelectorAll("button.opt").forEach((b) => b.addEventListener("click", () => { state.accent = b.dataset.c || null; refresh(); buildColors(); }));
+  $("#colorPick").addEventListener("input", (e) => { state.accent = e.target.value.toUpperCase(); $("#colorHex").value = state.accent; refresh(); });
   $("#colorHex").addEventListener("input", (e) => { const v = e.target.value.trim(); if (/^#[0-9a-fA-F]{6}$/.test(v)) { state.accent = v.toUpperCase(); refresh(); } else if (v === "") { state.accent = null; refresh(); } });
 }
 function buildFonts() {
-  $("#fontDisplay").innerHTML = FONTS_D.map((f) => `<option value="${f[0]}">${f[1]}</option>`).join("");
-  $("#fontCaptions").innerHTML = FONTS_C.map((f) => `<option value="${f[0]}">${f[1]}</option>`).join("");
-  $("#fontDisplay").value = state.fontDisplay || ""; $("#fontCaptions").value = state.fontCaptions || "";
-  $("#fontDisplay").addEventListener("change", (e) => { state.fontDisplay = e.target.value || null; refresh(); });
-  $("#fontCaptions").addEventListener("change", (e) => { state.fontCaptions = e.target.value || null; refresh(); });
+  const card = (id, list, key) => { $("#" + id).innerHTML = list.map(([v, n]) => `<button type="button" class="opt" data-f="${v}" aria-pressed="${(state[key] || "") === v}"><div class="pv-mini" style="display:grid;place-items:center;background:var(--surface-2);font-family:'${v || "Inter"}',Inter,sans-serif;font-size:26px;font-weight:900;color:var(--ink)">Aa Ta phrase</div><b>${n}</b></button>`).join("");
+    $("#" + id).querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { state[key] = b.dataset.f || null; refresh(); buildFonts(); })); };
+  card("fontsD", FONTS_D, "fontDisplay"); card("fontsC", FONTS_C, "fontCaptions");
 }
 function pick(groupId, key, multi) {
   const el = $("#" + groupId);
@@ -288,7 +287,7 @@ function pick(groupId, key, multi) {
       if (key === "preset") state.skin = PRESETS.find((p) => p.id === v).skin;
     }
     refresh();
-    if (key === "preset") buildColors();
+    if (key === "preset" || key === "skin") buildColors();
   });
 }
 
