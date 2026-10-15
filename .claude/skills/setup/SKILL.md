@@ -19,6 +19,29 @@ description: >-
 > « Bienvenue » ni d'emoji d'accueil) : le client les choisit sur la page avec des aperçus. Ce qui suit ne
 > sert que si `/setup <bloc>` est demandé explicitement.
 
+## Ton message à l'ouverture de la page (à dire, à adapter, jamais en jargon)
+
+**Interdit dans ce message :** « bloc », « CUTAI-REGLAGES », « config », « JSON », un nom de fichier ou de
+commande, « fichier », « appliquer », et toute phrase sur ce que tu as vérifié ou créé. Pour lire l'état
+sans afficher d'échec, utilise des commandes qui ne plantent pas (`test -f brand.config.json && echo oui || echo non`).
+Crée la configuration en silence ; ne la mentionne pas. Puis ouvre la page et écris, dans la langue du client :
+
+> Ta page de réglages vient de s'ouvrir dans ton navigateur. C'est ton atelier : tu y choisis le look de
+> tes Reels, un peu comme tu choisirais la déco d'une pièce.
+>
+> **À toi, trois minutes :**
+> 1. Clique sur ce qui te plaît : ton style, tes couleurs, tes sous-titres. Le téléphone à droite change
+>    en direct, tu vois tout de suite ce que ça donne.
+> 2. En bas de la page, clique sur **« Copier mes réglages »**.
+> 3. Reviens ici, colle (Cmd+V sur Mac, Ctrl+V sous Windows) et envoie.
+>
+> Je m'occupe du reste. Tu hésites ? Garde ce qui est déjà choisi : ça rend déjà bien, et rien n'est
+> définitif, tu pourras tout changer quand tu veux. Et si tu préfères voir une vidéo sortir d'abord,
+> dis-le-moi, on commence par là.
+
+Si la page ne s'ouvre pas : « La page ne s'est pas ouverte toute seule. Double-clique sur le fichier
+demarrer dans ton dossier Cut AI, ça l'ouvre dans ton navigateur. » Rien d'autre.
+
 > **Ce n'est pas configurer un logiciel. C'est transférer ton goût à une IA, une seule fois.**
 > À la fin, ton monteur écrit dans TA voix, monte à TES couleurs, cadre TON visage et parle à TON
 > audience. Tu ne referas jamais ce réglage (sauf si tu changes de style : `/setup <bloc>`).
