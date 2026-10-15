@@ -13,7 +13,7 @@ Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie 
 
 C'est le même départ si la vidéo de formation dit simplement « lis INSTALL.md et installe tout ».
 L'IA vérifie ton ordinateur, explique ce qu'il reste à préparer, puis te dit quoi faire.
-**Quand elle te propose de commencer, réponds « go » dans la conversation.**
+**Quand elle te propose de commencer, réponds « vas-y » dans la conversation.**
 
 - **À installer** signifie que l'outil n'est pas encore présent. Ce n'est pas une erreur.
 - L'IA exécute les commandes. Tu n'as pas à les recopier dans un terminal.

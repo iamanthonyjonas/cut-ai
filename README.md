@@ -21,7 +21,7 @@ ouvre ton dossier Cut AI dans Claude Code ou Codex et colle cette phrase :
 Mets Cut AI à jour : suis https://github.com/iamanthonyjonas/cut-ai/blob/main/MISE-A-JOUR.md
 ```
 
-Ton IA te montre ce qu'elle va faire, tu réponds « go ». Tes réglages, ta voix, tes sons et tes
+Ton IA te montre ce qu'elle va faire, tu réponds « vas-y ». Tes réglages, ta voix, tes sons et tes
 extensions sont gardés ([détails](MISE-A-JOUR.md)).
 
 ---
