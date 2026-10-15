@@ -499,7 +499,7 @@ function planDeTravail(client, manifeste, { sujet, date, v2 }) {
 }
 
 // Noms de dossier Cut AI laissés par défaut (tools/nouveau_reel.py) : ils ne disent rien du client.
-const NOMS_PAR_DEFAUT = new Set(["monteur-ia", "monteur-ia-main", "cut-ai", "cut-ai-main", "cut ai", "monteur ia", "monteur-ia-template"]);
+const NOMS_PAR_DEFAUT = new Set(["monteur-ia", "monteur-ia-main", "cut-ai", "cut-ai-main", "monteur ia", "monteur-ia-template"]);
 const propre = (texte) => String(texte).replace(/[<>:"/\\|?*\x00-\x1f]/g, "-").replace(/\s+/g, " ")
   .replace(/^[ .-]+|[ .-]+$/g, "").slice(0, 60).replace(/[ .-]+$/, "");
 

@@ -5,7 +5,7 @@ Videos sur Windows). Évite Documents et le Bureau : sur beaucoup d'ordinateurs,
 synchronisés avec iCloud ou OneDrive, qui retirent les fichiers du disque pour faire de la place,
 et chaque montage attend alors que tes rushes redescendent.
 
-Ouvre ensuite le dossier **Cut AI** dans Claude Code ou Codex, puis envoie ce message :
+Ouvre ensuite le dossier **cut-ai-main** dans Claude Code ou Codex, puis envoie ce message :
 
 ```text
 Lis INSTALL.md et accompagne-moi pour installer Cut AI. Occupe-toi de la partie technique.
@@ -234,7 +234,7 @@ Le message du début de cette page s'adresse à une IA. Il faut donc d'abord ins
 1. Télécharge l'application Claude pour ordinateur depuis [le site officiel](https://claude.com/download),
    puis connecte-toi avec ton compte disposant d'un accès à Claude Code.
 2. Ouvre l'espace **Code** et choisis l'environnement **Local** pour travailler sur ton ordinateur.
-3. Sélectionne le dossier dézippé **Cut AI** via « Ouvrir un dossier » ou le sélecteur de projet.
+3. Sélectionne le dossier dézippé **cut-ai-main** via « Ouvrir un dossier » ou le sélecteur de projet.
 4. Envoie le message du début de cette page. L'IA prend le relais.
 
 La présentation des menus peut évoluer. Le repère à vérifier : **Code, Local, ton dossier sélectionné**.
@@ -243,7 +243,7 @@ Voir la [documentation officielle](https://code.claude.com/docs/en/desktop) si l
 ### Option B : Codex
 
 1. Télécharge l'application de bureau ChatGPT depuis le site officiel, puis connecte-toi avec ton compte.
-2. Ouvre **Codex** et sélectionne le dossier local dézippé **Cut AI** comme projet.
+2. Ouvre **Codex** et sélectionne le dossier local dézippé **cut-ai-main** comme projet.
 3. Envoie le message du début de cette page. L'IA prend le relais.
 
 Le repère à vérifier est **Codex avec accès au dossier de ton ordinateur**. Joindre INSTALL.md à
