@@ -82,8 +82,7 @@ Exemple de formulation, à adapter au bilan réel :
 >
 > [Tableau du bilan réel]
 >
-> Ça prend en général entre 10 et 30 minutes. Toi, tu n'as rien à faire : tu peux faire autre chose pendant
-> que je travaille. Je m'occupe des commandes, tu n'as rien à recopier dans un terminal.
+> Toi, tu n'as rien à faire : tu peux faire autre chose pendant que je travaille. Je m'occupe des commandes, tu n'as rien à recopier dans un terminal.
 >
 > La transcription nécessite un téléchargement d'environ 1,6 Go. Garde ton ordinateur connecté.
 > Si ta connexion est limitée, dis-le-moi : je pourrai choisir une version plus légère.
