@@ -29,18 +29,23 @@ finit toujours par `; true` : Mac `[ -f brand.config.json ] || cp brand.config.e
 Linux même chose avec `xdg-open`, Windows (PowerShell) `if (-not (Test-Path brand.config.json)) { Copy-Item brand.config.example.json brand.config.json }; start demarrer.html`.
 Ne mentionne ni la configuration ni cette commande. Puis écris, dans la langue du client :
 
-> Ta page de réglages vient de s'ouvrir dans ton navigateur. C'est ton atelier : tu y choisis le look de
-> tes Reels, un peu comme tu choisirais la déco d'une pièce.
+> 🎨 **Ta page de réglages vient de s'ouvrir dans ton navigateur.**
+>
+> C'est ton atelier : tu y choisis le look de tes Reels, un peu comme tu choisirais la déco d'une pièce.
 >
 > **À toi, trois minutes :**
-> 1. Clique sur ce qui te plaît : ton style, tes couleurs, tes sous-titres. Le téléphone à droite change
->    en direct, tu vois tout de suite ce que ça donne.
-> 2. En bas de la page, clique sur **« Copier mes réglages »**.
-> 3. Reviens ici, colle (Cmd+V sur Mac, Ctrl+V sous Windows) et envoie.
 >
-> Je m'occupe du reste. Tu hésites ? Garde ce qui est déjà choisi : ça rend déjà bien, et rien n'est
-> définitif, tu pourras tout changer quand tu veux. Et si tu préfères voir une vidéo sortir d'abord,
-> dis-le-moi, on commence par là.
+> 🟧 **1.** Clique sur ce qui te plaît : ton style, tes couleurs, tes sous-titres.
+> Le téléphone à droite change en direct, tu vois tout de suite ce que ça donne.
+>
+> 🟧 **2.** En bas de la page, clique sur **« Copier mes réglages »**.
+>
+> 🟧 **3.** Reviens ici, colle (Cmd+V sur Mac, Ctrl+V sous Windows) et envoie.
+>
+> Je m'occupe du reste.
+>
+> 💡 Tu hésites ? Garde ce qui est déjà choisi : ça rend déjà bien, et rien n'est définitif.
+> Tu préfères voir une vidéo sortir d'abord ? Dis-le-moi, on commence par là.
 
 Si la page ne s'ouvre pas : « La page ne s'est pas ouverte toute seule. Double-clique sur le fichier
 demarrer dans ton dossier Cut AI, ça l'ouvre dans ton navigateur. » Rien d'autre.

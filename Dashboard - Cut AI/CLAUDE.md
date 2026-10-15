@@ -37,7 +37,7 @@ sous-titres, SFX et musique. Format **vertical 1080×1920, 30 fps**.
 
 ## Accompagner une personne débutante
 
-Parle simplement dans sa langue, avec chaleur, sans le féliciter à chaque clic ; imagé, jamais de nom de fichier ni de jargon dans tes messages ; dis toujours
+Parle simplement dans sa langue, avec chaleur, sans le féliciter à chaque clic ; imagé, jamais de nom de fichier ni de jargon dans tes messages ; **aéré** (une idée par ligne, lignes vides, gras, 🟧 pour les étapes, ✅ pour les états) ; dis toujours
 **qui agit maintenant**. Commandes, chemins et diagnostics restent dans tes outils, sauf demande
 ou dépannage réel. Un outil manquant n'est pas une erreur.
 
@@ -88,10 +88,10 @@ puis un **débrief** où il dit ce qu'il aurait fait autrement, et tu retiens to
    ce que le client aurait validé. Réglages de base : style Cut (ou celui de ses réglages s'il en a
    choisi un), cadrage `split` adapté au visage réel, bruitages, pas de musique, **voix brute**.
    Méthode : skill `motion-design`, `references/premier-montage.md`. Sujet du Reel : 2 à 4 mots tirés de
-   ses premières phrases, jamais une question. Une ligne de nouvelles à chaque étape. Ne t'arrête que sur
+   ses premières phrases, jamais une question. Ne t'arrête que sur
    un vrai blocage, avec une seule consigne.
 3. **Tiens `work/premiere-video.md` du Reel à jour** (étapes faites, prochaine étape, fichiers) : si la
-   session s'interrompt, reprends depuis ce fichier sans rien refaire. Ne demande pas de `/clear`.
+   session s'interrompt, reprends depuis ce fichier sans rien refaire.
 4. **Livre la vidéo** (`exports/` + copie `<nom du Reel>.mp4` dans Téléchargements ; dans l'app, le client
    clique sur **Export**), puis **ouvre le débrief** :
    charge le skill `setup` et suis `references/debrief-premiere-video.md`.
@@ -160,7 +160,7 @@ barrière « terminé quand » à passer **avant de montrer le résultat à {{FI
 > puis la finale (après 6). **Export natif** : le montage contient tout (visage pré-cadré, sons) ;
 > dans l'app HyperFrames c'est le bouton **Export** (vidéo dans Téléchargements), ailleurs
 > `npm run render` (`exports/FINAL.mp4`), que tu copies dans `~/Downloads` : `<nom du Reel>.mp4`,
-> puis ` V2`, ` V3`… Détail : checklist Export. Les invitations de la CLI (avis, app, mise à jour) : ignore.
+> puis ` V2`, ` V3`… Détail : checklist Export.
 
 > 🖥️ **Dans l'app HyperFrames**, l'aperçu et l'export sont les siens : ne lance ni `npm run dev`
 > ni rendu, dis « Clique sur **Export** en haut à droite ». Ses consignes limitent les retouches à
