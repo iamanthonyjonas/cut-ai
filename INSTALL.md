@@ -201,7 +201,8 @@ Après réussite seulement :
 > Trois choses, dans l'ordre :
 >
 > 1. **Télécharge l'app HyperFrames, elle est gratuite** (Mac et Linux) : https://hyperframes.dev/studio.
->    Elle montre ton montage sur une timeline et fait l'export en un clic.
+>    Elle montre ton montage sur une timeline et fait l'export en un clic. **Sous Windows**, elle n'existe pas
+>    encore : dis-le simplement, tu n'en as pas besoin (aperçu dans le navigateur, export par l'IA).
 > 2. **Personnalise ton style en 2 minutes** : je t'ouvre une page avec des aperçus (ton style, tes
 >    sous-titres, ton appel à l'action). Tu cliques, tu copies le résultat, tu me le colles ici.
 > 3. **Ta première vidéo** : soit tu n'as pas encore tourné et je t'écris ton script puis ta légende,
@@ -210,7 +211,7 @@ Après réussite seulement :
 > Tu peux sauter l'étape 2 : je monte alors ta première vidéo avec les réglages de base.
 
 Puis, dans cet ordre, **sans attendre de réponse entre les étapes** et **sans jamais lancer le skill `setup` ni un questionnaire dans le chat** :
-0. **Propose HyperFrames** : dis une fois « Installe l'app HyperFrames, elle est gratuite : https://hyperframes.dev/studio » (c'est aussi l'étape 0 de la page).
+0. **Propose HyperFrames** (Mac et Linux seulement ; sous Windows ne le propose pas : dis que l'app n'existe pas encore et que tu ouvres l'aperçu dans le navigateur avec `npm run dev` dans le dossier du Reel, en arrière-plan, et que tu exportes avec `npm run render`) : dis une fois « Installe l'app HyperFrames, elle est gratuite : https://hyperframes.dev/studio » (c'est aussi l'étape 0 de la page).
 1. **Ouvre `demarrer.html`** pour le client (Mac : `open demarrer.html`, Linux : `xdg-open`, Windows :
    `start demarrer.html`). S'il est dans Claude Code ou Codex (et pas dans l'app HyperFrames), propose
    aussi d'**ouvrir un onglet de preview** : la page dans le navigateur intégré s'il y en a un, sinon dans

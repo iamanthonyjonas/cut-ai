@@ -274,7 +274,7 @@ node ../scripts/app-hyperframes.mjs brancher   # une fois par ordinateur : l'app
 > **`npm run dev` bloque jusqu'à l'arrêt** : toujours en arrière-plan (Claude Code :
 > `run_in_background: true`), sinon il expire et la preview casse.
 
-**Windows** : `python` (sinon `py`) là où les consignes et les skills écrivent `python3`. **Doc** : `npx hyperframes
+**Windows** : `python` (sinon `py`) là où les consignes et les skills écrivent `python3`. L'app HyperFrames n'existe pas sous Windows : aperçu dans le navigateur (`npm run dev`), export `npm run render`. **Doc** : `npx hyperframes
 docs <topic>` (hors ligne) ; complète via `https://hyperframes.heygen.com/llms.txt`, sans deviner d'URL.
 
 ## Structure du projet

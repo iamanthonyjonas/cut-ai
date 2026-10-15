@@ -152,7 +152,8 @@ footer.sig { padding-block: var(--space-6) var(--space-8); } footer.sig img { wi
   <section class="step" id="s0">
     <h2><span class="n">0</span>Installe HyperFrames</h2>
     <p class="hint">C'est l'application gratuite qui te montre ton montage sur une timeline et exporte en un clic (Mac et Linux). Installe-la maintenant : tu en auras besoin pour voir ton Reel.</p>
-    <div class="hf"><a class="cut-btn cut-btn--buy" href="https://hyperframes.dev/studio" target="_blank" rel="noopener">Télécharger HyperFrames</a><span class="note" style="margin:0">Déjà installée ? Passe à l'étape 1.</span></div>
+    <div class="callout" id="hfWin" style="display:none;background:var(--surface-2);color:var(--ink);border-color:var(--line-strong)"><b>Tu es sur Windows : l'app HyperFrames n'existe pas encore pour Windows.</b> Tu n'en as pas besoin pour démarrer. Ton IA ouvre l'aperçu de ton Reel dans ton navigateur et exporte ta vidéo dans ton dossier Téléchargements. Ignore le bouton ci-dessous.</div>
+    <div class="hf" id="hfBtn"><a class="cut-btn cut-btn--buy" href="https://hyperframes.dev/studio" target="_blank" rel="noopener">Télécharger HyperFrames</a><span class="note" style="margin:0">Déjà installée ? Passe à l'étape 1.</span></div>
   </section>
 
   <section class="step" id="s1">
@@ -409,6 +410,7 @@ $("#copyScripts").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(t); } catch (e) { const a = $("#scripts"); a.select(); document.execCommand("copy"); }
   $("#copyScripts").textContent = "Copié"; setTimeout(() => { $("#copyScripts").textContent = "Copier mes scripts"; }, 2500);
 });
+if (/Win/i.test(navigator.userAgent)) { $("#hfWin").style.display = "block"; $("#hfBtn").style.display = "none"; }
 refresh();
 </script>
 </body>
