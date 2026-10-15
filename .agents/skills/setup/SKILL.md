@@ -5,7 +5,8 @@ description: >-
   l'action, prénom) se fait UNIQUEMENT par la page visuelle `demarrer.html` : ouvre-la, n'ouvre jamais
   de questionnaire dans le chat. Use when the user says "personnalise", "personnalise mon style",
   "réglages", "setup" ou "onboarding" : ouvre `demarrer.html` (Mac : `open demarrer.html`) et attends
-  le bloc `CUTAI-REGLAGES`. Un message qui contient ce bloc = onboarding visuel, à appliquer sans
+  les réglages collés par le client (ne cite jamais ce nom technique au client, suis la section « Ton message à
+  l'ouverture de la page » ci-dessous). Un message qui commence par `CUTAI-REGLAGES` = onboarding visuel, à appliquer sans
   questionnaire (references/onboarding-visuel.md). Les blocs en conversation ne servent que sur
   demande explicite `/setup <bloc>` (identite, voix, funnel, visuel, derush, technique) et pour
   la voix (bloc B) après la première vidéo. Débrief de la première vidéo : references/debrief-premiere-video.md,
