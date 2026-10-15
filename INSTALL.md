@@ -53,6 +53,14 @@ pour l'utilisateur et ne lui demande pas de le lire.
 
 - Détecte le système et l'architecture, vérifie le dossier et les outils présents en lecture seule.
   Distingue un outil absent d'un outil présent mais non fonctionnel. Ne change rien à cette étape.
+- **Aucun « Échec » affiché au client pendant ce bilan.** L'application montre en rouge toute commande
+  qui renvoie une erreur, même si l'absence est normale. Regroupe tes vérifications en une ou deux
+  commandes, redirige les erreurs (`2>/dev/null`), n'utilise pas `grep` ni `ls` sur un fichier qui peut
+  manquer, et termine toujours chaque commande de lecture par `; true` (Windows : `; $true`).
+  Une commande de vérification n'est jamais censée échouer : un outil absent se lit dans sa sortie.
+- **Durée annoncée : « environ 15 minutes »**, exactement. Ne donne pas une autre durée.
+- **Une seule liste de « 3 choses »** : celle de l'introduction ci-dessous. N'en annonce pas une
+  seconde avec d'autres étapes.
 - Commence par un constat réel et rassurant, sans garantir à l'avance que tout réussira.
 - Présente un tableau court avec des **fonctions compréhensibles** : base du système (Node.js),
   outils du monteur (Python), traitement vidéo, moteur de montage, export vidéo, transcription,
