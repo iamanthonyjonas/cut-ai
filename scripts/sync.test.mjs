@@ -131,6 +131,9 @@ test('AGENTS.md et CLAUDE.md tiennent dans la limite de lecture de Codex', (t) =
     fs.appendFileSync(path.join(dir, 'templates/AGENT.md.tpl'), `\n<!-- BEGIN EXTENSION: ${nom} (installation) -->\n`
       + `${'Consigne extension. '.repeat(50).slice(0, 1000)}\n<!-- END EXTENSION: ${nom} -->\n`);
   }
+  // Un dossier personnalisé est un dossier installé : `node_modules/` existe, donc l'accueil du premier « go »
+  // (bloc PREMIER_DEPART, ~1 Kio) n'est plus dans les consignes.
+  fs.mkdirSync(path.join(dir, 'node_modules'), { recursive: true });
   sync(dir);
   for (const file of ['AGENTS.md', 'CLAUDE.md', `${accueil}/AGENTS.md`, `${accueil}/CLAUDE.md`,
     `${reel}/AGENTS.md`, `${reel}/CLAUDE.md`]) {
