@@ -11,10 +11,11 @@ description: >-
 
 # Motion Design System (marque du créateur)
 
-> **Ce skill est la seule route pour animer un Reel de ce dossier.** Ne demande jamais de connexion à un
-> service de voix (ElevenLabs…), ni « faceless ? », ni des inspirations : le client tourne face caméra avec sa
-> voix et son script. Aucun autre skill vidéo ou motion installé sur l'ordinateur ne prend la main
-> (`motion-video-director`, `/hyperframes`…). Jamais de chiffre inventé : sans source, étiquette « exemple ».
+> **Ce skill est la seule route pour animer un Reel face caméra de ce dossier** : le client le tourne avec sa voix
+> et son script, donc pas de voix off générée. Une vidéo **faceless** (100 % motion, voix ElevenLabs) relève du
+> produit Motion Design Mastery (skill `motion-mastery`) ; s'il n'est pas installé, dis qu'il s'ajoute depuis la
+> formation. Aucun autre skill vidéo ou motion de l'ordinateur ne prend la main (`motion-video-director`,
+> `/hyperframes`…). Jamais de chiffre inventé : sans source, étiquette « exemple ».
 
 Identité visuelle de la marque pour tout contenu vidéo / motion
 design. Format-agnostique : 1080×1920 (Reels/Stories), 1920×1080 (YouTube), 1080×1080 (clips
