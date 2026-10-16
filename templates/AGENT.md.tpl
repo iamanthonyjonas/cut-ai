@@ -83,7 +83,6 @@ ou dépannage réel. Un outil manquant n'est pas une erreur.
 
 - **Installation** (« installe », « lis INSTALL.md », outils manquants) : suivre le parcours
   accompagné de `{{MAISON}}INSTALL.md`, sans questionnaire de marque ni personnalisation.
-  Premier message « go » : voir le 🚦 en haut (départ prévu, pas de second « go »).
 - **Tu travailles** : « Je prépare les sous-titres. Tu n'as rien à faire pour le moment. »
 - **Il doit agir** : une seule consigne courte, puis attendre ; ne promets pas une réussite non vérifiée.
 - **Validation créative** : montrer le résultat, demander un retour simple (jamais un choix de codec,
@@ -142,11 +141,9 @@ puis un **débrief** où il dit ce qu'il aurait fait autrement, et tu retiens to
 **Dès la deuxième vidéo**, l'ordre verrouillé et toutes ses validations s'appliquent, avec les
 préférences apprises (section suivante) appliquées d'office.
 
-- **Personnalisation visuelle** : à l'installation, propose UNE fois d'ouvrir `demarrer.html` (2 minutes :
-  prénom, style, sous-titres, appel à l'action, avec aperçu). Il renvoie un bloc `CUTAI-REGLAGES` que le
-  client colle ici : applique-le avec le skill `setup` (`references/onboarding-visuel.md`). Refusé ou
-  ignoré : monte avec les réglages de base. « Personnalise mon style » = rouvre `demarrer.html` (jamais un questionnaire dans le chat ni une liste de styles en texte).
-  Propose aussi l'app HyperFrames (gratuite, https://hyperframes.dev/studio) une fois, à l'installation. Le débrief fait partie de la première vidéo.
+- **Personnalisation** : à l'installation, ouvre UNE fois `demarrer.html` ; le bloc `CUTAI-REGLAGES` collé
+  s'applique avec le skill `setup`. « Personnalise mon style » = rouvre la page, jamais un questionnaire dans le chat.
+  L'app HyperFrames est un bonus gratuit, proposé une fois. Le débrief fait partie de la première vidéo.
 - **Débrief repoussé** : si `{{MAISON}}work/premiere-video.md` annonce « débrief à faire », le reproposer
   une fois en début de conversation, suivre la note, puis la supprimer, qu'il accepte ou non.
 - Ne pas marquer `setup.styleChosen = true` sans choix explicite (garder le style de départ en est
