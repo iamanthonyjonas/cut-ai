@@ -437,7 +437,10 @@ function generateAgentFiles(config, style) {
     const { out: substituted, missing } = substitutePlaceholders(tpl, { ...map, MAISON: lieu.maison, REEL_NOM: lieu.nom });
     if (missing.size > 0) missingIdentity = true;
     for (const { file, keep } of targets) {
-      const contenu = resolveConditionals(substituted, [keep, lieu.bloc]);
+      // Le départ « go » (accueil de l'installation) ne sert qu'avant `npm install` : ensuite il libère ~1 Kio
+      // pour les extensions (limite de lecture de Codex).
+      const avantInstall = !fs.existsSync(path.join(ROOT, "node_modules"));
+      const contenu = resolveConditionals(substituted, [keep, lieu.bloc, ...(avantInstall ? ["PREMIER_DEPART"] : [])]);
       tropLong = Math.max(tropLong, Buffer.byteLength(contenu));
       ecrireSiDifferent(path.join(lieu.dir, file), contenu);
     }

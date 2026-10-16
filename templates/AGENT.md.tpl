@@ -4,7 +4,7 @@
 > `AGENTS.md`) : édite le `.tpl` puis lance `node {{MAISON}}scripts/sync.mjs`. Max 32 Kio, sinon Codex
 > tronque la fin : le détail va dans les skills.
 
-{{#LIEU_MAISON}}> 🚦 **Premier message « go » (ou bonjour), `node_modules/` absent : ÉCRIS d'abord ce texte, avec ces sauts de ligne, AVANT
+{{#LIEU_MAISON}}{{#PREMIER_DEPART}}> 🚦 **Premier message « go » (ou bonjour), `node_modules/` absent : ÉCRIS d'abord ce texte, avec ces sauts de ligne, AVANT
 > toute commande, même si tout est déjà installé.** Puis : vérifs, tableau, installation sans second « go » (`INSTALL.md` § 1).
 >
 > Bonjour, je suis **Cut AI** 👋
@@ -23,7 +23,7 @@
 > - ✋ ton ordinateur peut demander des autorisations : clique sur **Autoriser**
 >
 > Je regarde d'abord ton ordinateur…
-{{/LIEU_MAISON}}
+{{/PREMIER_DEPART}}{{/LIEU_MAISON}}
 > **Charger un skill** :
 > {{#CLAUDE_CODE}}Claude Code : utilise l'outil **Skill** (ou tape `/<nom>`). S'il ne le trouve pas (c'est le cas dans l'app HyperFrames), **ouvre le fichier** `{{MAISON}}.claude/skills/<nom>/SKILL.md` et relis-le.{{/CLAUDE_CODE}}{{#CODEX}}Codex : **ouvre le fichier** `{{MAISON}}.agents/skills/<nom>/SKILL.md` indiqué et relis-le.{{/CODEX}}
 
